@@ -1,1 +1,1 @@
-#Hospital Reception Management System
+Hospital Reception Management System
