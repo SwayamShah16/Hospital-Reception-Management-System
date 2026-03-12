@@ -16,6 +16,7 @@ The Hospital Reception Management System is a robust application that automates 
 
 ### 2. **Appointment Scheduling**
    - Schedule appointments with doctors
+   - Priority based Appointments for Critical Cases
    - View appointment availability
    - Manage appointment cancellations and rescheduling
    - Generate appointment reminders
