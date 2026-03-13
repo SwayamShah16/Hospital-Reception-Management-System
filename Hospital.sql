@@ -93,8 +93,55 @@ CREATE TABLE Admission (
     Discharge_Date DATE,
     Doctor_ID INT,
     Total_Bill DECIMAL(10,2),
-    
+
     FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID),
     FOREIGN KEY (Room_ID) REFERENCES Room(Room_ID),
     FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_ID)
 );
+
+9. Emergency_Case Table
+CREATE TABLE Emergency_Case (
+    Emergency_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_ID INT,
+    Emergency_Type VARCHAR(100),
+    Severity_Level VARCHAR(20),
+    Priority_Level VARCHAR(20),
+    Arrival_Time DATETIME,
+    Assigned_Doctor_ID INT,
+    Status VARCHAR(20),
+
+    FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID),
+    FOREIGN KEY (Assigned_Doctor_ID) REFERENCES Doctor(Doctor_ID)
+);
+
+10. Staff Table
+CREATE TABLE Staff (
+    Staff_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Role VARCHAR(50),
+    Department_ID INT,
+    Contact_Number VARCHAR(15),
+    Email VARCHAR(100),
+    Shift_Timing VARCHAR(50),
+    Salary DECIMAL(10,2),
+    Status VARCHAR(20),
+
+    FOREIGN KEY (Department_ID) REFERENCES Department(Department_ID)
+);
+
+11. Queue Management
+CREATE TABLE Queue_Management (
+    Queue_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_ID INT,
+    Appointment_ID INT,
+    Token_Number INT,
+    Queue_Type VARCHAR(20),
+    Priority_Level VARCHAR(20),
+    Arrival_Time DATETIME,
+    Status VARCHAR(20),
+
+    FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID),
+    FOREIGN KEY (Appointment_ID) REFERENCES Appointment(Appointment_ID)
+);
+
+
