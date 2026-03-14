@@ -8,21 +8,16 @@ public class GetConnection {
 
 	public Connection GetConnection() {
 
+		Connection connection = null;
+
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital", "root", "");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital", "root", "");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		Connection connection = null;
 
 		return connection;
 
