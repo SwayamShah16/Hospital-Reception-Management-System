@@ -10,14 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import DAO.PatientDAO;
-import POJO.PatientPOJO;
+import DAO.AdmissionDAO;
+import DAO.RoomDAO;
+import POJO.AdmissionPOJO;
+import POJO.RoomPOJO;
 
-@WebServlet("/patient")
-public class PatientServlet extends HttpServlet {
+@WebServlet("/admission")
+public class AdmissionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private final PatientDAO patientDAO = new PatientDAO();
+	private final AdmissionDAO admissionDAO = new AdmissionDAO();
+	private final RoomDAO roomDAO = new RoomDAO();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,16 +74,18 @@ public class PatientServlet extends HttpServlet {
 			handleDelete(request, response);
 			break;
 		default:
-			response.sendRedirect("patient?action=list");
+			response.sendRedirect("admission?action=list");
 			break;
 		}
 	}
 
 	private void showList(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<PatientPOJO> patients = patientDAO.getAllPatients();
-		request.setAttribute("patients", patients);
-		request.getRequestDispatcher("/WEB-INF/Patient.jsp").forward(request, response);
+		List<AdmissionPOJO> admissions = admissionDAO.getAllAdmissions();
+		List<RoomPOJO> rooms = roomDAO.getAllRooms();
+		request.setAttribute("admissions", admissions);
+		request.setAttribute("rooms", rooms);
+		request.getRequestDispatcher("/WEB-INF/Admission.jsp").forward(request, response);
 	}
 
 	private void showForm(HttpServletRequest request, HttpServletResponse response)
@@ -91,70 +96,68 @@ public class PatientServlet extends HttpServlet {
 		}
 
 		if ("update".equalsIgnoreCase(mode)) {
-			String idParam = request.getParameter("patient_ID");
+			String idParam = request.getParameter("admit_ID");
 			if (idParam != null && !idParam.isEmpty()) {
 				try {
 					int id = Integer.parseInt(idParam);
-					PatientPOJO patient = patientDAO.getPatientById(id);
-					if (patient != null) {
-						request.setAttribute("patient", patient);
+					AdmissionPOJO admission = admissionDAO.getAdmissionById(id);
+					if (admission != null) {
+						request.setAttribute("admission", admission);
 					}
 				} catch (NumberFormatException ignored) {
-					// fall back to empty form
 				}
 			}
 		}
 
+		// rooms to choose from
+		List<RoomPOJO> rooms = roomDAO.getAllRooms();
+		request.setAttribute("rooms", rooms);
 		request.setAttribute("mode", mode);
-		request.getRequestDispatcher("/WEB-INF/Patient_Form.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/Admission_Form.jsp").forward(request, response);
 	}
 
 	private void handleCreateOrUpdate(HttpServletRequest request, HttpServletResponse response, boolean isUpdate)
 			throws IOException {
 		try {
+			int admitId = Integer.parseInt(request.getParameter("admit_ID"));
 			int patientId = Integer.parseInt(request.getParameter("patient_ID"));
-			String firstName = request.getParameter("patient_first_name");
-			String lastName = request.getParameter("patient_last_name");
-			String gender = request.getParameter("patient_gender");
-			int dob = Integer.parseInt(request.getParameter("patient_DOB"));
-			int contactNo = Integer.parseInt(request.getParameter("patient_contact_no"));
-			String address = request.getParameter("patient_address");
-			String email = request.getParameter("patient_email");
-			String bloodGroup = request.getParameter("BloodGroup");
-			int registrationDate = Integer.parseInt(request.getParameter("Registration_Date"));
+			int roomId = Integer.parseInt(request.getParameter("room_ID"));
+			int admitDate = Integer.parseInt(request.getParameter("admit_date"));
+			int dischargeDate = Integer.parseInt(request.getParameter("discharge_date"));
+			int doctorId = Integer.parseInt(request.getParameter("doctor_ID"));
+			int totalBill = Integer.parseInt(request.getParameter("total_bill"));
 
-			PatientPOJO patient = new PatientPOJO(patientId, firstName, lastName, gender, dob, contactNo, address,
-					email, bloodGroup, registrationDate);
+			AdmissionPOJO admission = new AdmissionPOJO(admitId, patientId, roomId, admitDate, dischargeDate,
+					doctorId, totalBill);
 
 			boolean success;
 			if (isUpdate) {
-				success = patientDAO.updatePatient(patient);
+				success = admissionDAO.updateAdmission(admission);
 			} else {
-				success = patientDAO.createPatient(patient);
+				success = admissionDAO.createAdmission(admission);
 			}
 
 			if (success) {
-				response.sendRedirect("patient?action=list");
+				response.sendRedirect("admission?action=list");
 			} else {
-				// On failure, go back to form
-				response.sendRedirect("patient?action=form&mode=" + (isUpdate ? "update" : "create") + "&patient_ID="
-						+ patientId);
+				response.sendRedirect("admission?action=form&mode=" + (isUpdate ? "update" : "create") + "&admit_ID="
+						+ admitId);
 			}
 		} catch (NumberFormatException e) {
-			response.sendRedirect("patient?action=form&mode=" + (isUpdate ? "update" : "create"));
+			response.sendRedirect("admission?action=form&mode=" + (isUpdate ? "update" : "create"));
 		}
 	}
 
 	private void handleDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String idParam = request.getParameter("patient_ID");
+		String idParam = request.getParameter("admit_ID");
 		if (idParam != null && !idParam.isEmpty()) {
 			try {
 				int id = Integer.parseInt(idParam);
-				patientDAO.deletePatient(id);
+				admissionDAO.deleteAdmission(id);
 			} catch (NumberFormatException ignored) {
-				// ignore parse error, just return to list
 			}
 		}
-		response.sendRedirect("patient?action=list");
+		response.sendRedirect("admission?action=list");
 	}
 }
+

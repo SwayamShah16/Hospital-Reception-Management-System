@@ -33,10 +33,14 @@ public class ReceptionistServlet extends HttpServlet {
 		case "logout":
 			handleLogout(request, response);
 			break;
+		case "registerForm":
+			// Show registration form
+			request.getRequestDispatcher("/WEB-INF/Receptionist_Registration.jsp").forward(request, response);
+			break;
 		case "loginForm":
 		default:
-			// Normally forward to receptionist login JSP
-			response.sendRedirect("receptionist-login.jsp");
+			// Forward internally to the login JSP under WEB-INF
+			request.getRequestDispatcher("/WEB-INF/Receptionist_Login.jsp").forward(request, response);
 			break;
 		}
 	}
@@ -74,7 +78,8 @@ public class ReceptionistServlet extends HttpServlet {
 
 		if (receptionistIdParam == null || password == null || receptionistIdParam.trim().isEmpty()
 				|| password.trim().isEmpty()) {
-			out.println("Receptionist ID and password are required.");
+			// Missing fields, go back to login with generic error
+			response.sendRedirect("receptionist?action=loginForm&error=1");
 			return;
 		}
 
@@ -82,7 +87,8 @@ public class ReceptionistServlet extends HttpServlet {
 		try {
 			receptionistId = Integer.parseInt(receptionistIdParam);
 		} catch (NumberFormatException e) {
-			out.println("Invalid receptionist ID.");
+			// Invalid ID format, treat as login error
+			response.sendRedirect("receptionist?action=loginForm&error=1");
 			return;
 		}
 
@@ -92,10 +98,10 @@ public class ReceptionistServlet extends HttpServlet {
 			// Store the logged-in receptionist in the session
 			session.setAttribute("user", receptionist);
 			// Redirect to receptionist home/dashboard page
-			response.sendRedirect("receptionist-home.jsp");
+			response.sendRedirect("home.jsp");
 		} else {
-			out.println("Invalid receptionist ID or password.");
-			// Optionally: response.sendRedirect("receptionist-login.jsp?error=1");
+			// Redirect back to the login form via servlet with an error flag
+			response.sendRedirect("receptionist?action=loginForm&error=1");
 		}
 	}
 
@@ -118,12 +124,14 @@ public class ReceptionistServlet extends HttpServlet {
 				|| confirmPassword.trim().isEmpty() || recepContactNoParam.trim().isEmpty()
 				|| shiftTimingParam.trim().isEmpty() || email.trim().isEmpty()) {
 
-			out.println("All fields are required.");
+			// Back to registration with a generic error flag
+			response.sendRedirect("receptionist?action=registerForm&error=1");
 			return;
 		}
 
 		if (!password.equals(confirmPassword)) {
-			out.println("Passwords do not match.");
+			// Use same generic error for now
+			response.sendRedirect("receptionist?action=registerForm&error=1");
 			return;
 		}
 
@@ -135,38 +143,37 @@ public class ReceptionistServlet extends HttpServlet {
 			recepContactNo = Integer.parseInt(recepContactNoParam);
 			shiftTiming = Integer.parseInt(shiftTimingParam);
 		} catch (NumberFormatException e) {
-			out.println("Invalid numeric value in receptionist ID, contact number, or shift timing.");
+			response.sendRedirect("receptionist?action=registerForm&error=1");
 			return;
 		}
 
 		// Optional: check if receptionist already exists
 		if (receptionistDAO.isReceptionistIdTaken(receptionistId)) {
-			out.println("Receptionist ID is already registered.");
+			// Indicate "taken" to the registration JSP
+			response.sendRedirect("receptionist?action=registerForm&taken=1");
 			return;
 		}
 
 		ReceptionistPOJO newReceptionist = new ReceptionistPOJO(receptionistId, recepName, password, recepContactNo,
-                shiftTiming,
-                email
-        );
+				shiftTiming, email);
 
-        boolean created = receptionistDAO.createReceptionist(newReceptionist);
+		boolean created = receptionistDAO.createReceptionist(newReceptionist);
 
-        if (created) {
-            out.println("Receptionist registration successful. You can now login.");
-            // Optionally: response.sendRedirect("receptionist-login.jsp?registered=1");
-        } else {
-            out.println("Registration failed. Please try again.");
-        }
-    }
+		if (created) {
+			// Redirect to login with "registered" flag
+			response.sendRedirect("receptionist?action=loginForm&registered=1");
+		} else {
+			response.sendRedirect("receptionist?action=registerForm&error=1");
+		}
+	}
 
-    private void handleLogout(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+	private void handleLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        response.sendRedirect("receptionist-login.jsp");
-    }
+		HttpSession session1 = request.getSession(false);
+		if (session1 != null) {
+			session1.invalidate();
+		}
+		// Go back to login form via servlet
+		response.sendRedirect("receptionist?action=loginForm");
+	}
 }

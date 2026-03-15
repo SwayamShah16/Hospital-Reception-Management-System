@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import DAO.PatientDAO;
-import POJO.PatientPOJO;
+import DAO.StaffDAO;
+import POJO.StaffPOJO;
 
-@WebServlet("/patient")
-public class PatientServlet extends HttpServlet {
+@WebServlet("/staff")
+public class StaffServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private final PatientDAO patientDAO = new PatientDAO();
+	private final StaffDAO staffDAO = new StaffDAO();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,16 +71,16 @@ public class PatientServlet extends HttpServlet {
 			handleDelete(request, response);
 			break;
 		default:
-			response.sendRedirect("patient?action=list");
+			response.sendRedirect("staff?action=list");
 			break;
 		}
 	}
 
 	private void showList(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<PatientPOJO> patients = patientDAO.getAllPatients();
-		request.setAttribute("patients", patients);
-		request.getRequestDispatcher("/WEB-INF/Patient.jsp").forward(request, response);
+		List<StaffPOJO> staffList = staffDAO.getAllStaff();
+		request.setAttribute("staffList", staffList);
+		request.getRequestDispatcher("/WEB-INF/Staff.jsp").forward(request, response);
 	}
 
 	private void showForm(HttpServletRequest request, HttpServletResponse response)
@@ -91,70 +91,67 @@ public class PatientServlet extends HttpServlet {
 		}
 
 		if ("update".equalsIgnoreCase(mode)) {
-			String idParam = request.getParameter("patient_ID");
+			String idParam = request.getParameter("staff_Id");
 			if (idParam != null && !idParam.isEmpty()) {
 				try {
 					int id = Integer.parseInt(idParam);
-					PatientPOJO patient = patientDAO.getPatientById(id);
-					if (patient != null) {
-						request.setAttribute("patient", patient);
+					StaffPOJO staff = staffDAO.getStaffById(id);
+					if (staff != null) {
+						request.setAttribute("staff", staff);
 					}
 				} catch (NumberFormatException ignored) {
-					// fall back to empty form
 				}
 			}
 		}
 
 		request.setAttribute("mode", mode);
-		request.getRequestDispatcher("/WEB-INF/Patient_Form.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/Staff_Form.jsp").forward(request, response);
 	}
 
 	private void handleCreateOrUpdate(HttpServletRequest request, HttpServletResponse response, boolean isUpdate)
 			throws IOException {
 		try {
-			int patientId = Integer.parseInt(request.getParameter("patient_ID"));
-			String firstName = request.getParameter("patient_first_name");
-			String lastName = request.getParameter("patient_last_name");
-			String gender = request.getParameter("patient_gender");
-			int dob = Integer.parseInt(request.getParameter("patient_DOB"));
-			int contactNo = Integer.parseInt(request.getParameter("patient_contact_no"));
-			String address = request.getParameter("patient_address");
-			String email = request.getParameter("patient_email");
-			String bloodGroup = request.getParameter("BloodGroup");
-			int registrationDate = Integer.parseInt(request.getParameter("Registration_Date"));
+			int staffId = Integer.parseInt(request.getParameter("staff_Id"));
+			String name = request.getParameter("name");
+			String role = request.getParameter("role");
+			int departmentId = Integer.parseInt(request.getParameter("department_ID"));
+			int contactNo = Integer.parseInt(request.getParameter("contact_no"));
+			String email = request.getParameter("email");
+			int shiftTiming = Integer.parseInt(request.getParameter("shift_timing"));
+			int salary = Integer.parseInt(request.getParameter("salary"));
+			String status = request.getParameter("status");
 
-			PatientPOJO patient = new PatientPOJO(patientId, firstName, lastName, gender, dob, contactNo, address,
-					email, bloodGroup, registrationDate);
+			StaffPOJO staff = new StaffPOJO(staffId, name, role, departmentId, contactNo, email, shiftTiming, salary,
+					status);
 
 			boolean success;
 			if (isUpdate) {
-				success = patientDAO.updatePatient(patient);
+				success = staffDAO.updateStaff(staff);
 			} else {
-				success = patientDAO.createPatient(patient);
+				success = staffDAO.createStaff(staff);
 			}
 
 			if (success) {
-				response.sendRedirect("patient?action=list");
+				response.sendRedirect("staff?action=list");
 			} else {
-				// On failure, go back to form
-				response.sendRedirect("patient?action=form&mode=" + (isUpdate ? "update" : "create") + "&patient_ID="
-						+ patientId);
+				response.sendRedirect("staff?action=form&mode=" + (isUpdate ? "update" : "create") + "&staff_Id="
+						+ staffId);
 			}
 		} catch (NumberFormatException e) {
-			response.sendRedirect("patient?action=form&mode=" + (isUpdate ? "update" : "create"));
+			response.sendRedirect("staff?action=form&mode=" + (isUpdate ? "update" : "create"));
 		}
 	}
 
 	private void handleDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String idParam = request.getParameter("patient_ID");
+		String idParam = request.getParameter("staff_Id");
 		if (idParam != null && !idParam.isEmpty()) {
 			try {
 				int id = Integer.parseInt(idParam);
-				patientDAO.deletePatient(id);
+				staffDAO.deleteStaff(id);
 			} catch (NumberFormatException ignored) {
-				// ignore parse error, just return to list
 			}
 		}
-		response.sendRedirect("patient?action=list");
+		response.sendRedirect("staff?action=list");
 	}
 }
+
