@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>Hospital Reception Management System</display-name>
+
+    <!-- Admission Servlet -->
+    <servlet>
+        <servlet-name>AdmissionServlet</servlet-name>
+        <servlet-class>Controller.AdmissionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdmissionServlet</servlet-name>
+        <url-pattern>/admission</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Appointment Servlet -->
+    <servlet>
+        <servlet-name>AppointmentServlet</servlet-name>
+        <servlet-class>Controller.AppointmentServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AppointmentServlet</servlet-name>
+        <url-pattern>/appointment</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Doctor Servlet -->
+    <servlet>
+        <servlet-name>DoctorServlet</servlet-name>
+        <servlet-class>Controller.DoctorServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DoctorServlet</servlet-name>
+        <url-pattern>/doctor</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Emergency Case Servlet -->
+    <servlet>
+        <servlet-name>EmergencyCaseServlet</servlet-name>
+        <servlet-class>Controller.EmergencyCaseServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EmergencyCaseServlet</servlet-name>
+        <url-pattern>/emergency</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Medicine Inventory Servlet -->
+    <servlet>
+        <servlet-name>MedicineInventoryServlet</servlet-name>
+        <servlet-class>Controller.MedicineInventoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MedicineInventoryServlet</servlet-name>
+        <url-pattern>/medicine</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Patient Servlet -->
+    <servlet>
+        <servlet-name>PatientServlet</servlet-name>
+        <servlet-class>Controller.PatientServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PatientServlet</servlet-name>
+        <url-pattern>/patient</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Payment Servlet -->
+    <servlet>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>Controller.PaymentServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/payment</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Receptionist Servlet -->
+    <servlet>
+        <servlet-name>ReceptionistServlet</servlet-name>
+        <servlet-class>Controller.ReceptionistServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ReceptionistServlet</servlet-name>
+        <url-pattern>/receptionist</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Staff Servlet -->
+    <servlet>
+        <servlet-name>StaffServlet</servlet-name>
+        <servlet-class>Controller.StaffServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StaffServlet</servlet-name>
+        <url-pattern>/staff</url-pattern>
+    </servlet-mapping>
+
+</web-app>
