@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import DAO.MedicineInventoryDAO;
 import POJO.MedicineInventoryPOJO;
 
-@WebServlet("/medicine")
+//@WebServlet("/medicine")
 public class MedicineInventoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

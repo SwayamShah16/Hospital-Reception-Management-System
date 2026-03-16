@@ -9,18 +9,17 @@ import Connection.GetConnection;
 
 public class UserDAO {
 
-	public static UserPOJO login(String username, String password, String role) {
-
+	// LOGIN METHOD
+	public UserPOJO login(String username, String password, String role) {
 		UserPOJO user = null;
 
 		try {
 
-			Connection con = null;
-			try {
-				con = GetConnection.GetConnection();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			Connection con = GetConnection.GetConnection();
+
+			if (con == null) {
+				System.out.println("Database connection failed");
+				return null;
 			}
 
 			String query = "SELECT * FROM users WHERE username=? AND password=? AND role=?";
@@ -42,6 +41,10 @@ public class UserDAO {
 				user.setRole(rs.getString("role"));
 			}
 
+			rs.close();
+			ps.close();
+			con.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,8 +52,9 @@ public class UserDAO {
 		return user;
 	}
 
+	// REGISTER METHOD
 	public boolean registerUser(UserPOJO user) {
-		// TODO Auto-generated method stub
+
 		boolean status = false;
 
 		try {
@@ -65,11 +69,14 @@ public class UserDAO {
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getRole());
 
-			int row = ps.executeUpdate();
+			int rows = ps.executeUpdate();
 
-			if (row > 0) {
+			if (rows > 0) {
 				status = true;
 			}
+
+			ps.close();
+			con.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();

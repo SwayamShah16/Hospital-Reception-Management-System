@@ -4,12 +4,10 @@ import DAO.UserDAO;
 import POJO.UserPOJO;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 @WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
@@ -25,9 +23,12 @@ public class UserServlet extends HttpServlet {
 
 		String action = request.getParameter("action");
 
-		if (action.equals("login")) {
+		if ("login".equals(action)) {
+
 			loginUser(request, response);
-		} else if (action.equals("register")) {
+
+		} else if ("register".equals(action)) {
+
 			registerUser(request, response);
 		}
 	}
@@ -39,30 +40,35 @@ public class UserServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String role = request.getParameter("role");
 
-		UserPOJO user = null;
-		try {
-			user = UserDAO.login(username, password, role);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		UserPOJO user = userDAO.login(username, password, role);
 
 		if (user != null) {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 
-			// Role based redirect
-			if (role.equals("ADMIN")) {
-				response.sendRedirect("adminDashboard.jsp");
-			} else if (role.equals("DOCTOR")) {
-				response.sendRedirect("doctorDashboard.jsp");
-			} else if (role.equals("STAFF")) {
-				response.sendRedirect("staffDashboard.jsp");
+			String userRole = user.getRole(); // get role from DB
+
+			if ("ADMIN".equalsIgnoreCase(userRole)) {
+
+				response.sendRedirect(request.getContextPath() + "/adminDashboard.jsp");
+
+			} else if ("DOCTOR".equalsIgnoreCase(userRole)) {
+
+				response.sendRedirect(request.getContextPath() + "/doctorDashboard.jsp");
+
+			} else if ("STAFF".equalsIgnoreCase(userRole)) {
+
+				response.sendRedirect(request.getContextPath() + "/staffDashboard.jsp");
+
+			} else {
+
+				response.sendRedirect(request.getContextPath() + "/login.jsp?error=role");
 			}
 
 		} else {
-			response.sendRedirect("login.jsp?error=invalid");
+
+			response.sendRedirect(request.getContextPath() + "/login.jsp?error=invalid");
 		}
 	}
 
@@ -82,9 +88,12 @@ public class UserServlet extends HttpServlet {
 		boolean status = userDAO.registerUser(user);
 
 		if (status) {
-			response.sendRedirect("login.jsp?success=registered");
+
+			response.sendRedirect(request.getContextPath() + "/login.jsp?success=registered");
+
 		} else {
-			response.sendRedirect("register.jsp?error=failed");
+
+			response.sendRedirect(request.getContextPath() + "/register.jsp?error=failed");
 		}
 	}
 }
