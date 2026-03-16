@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import DAO.ReceptionistDAO;
 import POJO.ReceptionistPOJO;
 
-@WebServlet("/receptionist")
+//@WebServlet("/receptionist")
 public class ReceptionistServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import DAO.AppointmentDAO;
 import POJO.AppointmentPOJO;
 
-@WebServlet("/appointment")
+//@WebServlet("/appointment")
 public class AppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -153,4 +153,3 @@ public class AppointmentServlet extends HttpServlet {
 		response.sendRedirect("appointment?action=list");
 	}
 }
-

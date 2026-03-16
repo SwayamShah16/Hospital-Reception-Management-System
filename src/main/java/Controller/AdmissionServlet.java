@@ -15,7 +15,7 @@ import DAO.RoomDAO;
 import POJO.AdmissionPOJO;
 import POJO.RoomPOJO;
 
-@WebServlet("/admission")
+//@WebServlet("/admission")
 public class AdmissionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -127,8 +127,8 @@ public class AdmissionServlet extends HttpServlet {
 			int doctorId = Integer.parseInt(request.getParameter("doctor_ID"));
 			int totalBill = Integer.parseInt(request.getParameter("total_bill"));
 
-			AdmissionPOJO admission = new AdmissionPOJO(admitId, patientId, roomId, admitDate, dischargeDate,
-					doctorId, totalBill);
+			AdmissionPOJO admission = new AdmissionPOJO(admitId, patientId, roomId, admitDate, dischargeDate, doctorId,
+					totalBill);
 
 			boolean success;
 			if (isUpdate) {
@@ -140,8 +140,8 @@ public class AdmissionServlet extends HttpServlet {
 			if (success) {
 				response.sendRedirect("admission?action=list");
 			} else {
-				response.sendRedirect("admission?action=form&mode=" + (isUpdate ? "update" : "create") + "&admit_ID="
-						+ admitId);
+				response.sendRedirect(
+						"admission?action=form&mode=" + (isUpdate ? "update" : "create") + "&admit_ID=" + admitId);
 			}
 		} catch (NumberFormatException e) {
 			response.sendRedirect("admission?action=form&mode=" + (isUpdate ? "update" : "create"));
@@ -160,4 +160,3 @@ public class AdmissionServlet extends HttpServlet {
 		response.sendRedirect("admission?action=list");
 	}
 }
-

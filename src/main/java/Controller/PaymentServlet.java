@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import DAO.PaymentDAO;
 import POJO.PaymentPOJO;
 
-@WebServlet("/payment")
+//@WebServlet("/payment")
 public class PaymentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
