@@ -129,19 +129,12 @@ CREATE TABLE Staff (
     FOREIGN KEY (Department_ID) REFERENCES Department(Department_ID)
 );
 
-11. Queue Management
-CREATE TABLE Queue_Management (
-    Queue_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Patient_ID INT,
-    Appointment_ID INT,
-    Token_Number INT,
-    Queue_Type VARCHAR(20),
-    Priority_Level VARCHAR(20),
-    Arrival_Time DATETIME,
-    Status VARCHAR(20),
-
-    FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID),
-    FOREIGN KEY (Appointment_ID) REFERENCES Appointment(Appointment_ID)
+11.User table
+CREATE TABLE users (
+    user_id INT(11) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    role VARCHAR(20) NOT NULL,
+    PRIMARY KEY (user_id)
 );
-
 
