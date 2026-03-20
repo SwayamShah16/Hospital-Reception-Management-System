@@ -9,15 +9,14 @@ import POJO.DoctorPOJO;
 public class DoctorDAO {
 
 	private Connection getConnection() {
-		return new GetConnection().GetConnection();
+		return GetConnection.GetConnection(); // ✅ FIXED
 	}
 
-	// ✅ GET ALL
 	public List<DoctorPOJO> getAllDoctors() {
 
 		List<DoctorPOJO> list = new ArrayList<>();
 
-		String sql = "SELECT * FROM Doctor ORDER BY Doctor_ID DESC";
+		String sql = "SELECT * FROM doctor;"; // ⚠️ ensure table name is lowercase
 
 		try (Connection con = getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);
@@ -27,13 +26,13 @@ public class DoctorDAO {
 
 				DoctorPOJO d = new DoctorPOJO();
 
-				d.setDoctor_ID(rs.getInt("Doctor_ID"));
-				d.setName(rs.getString("Name"));
-				d.setSpecialization(rs.getString("Specialization"));
-				d.setContact_Number(rs.getString("Contact_Number"));
-				d.setEmail(rs.getString("Email"));
-				d.setConsultation_Fee(rs.getDouble("Consultation_Fee"));
-				d.setAvailability_Status(rs.getString("Availability_Status"));
+				d.setDoctor_ID(rs.getInt("doctor_ID"));
+				d.setName(rs.getString("name"));
+				d.setSpecialization(rs.getString("specialization"));
+				d.setContact_Number(rs.getString("contact_Number"));
+				d.setEmail(rs.getString("email"));
+				d.setConsultation_Fee(rs.getDouble("consultation_Fee"));
+				d.setAvailability_Status(rs.getString("availability_Status"));
 
 				list.add(d);
 			}
@@ -45,11 +44,10 @@ public class DoctorDAO {
 		return list;
 	}
 
-	// ✅ DELETE
 	public boolean deleteDoctor(int id) {
 
 		try (Connection con = getConnection();
-				PreparedStatement ps = con.prepareStatement("DELETE FROM Doctor WHERE Doctor_ID=?")) {
+				PreparedStatement ps = con.prepareStatement("DELETE FROM doctor WHERE doctor_ID=?;")) {
 
 			ps.setInt(1, id);
 			return ps.executeUpdate() > 0;

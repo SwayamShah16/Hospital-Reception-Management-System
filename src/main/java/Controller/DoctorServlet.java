@@ -20,22 +20,30 @@ public class DoctorServlet extends HttpServlet {
 
 		String action = request.getParameter("action");
 
-		if (action == null)
+		if (action == null) {
 			action = "list";
+		}
 
-		switch (action) {
+		try {
 
-		case "delete":
-			int id = Integer.parseInt(request.getParameter("id"));
-			dao.deleteDoctor(id);
-			response.sendRedirect("doctor?action=list");
-			break;
+			switch (action) {
 
-		default:
-			List<DoctorPOJO> list = dao.getAllDoctors();
-			request.setAttribute("doctors", list);
-			request.getRequestDispatcher("Doctor.jsp").forward(request, response);
-			break;
+			case "delete":
+				int id = Integer.parseInt(request.getParameter("id"));
+				dao.deleteDoctor(id);
+				response.sendRedirect("doctor?action=list");
+				break;
+
+			default:
+				List<DoctorPOJO> list = dao.getAllDoctors();
+				request.setAttribute("doctorList", dao.getAllDoctors());
+				request.setAttribute("doctors", list);
+				request.getRequestDispatcher("Doctor.jsp").forward(request, response);
+				break;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

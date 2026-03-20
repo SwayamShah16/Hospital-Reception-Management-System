@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page
-	import="java.util.*, java.text.SimpleDateFormat, POJO.PatientPOJO"%>
+	import="java.util.*, java.text.SimpleDateFormat, POJO.PatientPOJO, DAO.PatientDAO"%>
 <%@ page import="java.util.Date"%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -169,62 +170,31 @@ body {
 								<th>Actions</th>
 							</tr>
 						</thead>
-
 						<tbody>
 
 							<%
 							List<PatientPOJO> patients = (List<PatientPOJO>) request.getAttribute("patients");
 
-							if (patients != null && !patients.isEmpty()) {
+							if (patients != null && patients.size() > 0) {
 
-								int count = 0;
+								SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 								for (PatientPOJO p : patients) {
-									count++;
 
-									String fullName = p.getFirst_Name() + " " + p.getLast_Name();
-
-									java.util.Date dob = p.getDob();
-									java.util.Date regDate = p.getRegistration_Date();
-
-									SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-									String dobStr = dob != null ? sdf.format(dob) : "N/A";
-									String regStr = regDate != null ? sdf.format(regDate) : "N/A";
-
-									String initials = (p.getFirst_Name() != null ? p.getFirst_Name().substring(0, 1) : "")
-									+ (p.getLast_Name() != null ? p.getLast_Name().substring(0, 1) : "");
-
-									long age = dob != null ? calculateAge(dob) : 0;
-									String statusClass = count <= 5 ? "status-recent" : "status-active";
+									String name = p.getFirst_Name() + " " + p.getLast_Name();
+									String dob = (p.getDob() != null) ? sdf.format(p.getDob()) : "N/A";
 							%>
 
 							<tr>
-								<td>#<%=p.getPatient_ID()%></td>
-
-								<td>
-									<div class="d-flex align-items-center">
-										<div class="avatar me-3"><%=initials%></div>
-										<div>
-											<div class="fw-semibold"><%=fullName%></div>
-											<small class="text-muted"><%=age%> years | <%=p.getGender()%></small>
-										</div>
-									</div>
-								</td>
-
-								<td><%=dobStr%></td>
-
+								<td><%=p.getPatient_ID()%></td>
+								<td><%=name%></td>
+								<td><%=p.getGender()%></td>
+								<td><%=dob%></td>
 								<td><%=p.getContact_Number()%></td>
-
-								<td><%=p.getAddress()%></td>
-
-								<td><span class="badge bg-info"><%=p.getBlood_Group()%></span></td>
-
-								<td><span class="<%=statusClass%> status-badge"><%=regStr%></span></td>
-
+								<td><%=p.getBlood_Group()%></td>
 								<td><a
-									href="patient?action=delete&id=<%=p.getPatient_ID()%>"
-									class="btn btn-danger btn-sm">Delete</a></td>
+									href="patient?action=delete&id=<%=p.getPatient_ID()%>">Delete</a>
+								</td>
 							</tr>
 
 							<%
@@ -233,7 +203,7 @@ body {
 							%>
 
 							<tr>
-								<td colspan="8" class="text-center">No Patients Found</td>
+								<td colspan="7">No Patients Found</td>
 							</tr>
 
 							<%
@@ -241,6 +211,7 @@ body {
 							%>
 
 						</tbody>
+
 					</table>
 
 				</div>

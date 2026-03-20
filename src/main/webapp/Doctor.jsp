@@ -111,91 +111,42 @@ body {
 								<th><i class="fas fa-cogs me-2"></i>Actions</th>
 							</tr>
 						</thead>
-
 						<tbody>
-
 							<%
-							List<DoctorPOJO> doctors = (List<DoctorPOJO>) request.getAttribute("doctors");
+							List<DoctorPOJO> doctorList = (List<DoctorPOJO>) request.getAttribute("doctorList");
 
-							if (doctors != null && !doctors.isEmpty()) {
-
-								int count = 0;
-
-								for (DoctorPOJO d : doctors) {
-									count++;
-
-									String name = d.getName();
-
-									String initials = "";
-									if (name != null && name.length() >= 2) {
-								String[] parts = name.split(" ");
-								for (String part : parts) {
-									initials += part.charAt(0);
-								}
-									}
-
-									String status = d.getAvailability_Status();
-									String statusClass = "Available".equalsIgnoreCase(status) ? "status-active" : "status-inactive";
+							if (doctorList != null && !doctorList.isEmpty()) {
+								for (DoctorPOJO doctor : doctorList) {
 							%>
-
 							<tr>
-								<td><strong>#<%=d.getDoctor_ID()%></strong></td>
+								<td><%=doctor.getDoctor_ID()%></td>
+								<td><%=doctor.getName()%></td>
+								<td><%=doctor.getSpecialization()%></td>
+								<td><%=doctor.getContact_Number()%></td>
+								<td><%=doctor.getEmail()%></td>
+								<td><%=doctor.getConsultation_Fee()%></td>
+								<td><%=doctor.getAvailability_Status()%></td>
 
-								<td>
-									<div class="d-flex align-items-center">
-										<div class="avatar me-3"><%=initials%></div>
-										<div>
-											<div class="fw-semibold"><%=name%></div>
-											<small class="text-muted"><%=d.getSpecialization()%></small>
-										</div>
-									</div>
-								</td>
-
-								<td><%=d.getSpecialization()%></td>
-
-								<td><a href="tel:<%=d.getContact_Number()%>"
-									class="text-decoration-none"> <i class="fas fa-phone me-1"></i><%=d.getContact_Number()%>
-								</a></td>
-
-								<td><%=d.getEmail()%></td>
-
-								<td><strong>₹<%=d.getConsultation_Fee()%></strong></td>
-
-								<td><span class="status-badge <%=statusClass%>"> <%=status%>
-								</span></td>
-
-								<td>
-									<div class="btn-group">
-
-										<a href="editDoctor.jsp?id=<%=d.getDoctor_ID()%>"
-											class="btn btn-sm btn-outline-warning"> <i
-											class="fas fa-edit"></i>
-										</a> <a href="doctor?action=delete&id=<%=d.getDoctor_ID()%>"
-											class="btn btn-sm btn-outline-danger"
-											onclick="return confirm('Delete this doctor?')"> <i
-											class="fas fa-trash"></i>
-										</a>
-
-									</div>
-								</td>
-
+								<!-- Optional Actions -->
+								<td><a
+									href="DoctorServlet?action=edit&id=<%=doctor.getDoctor_ID()%>"
+									class="btn btn-warning btn-sm">Edit</a> <a
+									href="DoctorServlet?action=delete&id=<%=doctor.getDoctor_ID()%>"
+									class="btn btn-danger btn-sm"
+									onclick="return confirm('Are you sure you want to delete this doctor?');">
+										Delete </a></td>
 							</tr>
-
 							<%
 							}
 							} else {
 							%>
-
 							<tr>
-								<td colspan="8" class="text-center py-5"><i
-									class="fas fa-user-md fa-3x text-muted mb-3"></i>
-									<h5 class="text-muted">No doctors found</h5></td>
+								<td colspan="8" style="text-align: center;">No Doctors
+									Available</td>
 							</tr>
-
 							<%
 							}
 							%>
-
 						</tbody>
 					</table>
 
