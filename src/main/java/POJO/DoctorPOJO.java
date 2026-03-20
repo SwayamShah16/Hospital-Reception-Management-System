@@ -1,24 +1,28 @@
 package POJO;
 
 public class DoctorPOJO {
-	private int doctor_ID;
-	private String doctor_name;
-	private String Specialization;
-	private int doctor_contact_no;
-	private String doctor_email;
-	private int consulatancy_fee;
-	private String availability_status;
 
-	public DoctorPOJO(int doctor_ID, String doctor_name, String specialization, int doctor_contact_no,
-			String doctor_email, int consulatancy_fee, String availability_status) {
-		super();
+	private int doctor_ID;
+	private String name;
+	private String specialization;
+	private String contact_Number;
+	private String email;
+	private double consultation_Fee;
+	private String availability_Status;
+
+	public DoctorPOJO() {
+	}
+
+	public DoctorPOJO(int doctor_ID, String name, String specialization, String contact_Number, String email,
+			double consultation_Fee, String availability_Status) {
+
 		this.doctor_ID = doctor_ID;
-		this.doctor_name = doctor_name;
-		Specialization = specialization;
-		this.doctor_contact_no = doctor_contact_no;
-		this.doctor_email = doctor_email;
-		this.consulatancy_fee = consulatancy_fee;
-		this.availability_status = availability_status;
+		this.name = name;
+		this.specialization = specialization;
+		this.contact_Number = contact_Number;
+		this.email = email;
+		this.consultation_Fee = consultation_Fee;
+		this.availability_Status = availability_Status;
 	}
 
 	public int getDoctor_ID() {
@@ -29,52 +33,51 @@ public class DoctorPOJO {
 		this.doctor_ID = doctor_ID;
 	}
 
-	public String getDoctor_name() {
-		return doctor_name;
+	public String getName() {
+		return name;
 	}
 
-	public void setDoctor_name(String doctor_name) {
-		this.doctor_name = doctor_name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getSpecialization() {
-		return Specialization;
+		return specialization;
 	}
 
 	public void setSpecialization(String specialization) {
-		Specialization = specialization;
+		this.specialization = specialization;
 	}
 
-	public int getDoctor_contact_no() {
-		return doctor_contact_no;
+	public String getContact_Number() {
+		return contact_Number;
 	}
 
-	public void setDoctor_contact_no(int doctor_contact_no) {
-		this.doctor_contact_no = doctor_contact_no;
+	public void setContact_Number(String contact_Number) {
+		this.contact_Number = contact_Number;
 	}
 
-	public String getDoctor_email() {
-		return doctor_email;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setDoctor_email(String doctor_email) {
-		this.doctor_email = doctor_email;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public int getConsulatancy_fee() {
-		return consulatancy_fee;
+	public double getConsultation_Fee() {
+		return consultation_Fee;
 	}
 
-	public void setConsulatancy_fee(int consulatancy_fee) {
-		this.consulatancy_fee = consulatancy_fee;
+	public void setConsultation_Fee(double consultation_Fee) {
+		this.consultation_Fee = consultation_Fee;
 	}
 
-	public String getAvailability_status() {
-		return availability_status;
+	public String getAvailability_Status() {
+		return availability_Status;
 	}
 
-	public void setAvailability_status(String availability_status) {
-		this.availability_status = availability_status;
+	public void setAvailability_Status(String availability_Status) {
+		this.availability_Status = availability_Status;
 	}
-
 }
