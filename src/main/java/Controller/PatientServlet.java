@@ -10,39 +10,21 @@ import javax.servlet.http.*;
 import DAO.PatientDAO;
 import POJO.PatientPOJO;
 
-@WebServlet("/patient")
+@WebServlet("/Patient")
 public class PatientServlet extends HttpServlet {
 
-	private PatientDAO dao = new PatientDAO();
+	private PatientDAO daopatient = new PatientDAO();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 
-		System.out.println("Servlet Called");
-
-		String action = request.getParameter("action");
-
-		if (action == null) {
-			action = "list";
-		}
-
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			switch (action) {
 
-			case "delete":
-				int id = Integer.parseInt(request.getParameter("id"));
-				dao.deletePatient(id);
-				response.sendRedirect("patient?action=list");
-				break;
-
-			default:
-				List<PatientPOJO> patients = dao.getAllPatients();
-				System.out.println("Patients in servlet: " + patients.size());
-
-				request.setAttribute("patients", patients);
-				request.getRequestDispatcher("Patient.jsp").forward(request, response);
-				break;
-			}
+			List<PatientPOJO> patients;
+			patients = daopatient.getAllPatients();
+			System.out.println("Patients fetched: " + patients.size());
+			req.setAttribute("patients", patients);
+			req.getRequestDispatcher("Patient.jsp").forward(req, resp);
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,160 +1,146 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ page import="java.util.*, POJO.DoctorPOJO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<%@ page
+	import="java.util.*, java.text.SimpleDateFormat, POJO.DoctorPOJO"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Doctor Management System</title>
-
+<title>Doctor Management</title>
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-<style>
-:root {
-	--primary: #3b82f6;
-	--success: #10b981;
-	--warning: #f59e0b;
-	--danger: #ef4444;
-}
-
-body {
-	background-color: #f8fafc;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.card {
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	border: none;
-	border-radius: 12px;
-}
-
-.status-badge {
-	padding: 0.5rem 1rem;
-	border-radius: 25px;
-	font-size: 0.8rem;
-	font-weight: 600;
-}
-
-.status-active {
-	background: #d1fae5;
-	color: var(--success);
-}
-
-.status-inactive {
-	background: #fee2e2;
-	color: var(--danger);
-}
-
-.avatar {
-	width: 45px;
-	height: 45px;
-	border-radius: 50%;
-	background: linear-gradient(135deg, var(--primary), #60a5fa);
-	color: white;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-weight: 600;
-}
-
-.table th {
-	background: #f1f5f9;
-	font-weight: 600;
-	border: none;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-	<div class="container-fluid py-4">
-
-		<!-- Header -->
-		<div class="card mb-4">
-			<div
-				class="card-body d-flex justify-content-between align-items-center">
-				<div>
-					<h2 class="mb-1">
-						<i class="fas fa-user-md me-2 text-primary"></i>Doctor Management
-					</h2>
-					<p class="text-muted mb-0">Manage all registered doctors</p>
-				</div>
-
-				<a href="addDoctor.jsp" class="btn btn-primary btn-lg"> <i
-					class="fas fa-plus me-2"></i>Add New Doctor
-				</a>
-			</div>
+	<!-- Sidebar -->
+	<div class="sidebar" id="sidebar">
+		<div
+			class="sidebar-header d-flex justify-content-between align-items-center">
+			<h4 class="mb-0">Hospital Dashboard</h4>
+			<button class="btn btn-sm btn-outline-light d-md-none"
+				id="sidebarToggle">
+				<i class="bi bi-x"></i>
+			</button>
 		</div>
+		<div class="sidebar-menu">
+			<ul class="nav flex-column">
+				<li class="nav-item"><a class="nav-link " href=""> <i
+						class="bi bi-dashboard"></i> Dashboard
+				</a></li>
+				<li class="nav-item"><a class="nav-link " href="Patient.jsp">
+						<i class="bi bi-speedometer2"></i> Patient
+				</a></li>
+				<li class="nav-item"><a class="nav-link active"
+					href="Doctor.jsp"> <i class="bi bi-cart3"></i> Doctor
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="bi bi-exclamation-triangle"></i> Appointments
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="bi bi-person"></i> Rooms
+				</a></li>
+				<li class="nav-item"><a class="nav-link " href=""> <i
+						class="bi bi-robot"></i> Medical Inventory
+				</a></li>
+				<li class="nav-item"><a class="nav-link " href=""> <i
+						class="bi bi-chat-dots"></i> Chatbot
+				</a></li>
 
-		<!-- Doctors Table -->
-		<div class="card">
-			<div class="card-body p-0">
-				<div class="table-responsive">
-
-					<table class="table table-hover mb-0">
-
-						<thead class="table-light">
-							<tr>
-								<th><i class="fas fa-hashtag me-2"></i>Doctor ID</th>
-								<th><i class="fas fa-user-md me-2"></i>Doctor Details</th>
-								<th><i class="fas fa-stethoscope me-2"></i>Specialization</th>
-								<th><i class="fas fa-phone me-2"></i>Contact</th>
-								<th><i class="fas fa-envelope me-2"></i>Email</th>
-								<th><i class="fas fa-money-bill-wave me-2"></i>Fee</th>
-								<th><i class="fas fa-toggle-on me-2"></i>Status</th>
-								<th><i class="fas fa-cogs me-2"></i>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%
-							List<DoctorPOJO> doctorList = (List<DoctorPOJO>) request.getAttribute("doctorList");
-
-							if (doctorList != null && !doctorList.isEmpty()) {
-								for (DoctorPOJO doctor : doctorList) {
-							%>
-							<tr>
-								<td><%=doctor.getDoctor_ID()%></td>
-								<td><%=doctor.getName()%></td>
-								<td><%=doctor.getSpecialization()%></td>
-								<td><%=doctor.getContact_Number()%></td>
-								<td><%=doctor.getEmail()%></td>
-								<td><%=doctor.getConsultation_Fee()%></td>
-								<td><%=doctor.getAvailability_Status()%></td>
-
-								<!-- Optional Actions -->
-								<td><a
-									href="DoctorServlet?action=edit&id=<%=doctor.getDoctor_ID()%>"
-									class="btn btn-warning btn-sm">Edit</a> <a
-									href="DoctorServlet?action=delete&id=<%=doctor.getDoctor_ID()%>"
-									class="btn btn-danger btn-sm"
-									onclick="return confirm('Are you sure you want to delete this doctor?');">
-										Delete </a></td>
-							</tr>
-							<%
-							}
-							} else {
-							%>
-							<tr>
-								<td colspan="8" style="text-align: center;">No Doctors
-									Available</td>
-							</tr>
-							<%
-							}
-							%>
-						</tbody>
-					</table>
-
-				</div>
-			</div>
+			</ul>
 		</div>
+	</div>
+	<div class="main-content">
+		<!-- Navbar -->
+		<nav class="navbar navbar-expand-lg">
+			<div class="container-fluid text-center">
+				<a class="navbar-brand" href=""> Hospital Reception ERP </a>
+
+				<form action="UserServlet" method="post">
+					<input type="hidden" name="action" value="logout">
+					<button class="btn btn-light btn-sm">Logout</button>
+				</form>
+
+			</div>
+		</nav>
+
+		<div class="container py-4">
+			<h3 class="mb-4 text-center text-dark">Doctors</h3>
+			<!-- Orders Table -->
+			<div class="card p-3">
+				<table class="table table-striped table-bordered mb-0 text-center">
+					<thead class="table-dark">
+						<tr>
+							<th>Doctor ID</th>
+							<th>Doctor Name</th>
+							<th>Specialization</th>
+							<th>Contact No.</th>
+							<th>Email</th>
+							<th>Fee</th>
+							<th>Status</th>
+
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr>
+							<%
+							List<DoctorPOJO> doctors = (List<DoctorPOJO>) request.getAttribute("doctorList");
+
+							if (doctors != null && !doctors.isEmpty()) {
+								for (DoctorPOJO d : doctors) {
+							%>
+							<td><%=d.getDoctor_ID()%></td>
+							<td><%=d.getName()%></td>
+							<td><%=d.getSpecialization()%></td>
+							<td><%=d.getContact_Number()%></td>
+							<td><%=d.getEmail()%></td>
+							<td><%=d.getConsultation_Fee()%></td>
+							<td><%=d.getAvailability_Status()%></td>
+
+							<td><a
+								href="DoctorServlet?action=edit&doctor_id=<%=d.getDoctor_ID()%>"
+								class="btn btn-warning btn-sm">Edit</a> <a
+								href="DoctorServlet?action=delete&doctor_id=<%=d.getDoctor_ID()%>"
+								class="btn btn-danger btn-sm"
+								onclick="return confirm('Are you sure?')">Delete</a></td>
+						</tr>
+
+						<%
+						}
+						} else {
+						%>
+						<tr>
+							<td colspan="8">No Doctors Found</td>
+						</tr>
+						<%
+						}
+						%>
+					</tbody>
+				</table>
+			</div>
+
+
+		</div>
+		<footer class="text-center mt-5 pt-4 pb-3 "">
+			<!-- place footer here -->
+			&copy; 2026 Hospital Reception ERP System. All rights reserved.
+		</footer>
+		<script
+			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+			crossorigin="anonymous"></script>
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+			integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+			crossorigin="anonymous"></script>
 
 	</div>
-
 </body>
 </html>

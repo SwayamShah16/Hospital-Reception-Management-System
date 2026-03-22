@@ -10,40 +10,20 @@ import javax.servlet.http.*;
 import DAO.DoctorDAO;
 import POJO.DoctorPOJO;
 
-@WebServlet("/doctor")
+@WebServlet("/Doctor")
 public class DoctorServlet extends HttpServlet {
 
-	private DoctorDAO dao = new DoctorDAO();
+	private static final long serialVersionUID = 1L;
+	DoctorDAO daodoc = new DoctorDAO();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String action = request.getParameter("action");
+		List<DoctorPOJO> list = daodoc.getAllDoctors();
+		request.setAttribute("doctorList", list);
+		request.getRequestDispatcher("Doctor.jsp").forward(request, response);
 
-		if (action == null) {
-			action = "list";
-		}
-
-		try {
-
-			switch (action) {
-
-			case "delete":
-				int id = Integer.parseInt(request.getParameter("id"));
-				dao.deleteDoctor(id);
-				response.sendRedirect("doctor?action=list");
-				break;
-
-			default:
-				List<DoctorPOJO> list = dao.getAllDoctors();
-				request.setAttribute("doctorList", dao.getAllDoctors());
-				request.setAttribute("doctors", list);
-				request.getRequestDispatcher("Doctor.jsp").forward(request, response);
-				break;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
+
 }

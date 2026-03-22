@@ -18,21 +18,6 @@ public class PatientPOJO {
 	public PatientPOJO() {
 	}
 
-	public PatientPOJO(int patient_ID, String first_Name, String last_Name, String gender, Date dob,
-			String contact_Number, String address, String email, String blood_Group, Date registration_Date) {
-
-		this.patient_ID = patient_ID;
-		this.first_Name = first_Name;
-		this.last_Name = last_Name;
-		this.gender = gender;
-		this.dob = dob;
-		this.contact_Number = contact_Number;
-		this.address = address;
-		this.email = email;
-		this.blood_Group = blood_Group;
-		this.registration_Date = registration_Date;
-	}
-
 	// Getters & Setters
 	public int getPatient_ID() {
 		return patient_ID;

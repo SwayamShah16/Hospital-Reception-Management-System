@@ -51,15 +51,15 @@ public class UserServlet extends HttpServlet {
 
 			if ("ADMIN".equalsIgnoreCase(userRole)) {
 
-				response.sendRedirect(request.getContextPath() + "/adminDashboard.jsp");
+				response.sendRedirect(request.getContextPath() + "/Doctor.jsp");
 
 			} else if ("DOCTOR".equalsIgnoreCase(userRole)) {
 
-				response.sendRedirect(request.getContextPath() + "/doctorDashboard.jsp");
+				response.sendRedirect(request.getContextPath() + "/DoctorView.jsp");
 
 			} else if ("STAFF".equalsIgnoreCase(userRole)) {
 
-				response.sendRedirect(request.getContextPath() + "/staffDashboard.jsp");
+				response.sendRedirect(request.getContextPath() + "/DoctorView.jsp");
 
 			} else {
 

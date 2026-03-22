@@ -1,237 +1,148 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
 <%@ page
-	import="java.util.*, java.text.SimpleDateFormat, POJO.PatientPOJO, DAO.PatientDAO"%>
-<%@ page import="java.util.Date"%>
-
-
+	import="java.util.*, java.text.SimpleDateFormat, POJO.PatientPOJO"%>
+<%
+List<PatientPOJO> patients = (List<PatientPOJO>) request.getAttribute("patients");
+SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patient Management System</title>
-
+<title>Patient Management</title>
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="style.css">
 
-<style>
-:root {
-	--primary: #3b82f6;
-	--success: #10b981;
-	--warning: #f59e0b;
-	--danger: #ef4444;
-}
-
-body {
-	background-color: #f8fafc;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.card {
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	border: none;
-	border-radius: 12px;
-}
-
-.status-badge {
-	padding: 0.5rem 1rem;
-	border-radius: 25px;
-	font-size: 0.8rem;
-	font-weight: 600;
-}
-
-.status-active {
-	background: #d1fae5;
-	color: var(--success);
-}
-
-.status-recent {
-	background: #fef3c7;
-	color: var(--warning);
-}
-
-.avatar {
-	width: 45px;
-	height: 45px;
-	border-radius: 50%;
-	background: linear-gradient(135deg, var(--primary), #60a5fa);
-	color: white;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-weight: 600;
-}
-
-.table th {
-	background: #f1f5f9;
-	font-weight: 600;
-	border: none;
-}
-</style>
 </head>
-
 <body>
 
-	<div class="container-fluid py-4">
-
-		<!-- Header -->
-		<div class="card mb-4">
-			<div
-				class="card-body d-flex justify-content-between align-items-center">
-				<div>
-					<h2 class="mb-1">
-						<i class="fas fa-users me-2 text-primary"></i>Patient Management
-					</h2>
-					<p class="text-muted mb-0">Manage all registered patients</p>
-				</div>
-
-				<a href="addPatient.jsp" class="btn btn-primary btn-lg"> <i
-					class="fas fa-plus me-2"></i>Add New Patient
-				</a>
-			</div>
+	<!-- Sidebar -->
+	<div class="sidebar" id="sidebar">
+		<div
+			class="sidebar-header d-flex justify-content-between align-items-center">
+			<h4 class="mb-0">Hospital Dashboard</h4>
+			<button class="btn btn-sm btn-outline-light d-md-none"
+				id="sidebarToggle">
+				<i class="bi bi-x"></i>
+			</button>
 		</div>
+		<div class="sidebar-menu">
+			<ul class="nav flex-column">
+				<li class="nav-item"><a class="nav-link " href=""> <i
+						class="bi bi-dashboard"></i> Dashboard
+				</a></li>
+				<li class="nav-item"><a class="nav-link active"
+					href="Patient.jsp"> <i class="bi bi-speedometer2"></i> Patient
+				</a></li>
+				<li class="nav-item"><a class="nav-link " href="Doctor.jsp">
+						<i class="bi bi-cart3"></i> Doctor
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="bi bi-exclamation-triangle"></i> Appointments
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="bi bi-person"></i> Rooms
+				</a></li>
+				<li class="nav-item"><a class="nav-link " href=""> <i
+						class="bi bi-robot"></i> Medical Inventory
+				</a></li>
+				<li class="nav-item"><a class="nav-link " href=""> <i
+						class="bi bi-chat-dots"></i> Chatbot
+				</a></li>
 
-		<!-- Filters -->
-		<div class="card mb-4">
-			<div class="card-body">
+			</ul>
+		</div>
+	</div>
+	<div class="main-content">
+		<!-- Navbar -->
+		<nav class="navbar navbar-expand-lg">
+			<div class="container-fluid text-center">
+				<a class="navbar-brand" href=""> Hospital Reception ERP </a>
 
-				<form method="GET" action="patient">
-
-					<div class="row g-3 align-items-end">
-
-						<div class="col-md-3">
-							<label class="form-label fw-semibold">Search Patient</label>
-							<div class="input-group">
-								<span class="input-group-text"><i class="fas fa-search"></i></span>
-								<input type="text" class="form-control" name="search"
-									value="<%=request.getParameter("search") != null ? request.getParameter("search") : ""%>"
-									placeholder="Name, ID, Phone...">
-							</div>
-						</div>
-
-						<div class="col-md-2">
-							<label class="form-label fw-semibold">Gender</label> <select
-								class="form-select" name="gender">
-								<option value="">All</option>
-								<option value="Male"
-									<%="Male".equals(request.getParameter("gender")) ? "selected" : ""%>>Male</option>
-								<option value="Female"
-									<%="Female".equals(request.getParameter("gender")) ? "selected" : ""%>>Female</option>
-							</select>
-						</div>
-
-						<div class="col-md-2">
-							<label class="form-label fw-semibold">Blood Group</label> <select
-								class="form-select" name="bloodGroup">
-								<option value="">All</option>
-								<option value="A+">A+</option>
-								<option value="B+">B+</option>
-								<option value="O+">O+</option>
-							</select>
-						</div>
-
-						<div class="col-md-2">
-							<label class="form-label fw-semibold">From Date</label> <input
-								type="date" class="form-control" name="fromDate">
-						</div>
-
-						<div class="col-md-3">
-							<button type="submit" class="btn btn-primary w-100">
-								<i class="fas fa-filter me-2"></i>Filter Patients
-							</button>
-						</div>
-
-					</div>
+				<form action="UserServlet" method="post">
+					<input type="hidden" name="action" value="logout">
+					<button class="btn btn-light btn-sm">Logout</button>
 				</form>
 
 			</div>
-		</div>
+		</nav>
 
-		<!-- Table -->
-		<div class="card">
-			<div class="card-body p-0">
-				<div class="table-responsive">
 
-					<table class="table table-hover mb-0">
+		<div class="container py-4">
+			<h3 class="mb-4 text-center text-dark">Patients</h3>
 
-						<thead class="table-light">
-							<tr>
-								<th>Patient ID</th>
-								<th>Patient Details</th>
-								<th>DOB</th>
-								<th>Contact</th>
-								<th>Address</th>
-								<th>Blood Group</th>
-								<th>Reg Date</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
 
-							<%
-							List<PatientPOJO> patients = (List<PatientPOJO>) request.getAttribute("patients");
+			<!-- Orders Table -->
+			<div class="card p-3">
+				<table class="table table-striped table-bordered mb-0 text-center">
+					<thead class="table-dark">
+						<tr>
+							<th>Patient ID</th>
+							<th>Patient Name</th>
+							<th>Gender</th>
+							<th>Date of Birth</th>
+							<th>Contact No.</th>
+							<th>Blood Group</th>
 
-							if (patients != null && patients.size() > 0) {
+						</tr>
+					</thead>
+					<tbody>
 
-								SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+						<%
+						if (patients != null && !patients.isEmpty()) {
+							for (PatientPOJO p : patients) {
 
-								for (PatientPOJO p : patients) {
+								String dob = (p.getDob() != null) ? sdf.format(p.getDob()) : "N/A";
+								String name = p.getFirst_Name() + " " + p.getLast_Name();
+						%>
 
-									String name = p.getFirst_Name() + " " + p.getLast_Name();
-									String dob = (p.getDob() != null) ? sdf.format(p.getDob()) : "N/A";
-							%>
+						<tr>
+							<td><%=p.getPatient_ID()%></td>
+							<td><%=name%></td>
+							<td><%=p.getGender()%></td>
+							<td><%=dob%></td>
+							<td><%=p.getContact_Number()%></td>
+							<td><%=p.getBlood_Group()%></td>
+							<td><a
+								href="patient?action=delete&id=<%=p.getPatient_ID()%>"
+								class="btn btn-danger btn-sm">Delete</a></td>
+						</tr>
 
-							<tr>
-								<td><%=p.getPatient_ID()%></td>
-								<td><%=name%></td>
-								<td><%=p.getGender()%></td>
-								<td><%=dob%></td>
-								<td><%=p.getContact_Number()%></td>
-								<td><%=p.getBlood_Group()%></td>
-								<td><a
-									href="patient?action=delete&id=<%=p.getPatient_ID()%>">Delete</a>
-								</td>
-							</tr>
-
-							<%
-							}
-							} else {
-							%>
-
-							<tr>
-								<td colspan="7">No Patients Found</td>
-							</tr>
-
-							<%
-							}
-							%>
-
-						</tbody>
-
-					</table>
-
-				</div>
+						<%
+						}
+						} else {
+						%>
+						<tr>
+							<td colspan="7">No Patients found</td>
+						</tr>
+						<%
+						}
+						%>
+					</tbody>
+				</table>
 			</div>
+
+
 		</div>
+		<footer class="text-center mt-5 pt-4 pb-3 "">
+			<!-- place footer here -->
+			&copy; 2026 Hospital Reception ERP System. All rights reserved.
+		</footer>
+		<script
+			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+			crossorigin="anonymous"></script>
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+			integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+			crossorigin="anonymous"></script>
 
 	</div>
-
-	<%!private long calculateAge(Date birthDate) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(birthDate);
-
-		Calendar today = Calendar.getInstance();
-		int age = today.get(Calendar.YEAR) - cal.get(Calendar.YEAR);
-
-		if (today.get(Calendar.DAY_OF_YEAR) < cal.get(Calendar.DAY_OF_YEAR)) {
-			age--;
-		}
-		return age;
-	}%>
-
 </body>
 </html>
