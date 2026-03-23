@@ -12,6 +12,15 @@ SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 <head>
 <title>Patient Management</title>
 <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+	rel="stylesheet">
+<link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <link rel="stylesheet"
@@ -25,7 +34,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	<div class="sidebar" id="sidebar">
 		<div
 			class="sidebar-header d-flex justify-content-between align-items-center">
-			<h4 class="mb-0">Hospital Dashboard</h4>
+			<h4 class="mb-0">Patient's Information</h4>
 			<button class="btn btn-sm btn-outline-light d-md-none"
 				id="sidebarToggle">
 				<i class="bi bi-x"></i>
@@ -33,28 +42,30 @@ SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		</div>
 		<div class="sidebar-menu">
 			<ul class="nav flex-column">
-				<li class="nav-item"><a class="nav-link " href=""> <i
-						class="bi bi-dashboard"></i> Dashboard
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="fas fa-tachometer-alt"></i> Dashboard
 				</a></li>
 				<li class="nav-item"><a class="nav-link active"
-					href="Patient.jsp"> <i class="bi bi-speedometer2"></i> Patient
+					href="Patient.jsp"> <i class="fas fa-user-injured"></i> Patient
 				</a></li>
-				<li class="nav-item"><a class="nav-link " href="Doctor.jsp">
-						<i class="bi bi-cart3"></i> Doctor
-				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
-						class="bi bi-exclamation-triangle"></i> Appointments
+				<li class="nav-item"><a class="nav-link" href="Doctor.jsp">
+						<i class="fas fa-user-md"></i> Doctor
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href=""> <i
-						class="bi bi-person"></i> Rooms
+						class="fas fa-calendar-check"></i> Appointments
 				</a></li>
-				<li class="nav-item"><a class="nav-link " href=""> <i
-						class="bi bi-robot"></i> Medical Inventory
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="fas fa-bed"></i> Rooms
 				</a></li>
-				<li class="nav-item"><a class="nav-link " href=""> <i
-						class="bi bi-chat-dots"></i> Chatbot
+				<li class="nav-item"><a class="nav-link" href="Medicine.jsp">
+						<i class="fas fa-boxes"></i> Medical Inventory
 				</a></li>
-
+				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
+						<i class="fas fa-ambulance"></i> Ambulance Service
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="Chatbot.jsp">
+						<i class="fas fa-robot"></i> Chatbot
+				</a></li>
 			</ul>
 		</div>
 	</div>

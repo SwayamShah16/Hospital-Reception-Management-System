@@ -262,22 +262,31 @@ to {
 		</div>
 		<div class="sidebar-menu">
 			<ul class="nav flex-column">
-				<li class="nav-item"><a class="nav-link active" href="#"><i
-						class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-				<li class="nav-item"><a class="nav-link" href="Patient.jsp"><i
-						class="fas fa-ambulance"></i> Patients</a></li>
-				<li class="nav-item"><a class="nav-link" href="Doctor.jsp"><i
-						class="fas fa-user-md"></i> Doctors</a></li>
-				<li class="nav-item"><a class="nav-link" href=""><i
-						class="fas fa-phone"></i> Appointments</a></li>
-				<li class="nav-item"><a class="nav-link" href=""><i
-						class="fas fa-map-marker-alt"></i> Rooms</a></li>
-				<li class="nav-item"><a class="nav-link" href="Medicine.jsp"><i
-						class="fas fa-clipboard-list"></i> Medical Inventory</a></li>
-				<li class="nav-item"><a class="nav-link" href="#"><i
-						class="fas fa-cog"></i> Ambulance Service</a></li>
-				<li class="nav-item"><a class="nav-link" href=""><i
-						class="fas fa-cog"></i>Chatbot</a></li>
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="fas fa-tachometer-alt"></i> Dashboard
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="Patient.jsp">
+						<i class="fas fa-user-injured"></i> Patient
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="Doctor.jsp">
+						<i class="fas fa-user-md"></i> Doctor
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="fas fa-calendar-check"></i> Appointments
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="fas fa-bed"></i> Rooms
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="Medicine.jsp"> <i class="fas fa-boxes"></i> Medical
+						Inventory
+				</a></li>
+				<li class="nav-item"><a class="nav-link active" href="Ambulance.jsp">
+						<i class="fas fa-ambulance"></i> Ambulance Service
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="Chatbot.jsp">
+						<i class="fas fa-robot"></i> Chatbot
+				</a></li>
 			</ul>
 		</div>
 	</div>

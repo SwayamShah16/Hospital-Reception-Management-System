@@ -9,6 +9,15 @@
 <head>
 <title>Doctor Management</title>
 <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+	rel="stylesheet">
+<link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <link rel="stylesheet"
@@ -22,7 +31,7 @@
 	<div class="sidebar" id="sidebar">
 		<div
 			class="sidebar-header d-flex justify-content-between align-items-center">
-			<h4 class="mb-0">Hospital Dashboard</h4>
+			<h4 class="mb-0">Doctor's Information</h4>
 			<button class="btn btn-sm btn-outline-light d-md-none"
 				id="sidebarToggle">
 				<i class="bi bi-x"></i>
@@ -30,28 +39,30 @@
 		</div>
 		<div class="sidebar-menu">
 			<ul class="nav flex-column">
-				<li class="nav-item"><a class="nav-link " href=""> <i
-						class="bi bi-dashboard"></i> Dashboard
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="fas fa-tachometer-alt"></i> Dashboard
 				</a></li>
-				<li class="nav-item"><a class="nav-link " href="Patient.jsp">
-						<i class="bi bi-speedometer2"></i> Patient
+				<li class="nav-item"><a class="nav-link" href="Patient.jsp">
+						<i class="fas fa-user-injured"></i> Patient
 				</a></li>
 				<li class="nav-item"><a class="nav-link active"
-					href="Doctor.jsp"> <i class="bi bi-cart3"></i> Doctor
+					href="Doctor.jsp"> <i class="fas fa-user-md"></i> Doctor
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href=""> <i
-						class="bi bi-exclamation-triangle"></i> Appointments
+						class="fas fa-calendar-check"></i> Appointments
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href=""> <i
-						class="bi bi-person"></i> Rooms
+						class="fas fa-bed"></i> Rooms
 				</a></li>
-				<li class="nav-item"><a class="nav-link " href=""> <i
-						class="bi bi-robot"></i> Medical Inventory
+				<li class="nav-item"><a class="nav-link" href="Medicine.jsp">
+						<i class="fas fa-boxes"></i> Medical Inventory
 				</a></li>
-				<li class="nav-item"><a class="nav-link " href=""> <i
-						class="bi bi-chat-dots"></i> Chatbot
+				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
+						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-
+				<li class="nav-item"><a class="nav-link" href="Chatbot.jsp">
+						<i class="fas fa-robot"></i> Chatbot
+				</a></li>
 			</ul>
 		</div>
 	</div>
@@ -68,7 +79,24 @@
 
 			</div>
 		</nav>
+		<form action="Doctor" method="post">
+			<input type="hidden" name="action" value="add"> Name: <input
+				type="text" name="name"> Specialization: <input type="text"
+				name="specialization"> Contact: <input type="text"
+				name="contact"> Email: <input type="text" name="email">
+			Fee: <input type="text" name="fee"> Status: <input
+				type="text" name="status">
 
+			<button type="submit">Add Doctor</button>
+		</form>
+		<form action="Doctor" method="get">
+			<input type="hidden" name="action" value="filter">
+
+			Specialization: <input type="text" name="specialization">
+			Status: <input type="text" name="availability">
+
+			<button type="submit">Filter</button>
+		</form>
 		<div class="container py-4">
 			<h3 class="mb-4 text-center text-dark">Doctors</h3>
 			<!-- Orders Table -->
@@ -87,14 +115,13 @@
 						</tr>
 					</thead>
 					<tbody>
+						<%
+						List<DoctorPOJO> doctors = (List<DoctorPOJO>) request.getAttribute("doctorList");
 
+						if (doctors != null && !doctors.isEmpty()) {
+							for (DoctorPOJO d : doctors) {
+						%>
 						<tr>
-							<%
-							List<DoctorPOJO> doctors = (List<DoctorPOJO>) request.getAttribute("doctorList");
-
-							if (doctors != null && !doctors.isEmpty()) {
-								for (DoctorPOJO d : doctors) {
-							%>
 							<td><%=d.getDoctor_ID()%></td>
 							<td><%=d.getName()%></td>
 							<td><%=d.getSpecialization()%></td>
@@ -103,14 +130,9 @@
 							<td><%=d.getConsultation_Fee()%></td>
 							<td><%=d.getAvailability_Status()%></td>
 
-							<td><a
-								href="DoctorServlet?action=edit&doctor_id=<%=d.getDoctor_ID()%>"
-								class="btn btn-warning btn-sm">Edit</a> <a
-								href="DoctorServlet?action=delete&doctor_id=<%=d.getDoctor_ID()%>"
-								class="btn btn-danger btn-sm"
-								onclick="return confirm('Are you sure?')">Delete</a></td>
+							<td><a href="Doctor?action=delete&id=<%=d.getDoctor_ID()%>">Delete</a>
+							</td>
 						</tr>
-
 						<%
 						}
 						} else {
@@ -124,7 +146,6 @@
 					</tbody>
 				</table>
 			</div>
-
 
 		</div>
 		<footer class="text-center mt-5 pt-4 pb-3 "">

@@ -8,24 +8,19 @@ import POJO.DoctorPOJO;
 
 public class DoctorDAO {
 
-	private Connection con;
-
-	public DoctorDAO() {
-		con = GetConnection.getConnection();
-	}
-
 	// ✅ ADD
 	public boolean addDoctor(DoctorPOJO d) {
-		try {
+		try (Connection con = GetConnection.getConnection()) {
+
 			String sql = "INSERT INTO doctor (name, specialization, contact_number, email, consultation_fee, availability_status) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
-
-			ps.setString(1, d.getName());
-			ps.setString(2, d.getSpecialization());
-			ps.setString(3, d.getContact_Number());
-			ps.setString(4, d.getEmail());
-			ps.setDouble(5, d.getConsultation_Fee());
-			ps.setString(6, d.getAvailability_Status());
+			ps.setInt(1, d.getDoctor_ID());
+			ps.setString(2, d.getName());
+			ps.setString(3, d.getSpecialization());
+			ps.setDouble(4, d.getContact_Number());
+			ps.setString(5, d.getEmail());
+			ps.setDouble(6, d.getConsultation_Fee());
+			ps.setString(7, d.getAvailability_Status());
 
 			return ps.executeUpdate() > 0;
 
@@ -37,55 +32,52 @@ public class DoctorDAO {
 
 	// ✅ GET ALL
 	public List<DoctorPOJO> getAllDoctors() {
-		List<DoctorPOJO> list = new ArrayList<>();
+		List<DoctorPOJO> doctors = new ArrayList<>();
 
-		try {
+		try (Connection con = GetConnection.getConnection()) {
+
 			String sql = "SELECT * FROM doctor";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				list.add(new DoctorPOJO(rs.getInt("doctor_id"), rs.getString("name"), rs.getString("specialization"),
-						rs.getString("contact_number"), rs.getString("email"), rs.getDouble("consultation_fee"),
-						rs.getString("availability_status")));
+				DoctorPOJO d = new DoctorPOJO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4),
+						rs.getString(5), rs.getDouble(6), rs.getString(7));
+				doctors.add(d);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return list;
+		return doctors;
 	}
 
-	// ✅ GET BY ID
-	public DoctorPOJO getDoctorById(int id) {
-		try {
-			String sql = "SELECT * FROM doctor WHERE doctor_id=?";
+	// ✅ DELETE
+	public boolean deleteDoctor(int id) {
+		try (Connection con = GetConnection.getConnection()) {
+
+			String sql = "DELETE FROM doctor WHERE Doctor_ID=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, id);
 
-			ResultSet rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return new DoctorPOJO(rs.getInt("doctor_id"), rs.getString("name"), rs.getString("specialization"),
-						rs.getString("contact_number"), rs.getString("email"), rs.getDouble("consultation_fee"),
-						rs.getString("availability_status"));
-			}
+			return ps.executeUpdate() > 0;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 
 	// ✅ UPDATE
 	public boolean updateDoctor(DoctorPOJO d) {
-		try {
-			String sql = "UPDATE doctor SET name=?, specialization=?, contact_number=?, email=?, consultation_fee=?, availability_status=? WHERE doctor_id=?";
+		try (Connection con = GetConnection.getConnection()) {
+
+			String sql = "UPDATE doctor SET name=?, specialization=?, contact_number=?, email=?, consultation_fee=?, availability_status=? WHERE Doctor_ID=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 
 			ps.setString(1, d.getName());
 			ps.setString(2, d.getSpecialization());
-			ps.setString(3, d.getContact_Number());
+			ps.setDouble(3, d.getContact_Number());
 			ps.setString(4, d.getEmail());
 			ps.setDouble(5, d.getConsultation_Fee());
 			ps.setString(6, d.getAvailability_Status());
@@ -99,33 +91,19 @@ public class DoctorDAO {
 		return false;
 	}
 
-	// ✅ DELETE
-	public boolean deleteDoctor(int id) {
-		try {
-			String sql = "DELETE FROM doctor WHERE doctor_id=?";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, id);
-
-			return ps.executeUpdate() > 0;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 	// ✅ FILTER
 	public List<DoctorPOJO> filterDoctors(String specialization, String availability) {
 		List<DoctorPOJO> list = new ArrayList<>();
 
-		try {
+		try (Connection con = GetConnection.getConnection()) {
+
 			String sql = "SELECT * FROM doctor WHERE 1=1";
 
 			if (specialization != null && !specialization.isEmpty()) {
-				sql += " AND specialization=?";
+				sql += " AND Specialization=?";
 			}
 			if (availability != null && !availability.isEmpty()) {
-				sql += " AND availability_status=?";
+				sql += " AND Availability_Status=?";
 			}
 
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -141,9 +119,10 @@ public class DoctorDAO {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				list.add(new DoctorPOJO(rs.getInt("doctor_id"), rs.getString("name"), rs.getString("specialization"),
-						rs.getString("contact_number"), rs.getString("email"), rs.getDouble("consultation_fee"),
-						rs.getString("availability_status")));
+				DoctorPOJO d = new DoctorPOJO(rs.getInt("Doctor_ID"), rs.getString("Name"),
+						rs.getString("Specialization"), rs.getDouble("Contact_Number"), rs.getString("Email"),
+						rs.getDouble("Consultation_Fee"), rs.getString("Availability_Status"));
+				list.add(d);
 			}
 
 		} catch (Exception e) {

@@ -50,9 +50,12 @@ body {
 	position: fixed;
 	left: 0;
 	top: 0;
-	background: linear-gradient(135deg, #0f2027, #2c5364);
+	background: #f2d305; background : linear-gradient( 90deg, rgba( 242,
+	211, 5, 1) 0%, rgba( 236, 240, 14, 1) 38%, rgba( 255, 235, 56, 1) 76%);
 	z-index: 1000;
 	transition: transform 0.3s ease;
+	background: linear-gradient(90deg, rgba(242, 211, 5, 1) 0%,
+		rgba(236, 240, 14, 1) 38%, rgba(255, 235, 56, 1) 76%);
 }
 
 .main-content {
@@ -235,7 +238,7 @@ body {
 }
 
 .sidebar-menu .nav-link {
-	color: rgba(255, 255, 255, 0.8);
+	color: rgba(0, 0, 0, 0.8);
 	padding: 0.75rem 1.5rem;
 	margin-bottom: 0.5rem;
 	border-left: 3px solid transparent;
@@ -275,20 +278,20 @@ to {
 	<!-- Sidebar (YOUR EXACT CONTENT) -->
 	<div class="sidebar" id="sidebar">
 		<div
-			class="sidebar-header d-flex justify-content-between align-items-center">
+			class="sidebar-header d-flex justify-content-between align-items-center text-dark">
 			<h4 class="mb-0">Inventory Dashboard</h4>
 			<button class="btn btn-sm btn-outline-light d-md-none"
 				id="sidebarToggle">
 				<i class="fas fa-times"></i>
 			</button>
 		</div>
-		<div class="sidebar-menu">
-			<ul class="nav flex-column">
+		<div class="sidebar-menu text-dark">
+			<ul class="nav flex-column text-dark">
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-tachometer-alt"></i> Dashboard
 				</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="Patient.jsp"> <i class="fas fa-user-injured"></i> Patient
+				<li class="nav-item"><a class="nav-link" href="Patient.jsp">
+						<i class="fas fa-user-injured"></i> Patient
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="Doctor.jsp">
 						<i class="fas fa-user-md"></i> Doctor
@@ -299,14 +302,15 @@ to {
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-bed"></i> Rooms
 				</a></li>
-				<li class="nav-item"><a class="nav-link active" href="Medicine.jsp"> <i
-						class="fas fa-boxes"></i> Medical Inventory
+				<li class="nav-item"><a class="nav-link active"
+					href="Medicine.jsp"> <i class="fas fa-boxes"></i> Medical
+						Inventory
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp"> <i
-						class="fas fa-boxes"></i> Ambulance Service
+				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
+						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
-						class="fas fa-robot"></i> Chatbot
+				<li class="nav-item"><a class="nav-link" href="Chatbot.jsp">
+						<i class="fas fa-robot"></i> Chatbot
 				</a></li>
 			</ul>
 		</div>

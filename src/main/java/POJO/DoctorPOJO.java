@@ -5,7 +5,7 @@ public class DoctorPOJO {
 	private int doctor_ID;
 	private String name;
 	private String specialization;
-	private String contact_Number;
+	private double contact_Number;
 	private String email;
 	private double consultation_Fee;
 	private String availability_Status;
@@ -13,7 +13,7 @@ public class DoctorPOJO {
 	public DoctorPOJO() {
 	}
 
-	public DoctorPOJO(int doctor_ID, String name, String specialization, String contact_Number, String email,
+	public DoctorPOJO(int doctor_ID, String name, String specialization, double contact_Number, String email,
 			double consultation_Fee, String availability_Status) {
 
 		this.doctor_ID = doctor_ID;
@@ -49,11 +49,11 @@ public class DoctorPOJO {
 		this.specialization = specialization;
 	}
 
-	public String getContact_Number() {
+	public double getContact_Number() {
 		return contact_Number;
 	}
 
-	public void setContact_Number(String contact_Number) {
+	public void setContact_Number(double contact_Number) {
 		this.contact_Number = contact_Number;
 	}
 
