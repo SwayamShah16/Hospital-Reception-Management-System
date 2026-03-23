@@ -15,7 +15,7 @@ public class UserDAO {
 
 		try {
 
-			Connection con = GetConnection.GetConnection();
+			Connection con = GetConnection.getConnection();
 
 			if (con == null) {
 				System.out.println("Database connection failed");
@@ -59,7 +59,7 @@ public class UserDAO {
 
 		try {
 
-			Connection con = GetConnection.GetConnection();
+			Connection con = GetConnection.getConnection();
 
 			String query = "INSERT INTO users(username,password,role) VALUES(?,?,?)";
 

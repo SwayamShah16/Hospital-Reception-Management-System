@@ -1,0 +1,176 @@
+:root {
+	--primary-color: #4e73df;
+	--sidebar-width: 250px;
+}
+
+body {
+	font-family: cursive;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	min-height: 100vh;
+	padding-top: 80px;
+	font-family: cursive;
+}
+
+.navbar {
+	background: linear-gradient(90deg, #0f2027 0%, #2c5364 100%);
+	backdrop-filter: blur(6px);
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1030;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.navbar-brand img {
+	height: 60px;
+}
+
+.navbar-brand img:hover {
+	transform: scale(1.1);
+}
+
+.navbar-brand, .nav-link {
+	color: #fff !important;
+	font-weight: 500;
+}
+
+.main-content .navbar {
+	margin-left: 0; /* already handled by .main-content */
+}
+
+.sidebar {
+	width: var(--sidebar-width);
+	height: 100vh;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: linear-gradient(135deg, #0f2027, #2c5364);
+	background-size: cover;
+	background-position: center;
+	min-height: 100vh;
+	color: white;
+	transition: all 0.3s;
+	z-index: 1000;
+}
+
+.sidebar-header {
+	padding: 1.5rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu {
+	padding: 1rem 0;
+}
+
+.sidebar-menu .nav-link {
+	color: rgba(255, 255, 255, 0.8);
+	padding: 0.75rem 1.5rem;
+	margin-bottom: 0.5rem;
+	border-left: 3px solid transparent;
+}
+
+.sidebar-menu .nav-link:hover, .sidebar-menu .nav-link.active {
+	color: white;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-left: 3px solid white;
+}
+
+.sidebar-menu .nav-link i {
+	margin-right: 10px;
+	font-size: 1.1rem;
+}
+
+.main-content {
+	margin-left: var(--sidebar-width);
+	min-height: 100vh;
+	transition: all 0.3s;
+	background-color: #f8f9fc;
+}
+
+@media ( max-width : 768px) {
+	.sidebar {
+		margin-left: -250px;
+	}
+	.sidebar.active {
+		margin-left: 0;
+	}
+	.main-content {
+		margin-left: 0;
+	}
+	.main-content.active {
+		margin-left: 250px;
+	}
+}
+
+h3 {
+	text-color: linear-gradient(135deg, #0f2027, #2c5364);
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.card {
+	border-radius: 15px;
+	background: rgba(255, 255, 255, 0.95);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+table {
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+tr:nth-child(odd) {
+	background-color: grey;
+}
+
+tr:nth-last-child(even) {
+	background-color: white;
+}
+
+thead th {
+	background-color: #212529;
+	color: white;
+}
+
+.form-label {
+	font-weight: 600;
+}
+
+.btn-success {
+	font-weight: 500;
+}
+
+.btn-success:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-warning {
+	font-weight: 500;
+}
+
+.btn-warning:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary {
+	font-weight: 500;
+}
+
+.btn-secondary:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}

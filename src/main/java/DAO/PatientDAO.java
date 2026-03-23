@@ -1,135 +1,121 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 import Connection.GetConnection;
 import POJO.PatientPOJO;
 
 public class PatientDAO {
 
-	private static final String INSERT_SQL = "INSERT INTO patient (patient_ID, patient_first_name, patient_last_name, patient_gender, patient_DOB, patient_contact_no, patient_address, patient_email, BloodGroup, Registration_Date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-	private static final String SELECT_BY_ID_SQL = "SELECT patient_ID, patient_first_name, patient_last_name, patient_gender, patient_DOB, patient_contact_no, patient_address, patient_email, BloodGroup, Registration_Date FROM patient WHERE patient_ID = ?";
-
-	private static final String SELECT_ALL_SQL = "SELECT patient_ID, patient_first_name, patient_last_name, patient_gender, patient_DOB, patient_contact_no, patient_address, patient_email, BloodGroup, Registration_Date FROM patient";
-
-	private static final String UPDATE_SQL = "UPDATE patient SET patient_first_name = ?, patient_last_name = ?, patient_gender = ?, patient_DOB = ?, patient_contact_no = ?, patient_address = ?, patient_email = ?, BloodGroup = ?, Registration_Date = ? WHERE patient_ID = ?";
-
-	private static final String DELETE_SQL = "DELETE FROM patient WHERE patient_ID = ?";
-
 	private Connection getConnection() {
-		return new GetConnection().GetConnection();
+		return GetConnection.getConnection();
 	}
 
-	public boolean createPatient(PatientPOJO patient) {
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL)) {
-
-			preparedStatement.setInt(1, patient.getPatient_ID());
-			preparedStatement.setString(2, patient.getPatient_first_name());
-			preparedStatement.setString(3, patient.getPatient_last_name());
-			preparedStatement.setString(4, patient.getPatient_gender());
-			preparedStatement.setInt(5, patient.getPatient_DOB());
-			preparedStatement.setInt(6, patient.getPatient_contact_no());
-			preparedStatement.setString(7, patient.getPatient_address());
-			preparedStatement.setString(8, patient.getPatient_email());
-			preparedStatement.setString(9, patient.getBloodGroup());
-			preparedStatement.setInt(10, patient.getRegistration_Date());
-
-			int rows = preparedStatement.executeUpdate();
-			return rows > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public PatientPOJO getPatientById(int patientId) {
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID_SQL)) {
-
-			preparedStatement.setInt(1, patientId);
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return mapRowToPatient(resultSet);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
+	// 🔹 Get All Patients
 	public List<PatientPOJO> getAllPatients() {
-		List<PatientPOJO> patients = new ArrayList<>();
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_SQL);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			while (resultSet.next()) {
-				patients.add(mapRowToPatient(resultSet));
+		List<PatientPOJO> list = new ArrayList<>();
+
+		try (Connection con = GetConnection.getConnection();
+				PreparedStatement ps = con.prepareStatement("SELECT * FROM patient");
+				ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				PatientPOJO p = new PatientPOJO();
+
+				p.setPatient_ID(rs.getInt("patient_ID"));
+				p.setFirst_Name(rs.getString("first_Name"));
+				p.setLast_Name(rs.getString("last_Name"));
+				p.setGender(rs.getString("gender"));
+				p.setDob(rs.getDate("dob"));
+				p.setContact_Number(rs.getString("contact_Number"));
+				p.setAddress(rs.getString("address"));
+				p.setEmail(rs.getString("email"));
+				p.setBlood_Group(rs.getString("blood_Group"));
+				p.setRegistration_Date(rs.getDate("registration_Date"));
+
+				list.add(p);
 			}
-		} catch (SQLException e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return patients;
+
+		return list;
 	}
 
-	public boolean updatePatient(PatientPOJO patient) {
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
+	// 🔹 Filter Patients
+	public List<PatientPOJO> getFilteredPatients(String name, String gender, String bloodGroup) {
 
-			preparedStatement.setString(1, patient.getPatient_first_name());
-			preparedStatement.setString(2, patient.getPatient_last_name());
-			preparedStatement.setString(3, patient.getPatient_gender());
-			preparedStatement.setInt(4, patient.getPatient_DOB());
-			preparedStatement.setInt(5, patient.getPatient_contact_no());
-			preparedStatement.setString(6, patient.getPatient_address());
-			preparedStatement.setString(7, patient.getPatient_email());
-			preparedStatement.setString(8, patient.getBloodGroup());
-			preparedStatement.setInt(9, patient.getRegistration_Date());
-			preparedStatement.setInt(10, patient.getPatient_ID());
+		List<PatientPOJO> list = new ArrayList<>();
+		String query = "SELECT * FROM patient WHERE 1=1";
 
-			int rows = preparedStatement.executeUpdate();
-			return rows > 0;
-		} catch (SQLException e) {
+		if (name != null && !name.trim().isEmpty()) {
+			query += " AND (first_Name LIKE ? OR last_Name LIKE ?)";
+		}
+		if (gender != null && !gender.trim().isEmpty()) {
+			query += " AND gender = ?";
+		}
+		if (bloodGroup != null && !bloodGroup.trim().isEmpty()) {
+			query += " AND blood_Group = ?";
+		}
+
+		try (Connection con = GetConnection.getConnection(); 
+				PreparedStatement ps = con.prepareStatement(query)) {
+
+			int index = 1;
+
+			if (name != null && !name.trim().isEmpty()) {
+				ps.setString(index++, "%" + name + "%");
+				ps.setString(index++, "%" + name + "%");
+			}
+			if (gender != null && !gender.trim().isEmpty()) {
+				ps.setString(index++, gender);
+			}
+			if (bloodGroup != null && !bloodGroup.trim().isEmpty()) {
+				ps.setString(index++, bloodGroup);
+			}
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				PatientPOJO p = new PatientPOJO();
+
+				p.setPatient_ID(rs.getInt("patient_ID"));
+				p.setFirst_Name(rs.getString("first_Name"));
+				p.setLast_Name(rs.getString("last_Name"));
+				p.setGender(rs.getString("gender"));
+				p.setDob(rs.getDate("dob"));
+				p.setContact_Number(rs.getString("contact_Number"));
+				p.setAddress(rs.getString("address"));
+				p.setEmail(rs.getString("email"));
+				p.setBlood_Group(rs.getString("blood_Group"));
+				p.setRegistration_Date(rs.getDate("registration_Date"));
+
+				list.add(p);
+			}
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		return list;
+	}
+
+	// 🔹 Delete
+	public boolean deletePatient(int id) {
+
+		try (Connection con = GetConnection.getConnection();
+				PreparedStatement ps = con.prepareStatement("DELETE FROM patient WHERE patient_ID=?")) {
+
+			ps.setInt(1, id);
+			return ps.executeUpdate() > 0;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return false;
-	}
-
-	public boolean deletePatient(int patientId) {
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
-
-			preparedStatement.setInt(1, patientId);
-			int rows = preparedStatement.executeUpdate();
-			return rows > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	private PatientPOJO mapRowToPatient(ResultSet resultSet) throws SQLException {
-		int id = resultSet.getInt("patient_ID");
-		String firstName = resultSet.getString("patient_first_name");
-		String lastName = resultSet.getString("patient_last_name");
-		String gender = resultSet.getString("patient_gender");
-		int dob = resultSet.getInt("patient_DOB");
-		int contactNo = resultSet.getInt("patient_contact_no");
-		String address = resultSet.getString("patient_address");
-		String email = resultSet.getString("patient_email");
-		String bloodGroup = resultSet.getString("BloodGroup");
-		int registrationDate = resultSet.getInt("Registration_Date");
-
-		return new PatientPOJO(id, firstName, lastName, gender, dob, contactNo, address, email, bloodGroup,
-				registrationDate);
 	}
 }
-
