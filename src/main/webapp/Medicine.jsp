@@ -50,8 +50,9 @@ body {
 	position: fixed;
 	left: 0;
 	top: 0;
-	background: #f2d305; background : linear-gradient( 90deg, rgba( 242,
-	211, 5, 1) 0%, rgba( 236, 240, 14, 1) 38%, rgba( 255, 235, 56, 1) 76%);
+	background: #f2d305;
+	background: linear-gradient(90deg, rgba(242, 211, 5, 1) 0%,
+		rgba(236, 240, 14, 1) 38%, rgba(255, 235, 56, 1) 76%);
 	z-index: 1000;
 	transition: transform 0.3s ease;
 	background: linear-gradient(90deg, rgba(242, 211, 5, 1) 0%,
@@ -290,17 +291,20 @@ to {
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-tachometer-alt"></i> Dashboard
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="Patient.jsp">
-						<i class="fas fa-user-injured"></i> Patient
+				<li class="nav-item"><a class="nav-link" href="patient"> <i
+						class="fas fa-user-injured"></i> Patient
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="Doctor.jsp">
-						<i class="fas fa-user-md"></i> Doctor
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="fas fa-user-md"></i> Doctor
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-calendar-check"></i> Appointments
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-bed"></i> Rooms
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="staff"> <i
+						class="fas fa-staff"></i> Staff
 				</a></li>
 				<li class="nav-item"><a class="nav-link active"
 					href="Medicine.jsp"> <i class="fas fa-boxes"></i> Medical
@@ -309,8 +313,8 @@ to {
 				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
 						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="Chatbot.jsp">
-						<i class="fas fa-robot"></i> Chatbot
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="fas fa-robot"></i> Chatbot
 				</a></li>
 			</ul>
 		</div>

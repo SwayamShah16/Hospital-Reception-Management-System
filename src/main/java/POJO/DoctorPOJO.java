@@ -2,35 +2,20 @@ package POJO;
 
 public class DoctorPOJO {
 
-	private int doctor_ID;
+	private int doctorId;
 	private String name;
 	private String specialization;
-	private double contact_Number;
+	private String contactNumber;
 	private String email;
-	private double consultation_Fee;
-	private String availability_Status;
+	private double consultationFee;
+	private String availabilityStatus;
 
-	public DoctorPOJO() {
+	public int getDoctorId() {
+		return doctorId;
 	}
 
-	public DoctorPOJO(int doctor_ID, String name, String specialization, double contact_Number, String email,
-			double consultation_Fee, String availability_Status) {
-
-		this.doctor_ID = doctor_ID;
-		this.name = name;
-		this.specialization = specialization;
-		this.contact_Number = contact_Number;
-		this.email = email;
-		this.consultation_Fee = consultation_Fee;
-		this.availability_Status = availability_Status;
-	}
-
-	public int getDoctor_ID() {
-		return doctor_ID;
-	}
-
-	public void setDoctor_ID(int doctor_ID) {
-		this.doctor_ID = doctor_ID;
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
 	}
 
 	public String getName() {
@@ -49,12 +34,12 @@ public class DoctorPOJO {
 		this.specialization = specialization;
 	}
 
-	public double getContact_Number() {
-		return contact_Number;
+	public String getContactNumber() {
+		return contactNumber;
 	}
 
-	public void setContact_Number(double contact_Number) {
-		this.contact_Number = contact_Number;
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
 	}
 
 	public String getEmail() {
@@ -65,19 +50,19 @@ public class DoctorPOJO {
 		this.email = email;
 	}
 
-	public double getConsultation_Fee() {
-		return consultation_Fee;
+	public double getConsultationFee() {
+		return consultationFee;
 	}
 
-	public void setConsultation_Fee(double consultation_Fee) {
-		this.consultation_Fee = consultation_Fee;
+	public void setConsultationFee(double consultationFee) {
+		this.consultationFee = consultationFee;
 	}
 
-	public String getAvailability_Status() {
-		return availability_Status;
+	public String getAvailabilityStatus() {
+		return availabilityStatus;
 	}
 
-	public void setAvailability_Status(String availability_Status) {
-		this.availability_Status = availability_Status;
+	public void setAvailabilityStatus(String availabilityStatus) {
+		this.availabilityStatus = availabilityStatus;
 	}
 }

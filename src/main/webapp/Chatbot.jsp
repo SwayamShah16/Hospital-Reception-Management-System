@@ -109,11 +109,11 @@ function sendMessage() {
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-tachometer-alt"></i> Dashboard
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="Patient.jsp">
-						<i class="fas fa-user-injured"></i> Patient
+				<li class="nav-item"><a class="nav-link" href="patient"> <i
+						class="fas fa-user-injured"></i> Patient
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="Doctor.jsp">
-						<i class="fas fa-user-md"></i> Doctor
+				<li class="nav-item"><a class="nav-link" href=""> <i
+						class="fas fa-user-md"></i> Doctor
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-calendar-check"></i> Appointments
@@ -121,14 +121,17 @@ function sendMessage() {
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-bed"></i> Rooms
 				</a></li>
+				<li class="nav-item"><a class="nav-link" href="staff"> <i
+						class="fas fa-staff"></i> Staff
+				</a></li>
 				<li class="nav-item"><a class="nav-link" href="Medicine.jsp">
 						<i class="fas fa-boxes"></i> Medical Inventory
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
+				<li class="nav-item"><a class="nav-link" href="Ambulance.jspF">
 						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-				<li class="nav-item"><a class="nav-link active"
-					href="Chatbot.jsp"> <i class="fas fa-robot"></i> Chatbot
+				<li class="nav-item"><a class="nav-link active" href=""> <i
+						class="fas fa-robot"></i> Chatbot
 				</a></li>
 			</ul>
 		</div>
