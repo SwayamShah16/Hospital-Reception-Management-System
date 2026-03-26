@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ page
-	import="java.util.*, java.text.SimpleDateFormat, POJO.PatientPOJO,DAO.PatientDAO"%>
+	import="java.util.*, java.text.SimpleDateFormat, POJO.RoomPOJO,DAO.RoomDAO"%>
 <%
 String keyword = request.getParameter("keyword");
 
@@ -10,10 +10,18 @@ if (keyword == null) {
 	keyword = "";
 }
 %>
+<%!public String highlight(String text, String keyword) {
+		if (text == null)
+			return "";
+		if (keyword == null || keyword.trim().isEmpty())
+			return text;
+
+		return text.replaceAll("(?i)(" + keyword + ")", "<span style='background:yellow;font-weight:bold;'>$1</span>");
+	}%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Patient Management</title>
+<title>Room Management</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -33,14 +41,14 @@ if (keyword == null) {
 </head>
 <body>
 	<%
-	PatientDAO dao = new PatientDAO();
-	List<PatientPOJO> list = dao.getAllPatients();
+	RoomDAO dao = new RoomDAO();
+	List<RoomPOJO> list = dao.getAllRooms();
 	%>
 	<!-- Sidebar -->
 	<div class="sidebar" id="sidebar">
 		<div
 			class="sidebar-header d-flex justify-content-between align-items-center">
-			<h4 class="mb-0">Patient's Information</h4>
+			<h4 class="mb-0">Room Occupancy</h4>
 			<button class="btn btn-sm btn-outline-light d-md-none"
 				id="sidebarToggle">
 				<i class="bi bi-x"></i>
@@ -51,8 +59,8 @@ if (keyword == null) {
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-tachometer-alt"></i> Dashboard
 				</a></li>
-				<li class="nav-item"><a class="nav-link active" href="patient">
-						<i class="fas fa-user-injured"></i> Patient
+				<li class="nav-item"><a class="nav-link" href="patient"> <i
+						class="fas fa-user-injured"></i> Patient
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="doctor"> <i
 						class="fas fa-user-md"></i> Doctor
@@ -60,8 +68,8 @@ if (keyword == null) {
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-calendar-check"></i> Appointments
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="room"> <i
-						class="fas fa-bed"></i> Rooms
+				<li class="nav-item"><a class="nav-link active" href="room">
+						<i class="fas fa-bed"></i> Rooms
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="staff"> <i
 						class="fas fa-staff"></i> Staff
@@ -93,38 +101,14 @@ if (keyword == null) {
 		</nav>
 
 		<div class="container py-4">
-			<h3 class="mb-4 text-center text-dark">Patients</h3>
+			<h3 class="mb-4 text-center text-dark">Rooms</h3>
 			<div class="card p-3 mb-3">
 
-				<form action="patient" method="get"
-					class="row g-2 align-items-center">
-
-					<input type="hidden" name="action" value="search">
-
-					<!-- Search Input -->
-					<div class="col-md-6">
-						<input type="text" name="keyword" class="form-control"
-							placeholder="Search by Name or Contact">
-					</div>
-
-					<!-- Buttons -->
-					<div class="col-md-6 text-end">
-
-						<button class="btn btn-primary">
-							<i class="fas fa-search"></i> Search
-						</button>
-
-						<a href="patient?action=list" class="btn btn-secondary"> <i
-							class="fas fa-sync"></i> Reset
-						</a>
-
-						<!-- Add Patient Button -->
-						<a href="addPatient.jsp" class="btn btn-success"> <i
-							class="fas fa-plus"></i> Add Patient
-						</a>
-
-					</div>
-
+				<form action="room" method="get" class="d-flex mb-3">
+					<input type="hidden" name="action" value="search"> <input
+						type="text" name="keyword" class="form-control me-2"
+						placeholder="Search Room No or Type">
+					<button class="btn btn-primary">Search</button>
 				</form>
 
 			</div>
@@ -133,50 +117,40 @@ if (keyword == null) {
 				<table class="table table-striped table-bordered mb-0 text-center">
 					<thead class="table-dark">
 						<tr>
-							<th>Patient ID</th>
-							<th>Patient Name</th>
-							<th>Gender</th>
-							<th>Date of Birth</th>
-							<th>Contact No.</th>
-							<th>Email</th>
-							<th>Blood Group</th>
+							<th>ID</th>
+							<th>Room No</th>
+							<th>Type</th>
+							<th>Status</th>
+							<th>Charges</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
 
+						<%
+						for (RoomPOJO r : list) {
+						%>
 						<tr>
-							<%
-							for (PatientPOJO p : list) {
-							%>
-							<td><%=p.getPatientId()%></td>
+							<td><%=r.getRoomId()%></td>
+							<td><%=highlight(r.getRoomNumber(), keyword)%></td>
+							<td><%=highlight(r.getRoomType(), keyword)%></td>
+
 							<td>
 								<%
-								String fullName = p.getFirstName() + " " + p.getLastName();
-
-								String highlightedName = fullName.replaceAll("(?i)" + keyword,
-										"<span style='background:yellow;'>" + keyword + "</span>");
-
-								out.print(highlightedName);
-								%>
-							</td>
-							<td><%=p.getGender()%></td>
-							<td><%=p.getDob()%></td>
-							<td>
+								if ("Available".equals(r.getStatus())) {
+								%> <span class="badge bg-success fs-6 px-2 py-1">Available</span>
 								<%
-								String contact = p.getContactNumber();
-
-								String highlightedContact = contact.replaceAll("(?i)" + keyword,
-										"<span style='background:yellow;'>" + keyword + "</span>");
-
-								out.print(highlightedContact);
+								} else {
+								%> <span class="badge bg-danger fs-6 px-2 py-1">Occupied</span>
+								<%
+								}
 								%>
 							</td>
-							<td><%=p.getEmail()%></td>
-							<td><%=p.getBloodGroup()%></td>
 
-							<td><a href="patient?action=edit&id=<%=p.getPatientId()%>"
-								class="btn btn-warning btn-sm"
-								onclick="return confirm('Update this patient?');"> Update </a></td>
+							<td><%=r.getChargesPerDay()%></td>
+
+							<td><a href="room?action=edit&id=<%=r.getRoomId()%>"
+								class="btn btn-warning btn-sm">Edit</a></td>
 						</tr>
 						<%
 						}

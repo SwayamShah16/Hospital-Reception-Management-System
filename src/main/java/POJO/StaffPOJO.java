@@ -1,36 +1,24 @@
 package POJO;
 
 public class StaffPOJO {
-	private int staff_Id;
+
+	private int staffId;
 	private String name;
 	private String role;
-	private int department_ID;
-	private int contact_no;
+	private int departmentId;
+	private String contactNumber;
 	private String email;
-	private int shift_timing;
-	private int salary;
+	private String shiftTiming;
+	private double salary;
 	private String status;
 
-	public StaffPOJO(int staff_Id, String name, String role, int department_ID, int contact_no, String email,
-			int shift_timing, int salary, String status) {
-		super();
-		this.staff_Id = staff_Id;
-		this.name = name;
-		this.role = role;
-		this.department_ID = department_ID;
-		this.contact_no = contact_no;
-		this.email = email;
-		this.shift_timing = shift_timing;
-		this.salary = salary;
-		this.status = status;
+	// getters & setters
+	public int getStaffId() {
+		return staffId;
 	}
 
-	public int getStaff_Id() {
-		return staff_Id;
-	}
-
-	public void setStaff_Id(int staff_Id) {
-		this.staff_Id = staff_Id;
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
 	}
 
 	public String getName() {
@@ -49,20 +37,20 @@ public class StaffPOJO {
 		this.role = role;
 	}
 
-	public int getDepartment_ID() {
-		return department_ID;
+	public int getDepartmentId() {
+		return departmentId;
 	}
 
-	public void setDepartment_ID(int department_ID) {
-		this.department_ID = department_ID;
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
 	}
 
-	public int getContact_no() {
-		return contact_no;
+	public String getContactNumber() {
+		return contactNumber;
 	}
 
-	public void setContact_no(int contact_no) {
-		this.contact_no = contact_no;
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
 	}
 
 	public String getEmail() {
@@ -73,19 +61,19 @@ public class StaffPOJO {
 		this.email = email;
 	}
 
-	public int getShift_timing() {
-		return shift_timing;
+	public String getShiftTiming() {
+		return shiftTiming;
 	}
 
-	public void setShift_timing(int shift_timing) {
-		this.shift_timing = shift_timing;
+	public void setShiftTiming(String shiftTiming) {
+		this.shiftTiming = shiftTiming;
 	}
 
-	public int getSalary() {
+	public double getSalary() {
 		return salary;
 	}
 
-	public void setSalary(int salary) {
+	public void setSalary(double salary) {
 		this.salary = salary;
 	}
 
@@ -96,5 +84,4 @@ public class StaffPOJO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 }

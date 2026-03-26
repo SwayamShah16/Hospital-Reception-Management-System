@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*,POJO.StaffPOJO,DAO.StaffDAO"%>
 
-<%@ page
-	import="java.util.*, java.text.SimpleDateFormat, POJO.DoctorPOJO,DAO.DoctorDAO"%>
 <%
 String keyword = request.getParameter("keyword");
 if (keyword == null)
@@ -17,13 +14,13 @@ if (keyword == null)
 		return text.replaceAll("(?i)(" + keyword + ")", "<span style='background:yellow;font-weight:bold;'>$1</span>");
 	}%>
 <%
-DoctorDAO dao = new DoctorDAO();
-List<DoctorPOJO> list = dao.getAllDoctors();
+StaffDAO dao = new StaffDAO();
+List<StaffPOJO> list = dao.getAllStaff();
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Doctor Management</title>
+<title>Staff Management</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -47,7 +44,7 @@ List<DoctorPOJO> list = dao.getAllDoctors();
 	<div class="sidebar" id="sidebar">
 		<div
 			class="sidebar-header d-flex justify-content-between align-items-center">
-			<h4 class="mb-0">Doctor's Information</h4>
+			<h4 class="mb-0">Staff's Information</h4>
 			<button class="btn btn-sm btn-outline-light d-md-none"
 				id="sidebarToggle">
 				<i class="bi bi-x"></i>
@@ -61,8 +58,8 @@ List<DoctorPOJO> list = dao.getAllDoctors();
 				<li class="nav-item"><a class="nav-link" href="patient"> <i
 						class="fas fa-user-injured"></i> Patient
 				</a></li>
-				<li class="nav-item"><a class="nav-link active" href="doctor">
-						<i class="fas fa-user-md"></i> Doctor
+				<li class="nav-item"><a class="nav-link" href="doctor"> <i
+						class="fas fa-user-md"></i> Doctor
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href=""> <i
 						class="fas fa-calendar-check"></i> Appointments
@@ -70,8 +67,8 @@ List<DoctorPOJO> list = dao.getAllDoctors();
 				<li class="nav-item"><a class="nav-link" href="room"> <i
 						class="fas fa-bed"></i> Rooms
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="staff"> <i
-						class="fas fa-staff"></i> Staff
+				<li class="nav-item"><a class="nav-link active" href="staff">
+						<i class="fas fa-staff"></i> Staff
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="Medicine.jsp">
 						<i class="fas fa-boxes"></i> Medical Inventory
@@ -101,101 +98,86 @@ List<DoctorPOJO> list = dao.getAllDoctors();
 
 
 		<div class="container py-4">
-			<h3 class="mb-4 text-center text-dark">Doctors</h3>
+			<h3 class="mb-4 text-center text-dark">Staff</h3>
 
-			<div class="container p-3 mb-3">
-				<form action="doctor" method="get"
-					class="d-flex mb-2 align-item-center">
+			<div class="container">
+				<form action="staff" method="get" class="d-flex ">
 					<input type="hidden" name="action" value="search"> <input
-						class="col-md-6" type="text" name="keyword" class="form-control "
-						placeholder="Search Doctor Name or Specialization"><br>
+						name="keyword" class="form-control">
 					<button class="btn btn-primary">Search</button>
-					<br> <a href="doctor?action=list" class="btn btn-secondary">
-						Reset </a><br> <a href="addDoctor.jsp" class="btn btn-success">
-						+ Add Doctor </a>
+					<a href="addStaff.jsp" class="btn btn-success">+ Add Staff</a>
 				</form>
 			</div>
+
 			<!-- CARD GRID -->
 			<div class="row">
 
 				<%
-				for (DoctorPOJO d : list) {
+				for (StaffPOJO s : list) {
 				%>
 
-				<div class="col-md-4 mb-4">
-					<div class="card shadow h-100">
+				<div class="col-md-4 mb-3">
+					<div class="card shadow">
 
 						<div class="card-body text-center">
 
-							<!-- Doctor Name -->
-							<h5 class="card-title fw-bold"><%=highlight(d.getName(), keyword)%></h5>
+							<h5><%=highlight(s.getName(), keyword)%></h5>
+							<p><%=highlight(s.getRole(), keyword)%></p>
 
-							<!-- Specialization -->
-							<p class="text-muted"><%=highlight(d.getSpecialization(), keyword)%></p>
-
-							<!-- Fee -->
-							<p class="fw-semibold">
+							<p>
 								$
-								<%=d.getConsultationFee()%></p>
+								<%=s.getSalary()%></p>
 
-							<!-- Status Badge -->
+							<span class="badge bg-info"><%=s.getShiftTiming()%></span> <br>
+							<br>
+
 							<%
-							if ("Available".equals(d.getAvailabilityStatus())) {
+							if ("Active".equals(s.getStatus())) {
 							%>
-							<span class="badge bg-success px-3 py-2">Available</span>
+							<span class="badge bg-success">Active</span>
 							<%
 							} else {
 							%>
-							<span class="badge bg-danger px-3 py-2">Unavailable</span>
+							<span class="badge bg-danger">Inactive</span>
 							<%
 							}
 							%>
 
 							<hr>
 
-							<!-- Contact -->
-							<p>
-								<i class="bi bi-telephone"></i>
-								<%=highlight(d.getContactNumber(), keyword)%></p>
+							<p><%=highlight(s.getContactNumber(), keyword)%></p>
+							<p><%=s.getEmail()%></p>
 
-							<!-- Email -->
-							<p>
-								<i class="bi bi-envelope"></i>
-								<%=d.getEmail()%></p>
-
-							<!-- Actions -->
-							<div class="mt-3">
-								<a href="doctor?action=edit&id=<%=d.getDoctorId()%>"
-									class="btn btn-warning btn-sm">Edit</a> <a
-									href="doctor?action=delete&id=<%=d.getDoctorId()%>"
-									class="btn btn-danger btn-sm">Delete</a>
-							</div>
+							<a href="staff?action=edit&id=<%=s.getStaffId()%>"
+								class="btn btn-warning btn-sm">Edit</a> <a
+								href="staff?action=delete&id=<%=s.getStaffId()%>"
+								class="btn btn-danger btn-sm">Delete</a>
 
 						</div>
-
 					</div>
 				</div>
 
 				<%
 				}
 				%>
-
-
 			</div>
-			<footer class="text-center mt-5 pt-4 pb-3 "">
-				<!-- place footer here -->
-				&copy; 2026 Hospital Reception ERP System. All rights reserved.
-			</footer>
-			<script
-				src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-				integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-				crossorigin="anonymous"></script>
 
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-				integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-				crossorigin="anonymous"></script>
 
 		</div>
+		<footer class="text-center mt-5 pt-4 pb-3 "">
+			<!-- place footer here -->
+			&copy; 2026 Hospital Reception ERP System. All rights reserved.
+		</footer>
+		<script
+			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+			crossorigin="anonymous"></script>
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+			integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+			crossorigin="anonymous"></script>
+
+	</div>
 </body>
 </html>

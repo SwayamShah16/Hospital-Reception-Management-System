@@ -1,46 +1,42 @@
 package POJO;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class PatientPOJO {
-
-	private int patient_ID;
-	private String first_Name;
-	private String last_Name;
+	private int patientId;
+	private String firstName;
+	private String lastName;
 	private String gender;
 	private Date dob;
-	private String contact_Number;
+	private String contactNumber;
 	private String address;
 	private String email;
-	private String blood_Group;
-	private Date registration_Date;
+	private String bloodGroup;
+	private Date registrationDate;
 
-	public PatientPOJO() {
+	// Getters and Setters
+	public int getPatientId() {
+		return patientId;
 	}
 
-	// Getters & Setters
-	public int getPatient_ID() {
-		return patient_ID;
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
 	}
 
-	public void setPatient_ID(int patient_ID) {
-		this.patient_ID = patient_ID;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public String getFirst_Name() {
-		return first_Name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public void setFirst_Name(String first_Name) {
-		this.first_Name = first_Name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public String getLast_Name() {
-		return last_Name;
-	}
-
-	public void setLast_Name(String last_Name) {
-		this.last_Name = last_Name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getGender() {
@@ -59,12 +55,12 @@ public class PatientPOJO {
 		this.dob = dob;
 	}
 
-	public String getContact_Number() {
-		return contact_Number;
+	public String getContactNumber() {
+		return contactNumber;
 	}
 
-	public void setContact_Number(String contact_Number) {
-		this.contact_Number = contact_Number;
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
 	}
 
 	public String getAddress() {
@@ -83,19 +79,19 @@ public class PatientPOJO {
 		this.email = email;
 	}
 
-	public String getBlood_Group() {
-		return blood_Group;
+	public String getBloodGroup() {
+		return bloodGroup;
 	}
 
-	public void setBlood_Group(String blood_Group) {
-		this.blood_Group = blood_Group;
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
 	}
 
-	public Date getRegistration_Date() {
-		return registration_Date;
+	public Date getRegistrationDate() {
+		return registrationDate;
 	}
 
-	public void setRegistration_Date(Date registration_Date) {
-		this.registration_Date = registration_Date;
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 }
