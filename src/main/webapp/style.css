@@ -23,7 +23,7 @@ body {
 	backdrop-filter: blur(6px);
 	position: fixed;
 	top: 0;
-	width: 100%;
+	width: auto;
 	z-index: 1030;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }

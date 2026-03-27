@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +27,6 @@ body {
 				<div class="card p-4 rounded-4 ">
 					<h3 class="mb-3 text-center">Login</h3>
 					<form action="UserServlet" method="post">
-
 						<input type="hidden" name="action" value="login">
 
 						<div class="form-floating mb-3">
@@ -43,7 +43,6 @@ body {
 							<input type="text" class="form-control" name="role"
 								placeholder="" /> <label>Role</label>
 						</div>
-
 						<button class="btn btn-success w-100">Login</button>
 
 					</form>

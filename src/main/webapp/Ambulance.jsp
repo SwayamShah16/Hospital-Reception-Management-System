@@ -1,5 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+HttpSession session1 = request.getSession(false);
+
+if (session1 == null || session1.getAttribute("user_id") == null) {
+	response.sendRedirect("login.jsp");
+	return;
+}
+
+int userId = (int) session1.getAttribute("user_id");
+String username = (String) session1.getAttribute("username");
+String role = (String) session1.getAttribute("role");
+%>
+<%
+if (!("Admin".equals(role) || "Staff".equals(role))) {
+	response.sendRedirect("unauthorized.jsp");
+	return;
+}
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -262,23 +280,29 @@ to {
 		</div>
 		<div class="sidebar-menu">
 			<ul class="nav flex-column">
-				<li class="nav-item"><a class="nav-link" href=""> <i
-						class="fas fa-tachometer-alt"></i> Dashboard
+				<li class="nav-item"><a class="nav-link" href="dashboard">
+						<i class="fas fa-tachometer-alt"></i> Dashboard
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="patient"> <i
 						class="fas fa-user-injured"></i> Patient
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
+				<li class="nav-item"><a class="nav-link" href="doctor"> <i
 						class="fas fa-user-md"></i> Doctor
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
-						class="fas fa-calendar-check"></i> Appointments
+				<li class="nav-item"><a class="nav-link" href="appointment">
+						<i class="fas fa-calendar-check"></i> Appointments
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
+				<li class="nav-item"><a class="nav-link" href="emergency">
+						<i class="fas fa-calendar-check"></i> Emergency Cases
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="room"> <i
 						class="fas fa-bed"></i> Rooms
 				</a></li>
+				<li class="nav-item"><a class="nav-link" href="payment"> <i
+						class="fas fa-money-bills"></i> Payment
+				</a></li>
 				<li class="nav-item"><a class="nav-link" href="staff"> <i
-						class="fas fa-staff"></i> Staff
+						class="fas fa-id-badge"></i> Staff
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="Medicine.jsp">
 						<i class="fas fa-boxes"></i> Medical Inventory
@@ -296,6 +320,18 @@ to {
 
 	<!-- Main Content -->
 	<div class="main-content" ng-controller="DashboardController">
+		<nav class="navbar navbar-expand-lg">
+			<div class="container-fluid text-center">
+				<a class="navbar-brand" href="profile.jsp"> Hospital ERP </a> <span
+					class="me-3 text-dark">Logged in: <b class="bi bi-person"><%=username%>
+						(<%=role%>) </b></span>
+				<form action="UserServlet" method="post">
+					<input type="hidden" name="action" value="logout">
+					<button class="btn btn-warning btn-sm">Logout</button>
+				</form>
+
+			</div>
+		</nav>
 		<div class="container-fluid pt-5">
 			<!-- Stats Cards -->
 			<div class="row g-4 mb-5 fade-in">

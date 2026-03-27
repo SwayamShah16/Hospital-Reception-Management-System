@@ -1,82 +1,70 @@
 package POJO;
 
 public class EmergencyCasePOJO {
-	private int emergency_Id;
-	private int patient_Id;
-	private String emergency_type;
-	private String severity_level;
-	private String priority_level;
-	private int arrival_time;
-	private int assigned_doctor_ID;
+	private int emergencyId;
+	private int patientId;
+	private String emergencyType;
+	private String severityLevel;
+	private String priorityLevel;
+	private java.sql.Timestamp arrivalTime;
+	private int doctorId;
 	private String status;
 
-	public EmergencyCasePOJO(int emergency_Id, int patient_Id, String emergency_type, String severity_level,
-			String priority_level, int arrival_time, int assigned_doctor_ID, String status) {
-		super();
-		this.emergency_Id = emergency_Id;
-		this.patient_Id = patient_Id;
-		this.emergency_type = emergency_type;
-		this.severity_level = severity_level;
-		this.priority_level = priority_level;
-		this.arrival_time = arrival_time;
-		this.assigned_doctor_ID = assigned_doctor_ID;
-		this.status = status;
+	// Getters & Setters
+	public int getEmergencyId() {
+		return emergencyId;
 	}
 
-	public int getEmergency_Id() {
-		return emergency_Id;
+	public void setEmergencyId(int emergencyId) {
+		this.emergencyId = emergencyId;
 	}
 
-	public void setEmergency_Id(int emergency_Id) {
-		this.emergency_Id = emergency_Id;
+	public int getPatientId() {
+		return patientId;
 	}
 
-	public int getPatient_Id() {
-		return patient_Id;
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
 	}
 
-	public void setPatient_Id(int patient_Id) {
-		this.patient_Id = patient_Id;
+	public String getEmergencyType() {
+		return emergencyType;
 	}
 
-	public String getEmergency_type() {
-		return emergency_type;
+	public void setEmergencyType(String emergencyType) {
+		this.emergencyType = emergencyType;
 	}
 
-	public void setEmergency_type(String emergency_type) {
-		this.emergency_type = emergency_type;
+	public String getSeverityLevel() {
+		return severityLevel;
 	}
 
-	public String getSeverity_level() {
-		return severity_level;
+	public void setSeverityLevel(String severityLevel) {
+		this.severityLevel = severityLevel;
 	}
 
-	public void setSeverity_level(String severity_level) {
-		this.severity_level = severity_level;
+	public String getPriorityLevel() {
+		return priorityLevel;
 	}
 
-	public String getPriority_level() {
-		return priority_level;
+	public void setPriorityLevel(String priorityLevel) {
+		this.priorityLevel = priorityLevel;
 	}
 
-	public void setPriority_level(String priority_level) {
-		this.priority_level = priority_level;
+	public java.sql.Timestamp getArrivalTime() {
+		return arrivalTime;
 	}
 
-	public int getArrival_time() {
-		return arrival_time;
+	public void setArrivalTime(java.sql.Timestamp arrivalTime) {
+		this.arrivalTime = arrivalTime;
 	}
 
-	public void setArrival_time(int arrival_time) {
-		this.arrival_time = arrival_time;
+	public int getDoctorId() {
+		return doctorId;
 	}
 
-	public int getAssigned_doctor_ID() {
-		return assigned_doctor_ID;
-	}
-
-	public void setAssigned_doctor_ID(int assigned_doctor_ID) {
-		this.assigned_doctor_ID = assigned_doctor_ID;
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
 	}
 
 	public String getStatus() {
@@ -86,5 +74,4 @@ public class EmergencyCasePOJO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 }

@@ -1,8 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
-<%@ page
-	import="java.util.*, java.text.SimpleDateFormat, POJO.RoomPOJO,DAO.RoomDAO"%>
+<%@ page import="java.util.*,POJO.PaymentPOJO,DAO.PaymentDAO"%>
 <%
 HttpSession session1 = request.getSession(false);
 
@@ -16,30 +12,15 @@ String username = (String) session1.getAttribute("username");
 String role = (String) session1.getAttribute("role");
 %>
 <%
-if (!("Admin".equals(role) || "Staff".equals(role))) {
+if (!("Admin".equals(role) || "Doctor".equals(role) || "Staff".equals(role))) {
 	response.sendRedirect("unauthorized.jsp");
 	return;
 }
 %>
-<%
-String keyword = request.getParameter("keyword");
-
-if (keyword == null) {
-	keyword = "";
-}
-%>
-<%!public String highlight(String text, String keyword) {
-		if (text == null)
-			return "";
-		if (keyword == null || keyword.trim().isEmpty())
-			return text;
-
-		return text.replaceAll("(?i)(" + keyword + ")", "<span style='background:yellow;font-weight:bold;'>$1</span>");
-	}%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Room Management</title>
+<title>Add Payment</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -54,19 +35,16 @@ if (keyword == null) {
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-<link rel="stylesheet" href="style.css">
 
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<%
-	RoomDAO dao = new RoomDAO();
-	List<RoomPOJO> list = dao.getAllRooms();
-	%>
+
 	<!-- Sidebar -->
 	<div class="sidebar" id="sidebar">
 		<div
 			class="sidebar-header d-flex justify-content-between align-items-center">
-			<h4 class="mb-0">Room Occupancy</h4>
+			<h4 class="mb-0">Payment</h4>
 			<button class="btn btn-sm btn-outline-light d-md-none"
 				id="sidebarToggle">
 				<i class="bi bi-x"></i>
@@ -89,11 +67,11 @@ if (keyword == null) {
 				<li class="nav-item"><a class="nav-link" href="emergency">
 						<i class="fas fa-calendar-check"></i> Emergency Cases
 				</a></li>
-				<li class="nav-item"><a class="nav-link active" href="room">
-						<i class="fas fa-bed"></i> Rooms
+				<li class="nav-item"><a class="nav-link" href="room"> <i
+						class="fas fa-bed"></i> Rooms
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="payment"> <i
-						class="fas fa-money-bills"></i> Payment
+				<li class="nav-item"><a class="nav-link active" href="payment">
+						<i class="fas fa-money-bills"></i> Payment
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="staff"> <i
 						class="fas fa-id-badge"></i> Staff
@@ -114,74 +92,88 @@ if (keyword == null) {
 		<!-- Navbar -->
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-fluid text-center">
-				<a class="navbar-brand" href="dashboard.jsp"> Hospital ERP </a> <span
-					class="me-3 text-white">Logged in: <b class="bi bi-person"
-					style="max-width: 200px;"><%=username%> (<%=role%>) </b>
-				</span>
+				<a class="navbar-brand" href="profile.jsp"> Hospital ERP </a> <span
+					class="me-3 text-white">Logged in: <b class="bi bi-person"><%=username%>
+						(<%=role%>) </b></span>
 				<form action="UserServlet" method="post">
 					<input type="hidden" name="action" value="logout">
 					<button class="btn btn-light btn-sm">Logout</button>
 				</form>
+
 			</div>
 		</nav>
 
+
 		<div class="container py-4">
-			<h3 class="mb-4 text-center text-dark">Rooms</h3>
-			<div class="card p-3 mb-3">
+			<h3 class="mb-4 text-center text-dark">Payment</h3>
+			<!-- Page Content -->
+			<div id="page-content-wrapper">
+				<nav
+					class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+					<h4 class="ms-3 mb-0 text-white">Add Payment</h4>
+				</nav>
 
-				<form action="room" method="get" class="d-flex mb-3">
-					<input type="hidden" name="action" value="search"> <input
-						type="text" name="keyword" class="form-control me-2"
-						placeholder="Search Room No or Type">
-					<button class="btn btn-primary">Search</button>
-				</form>
+				<div class="container-fluid mt-4">
+					<div class="card shadow-sm">
+						<div class="card-header bg-primary text-white">
+							<h5 class="mb-0">Process Payment</h5>
+						</div>
+						<div class="card-body">
+							<form action="payment" method="post">
+								<div class="mb-3">
+									<label class="form-label">Appointment ID</label> <input
+										type="number" name="appointmentId" class="form-control"
+										placeholder="Enter Appointment ID" required>
+								</div>
 
-			</div>
-			<!-- Patients Table -->
-			<div class="card p-3">
-				<table class="table table-striped table-bordered mb-0 text-center">
-					<thead class="table-dark">
-						<tr>
-							<th>ID</th>
-							<th>Room No</th>
-							<th>Type</th>
-							<th>Status</th>
-							<th>Charges</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
+								<div class="mb-3">
+									<label class="form-label">Patient ID</label> <input
+										type="number" name="patientId" class="form-control"
+										placeholder="Enter Patient ID" required>
+								</div>
 
-						<%
-						for (RoomPOJO r : list) {
-						%>
-						<tr>
-							<td><%=r.getRoomId()%></td>
-							<td><%=highlight(r.getRoomNumber(), keyword)%></td>
-							<td><%=highlight(r.getRoomType(), keyword)%></td>
+								<div class="mb-3">
+									<label class="form-label">Amount</label> <input type="text"
+										name="amount" class="form-control" placeholder="Enter Amount"
+										required>
+								</div>
 
-							<td>
-								<%
-								if ("Available".equals(r.getStatus())) {
-								%> <span class="badge bg-success fs-6 px-2 py-1">Available</span>
-								<%
-								} else {
-								%> <span class="badge bg-danger fs-6 px-2 py-1">Occupied</span>
-								<%
-								}
-								%>
-							</td>
+								<div class="mb-3">
+									<label class="form-label">Payment Date</label> <input
+										type="date" name="paymentDate" class="form-control" required>
+								</div>
 
-							<td><%=r.getChargesPerDay()%></td>
+								<div class="mb-3">
+									<label class="form-label">Payment Mode</label> <select
+										name="paymentMode" class="form-select" required>
+										<option value="Cash">Cash</option>
+										<option value="Card">Card</option>
+										<option value="UPI">UPI</option>
+										<option value="Cheque">Cheque</option>
+									</select>
+								</div>
 
-							<td><a href="room?action=edit&id=<%=r.getRoomId()%>"
-								class="btn btn-warning btn-sm">Edit</a></td>
-						</tr>
-						<%
-						}
-						%>
-					</tbody>
-				</table>
+								<button type="submit" class="btn btn-success">Pay Now</button>
+
+								<button href="viewPaymentStatus.jsp" class="btn btn-warning">View
+									Payments</button>
+							</form>
+
+							<!-- Payment completion message -->
+							<%
+							String message = (String) request.getAttribute("message");
+							if (message != null) {
+								String alertClass = message.toLowerCase().contains("success") ? "alert-success" : "alert-danger";
+							%>
+							<div class="alert <%=alertClass%> mt-3" role="alert">
+								<%=message%>
+							</div>
+							<%
+							}
+							%>
+						</div>
+					</div>
+				</div>
 			</div>
 
 		</div>

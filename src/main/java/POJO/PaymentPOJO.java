@@ -1,80 +1,73 @@
 package POJO;
 
+import java.math.BigDecimal;
+import java.sql.Date;
+
 public class PaymentPOJO {
-	private int payment_ID;
-	private int appointment_ID;
-	private int patient_ID;
-	private int amount;
-	private int date;
-	private String mode;
-	private String status;
 
-	public PaymentPOJO(int payment_ID, int appointment_ID, int patient_ID, int amount, int date, String mode,
-			String status) {
-		super();
-		this.payment_ID = payment_ID;
-		this.appointment_ID = appointment_ID;
-		this.patient_ID = patient_ID;
-		this.amount = amount;
-		this.date = date;
-		this.mode = mode;
-		this.status = status;
+	private int paymentId;
+	private int appointmentId;
+	private int patientId;
+	private BigDecimal amount;
+	private Date paymentDate;
+	private String paymentMode;
+	private String paymentStatus;
+
+	// Getters and Setters
+
+	public int getPaymentId() {
+		return paymentId;
 	}
 
-	public int getPayment_ID() {
-		return payment_ID;
+	public void setPaymentId(int paymentId) {
+		this.paymentId = paymentId;
 	}
 
-	public void setPayment_ID(int payment_ID) {
-		this.payment_ID = payment_ID;
+	public int getAppointmentId() {
+		return appointmentId;
 	}
 
-	public int getAppointment_ID() {
-		return appointment_ID;
+	public void setAppointmentId(int appointmentId) {
+		this.appointmentId = appointmentId;
 	}
 
-	public void setAppointment_ID(int appointment_ID) {
-		this.appointment_ID = appointment_ID;
+	public int getPatientId() {
+		return patientId;
 	}
 
-	public int getPatient_ID() {
-		return patient_ID;
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
 	}
 
-	public void setPatient_ID(int patient_ID) {
-		this.patient_ID = patient_ID;
-	}
-
-	public int getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
-	public int getDate() {
-		return date;
+	public Date getPaymentDate() {
+		return paymentDate;
 	}
 
-	public void setDate(int date) {
-		this.date = date;
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 
-	public String getMode() {
-		return mode;
+	public String getPaymentMode() {
+		return paymentMode;
 	}
 
-	public void setMode(String mode) {
-		this.mode = mode;
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getPaymentStatus() {
+		return paymentStatus;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}
-
 }

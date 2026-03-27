@@ -9,9 +9,9 @@
 	<classpathentry kind="src" path="src/main/webapp/WEB-INF/lib"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/Downloads/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/OneDrive/Desktop/Apache Tomcat 10/apache-tomcat-10.0.27/lib/jsp-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/OneDrive/Desktop/Apache Tomcat 10/apache-tomcat-10.0.27/lib/servlet-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/OneDrive/Desktop/Apache Tomcat 10/apache-tomcat-10.0.27/lib/tomcat-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/Downloads/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

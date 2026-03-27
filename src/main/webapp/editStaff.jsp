@@ -2,7 +2,24 @@
 <%
 StaffPOJO s = (StaffPOJO) request.getAttribute("staff");
 %>
+<%
+HttpSession session1 = request.getSession(false);
 
+if (session1 == null || session1.getAttribute("user_id") == null) {
+	response.sendRedirect("login.jsp");
+	return;
+}
+
+int userId = (int) session1.getAttribute("user_id");
+String username = (String) session1.getAttribute("username");
+String role = (String) session1.getAttribute("role");
+%>
+<%
+if (!"Admin".equals(role)) {
+	response.sendRedirect("unauthorized.jsp");
+	return;
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
