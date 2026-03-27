@@ -1,3 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+HttpSession session1 = request.getSession(false);
+
+if (session1 == null || session1.getAttribute("user_id") == null) {
+	response.sendRedirect("login.jsp");
+	return;
+}
+
+int userId = (int) session1.getAttribute("user_id");
+String username = (String) session1.getAttribute("username");
+String role = (String) session1.getAttribute("role");
+%>
 <!DOCTYPE html>
 <html>
 <head>

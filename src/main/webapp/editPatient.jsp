@@ -1,6 +1,17 @@
 <%@ page
 	import="POJO.PatientPOJO,DAO.PatientDAO,java.text.SimpleDateFormat"%>
+<%
+HttpSession session1 = request.getSession(false);
 
+if (session1 == null || session1.getAttribute("user_id") == null) {
+	response.sendRedirect("login.jsp");
+	return;
+}
+
+int userId = (int) session1.getAttribute("user_id");
+String username = (String) session1.getAttribute("username");
+String role = (String) session1.getAttribute("role");
+%>
 <%
 int id = Integer.parseInt(request.getParameter("id"));
 PatientDAO dao = new PatientDAO();

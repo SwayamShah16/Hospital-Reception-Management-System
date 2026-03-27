@@ -1,22 +1,15 @@
 package Controller;
 
-import DAO.UserDAO;
-import POJO.UserPOJO;
-
 import java.io.IOException;
+import java.sql.*;
 
-import jakarta.servlet.ServletException;
+import Connection.GetConnection;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 @WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
-
-	private UserDAO userDAO;
-
-	public void init() {
-		userDAO = new UserDAO();
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -24,76 +17,101 @@ public class UserServlet extends HttpServlet {
 		String action = request.getParameter("action");
 
 		if ("login".equals(action)) {
-
 			loginUser(request, response);
-
 		} else if ("register".equals(action)) {
-
 			registerUser(request, response);
 		}
 	}
 
-	// LOGIN METHOD
+	// 🔐 LOGIN
 	private void loginUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String role = request.getParameter("role");
 
-		UserPOJO user = userDAO.login(username, password, role);
+		try {
+			Connection con = GetConnection.getConnection();
 
-		if (user != null) {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
 
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
+			ps.setString(1, username);
+			ps.setString(2, password);
 
-			String userRole = user.getRole(); // get role from DB
+			ResultSet rs = ps.executeQuery();
 
-			if ("ADMIN".equalsIgnoreCase(userRole)) {
+			if (rs.next()) {
 
-				response.sendRedirect(request.getContextPath() + "/Doctor.jsp");
+				HttpSession session = request.getSession();
 
-			} else if ("DOCTOR".equalsIgnoreCase(userRole)) {
+				session.setAttribute("user_id", rs.getInt("user_id"));
+				session.setAttribute("username", rs.getString("username"));
+				session.setAttribute("role", rs.getString("role"));
 
-				response.sendRedirect(request.getContextPath() + "/DoctorView.jsp");
+				System.out.println("LOGIN SUCCESS"); // 🔥 DEBUG
 
-			} else if ("STAFF".equalsIgnoreCase(userRole)) {
-
-				response.sendRedirect(request.getContextPath() + "/DoctorView.jsp");
+				response.sendRedirect("dashboard.jsp");
 
 			} else {
-
-				response.sendRedirect(request.getContextPath() + "/login.jsp?error=role");
+				System.out.println("LOGIN FAILED");
+				response.sendRedirect("login.jsp?error=1");
 			}
 
-		} else {
-
-			response.sendRedirect(request.getContextPath() + "/login.jsp?error=invalid");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
-	// REGISTER METHOD
+	// 📝 REGISTER
 	private void registerUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String role = request.getParameter("role");
 
-		UserPOJO user = new UserPOJO();
+		try {
+			Connection con = GetConnection.getConnection();
 
-		user.setUsername(username);
-		user.setPassword(password);
-		user.setRole(role);
+			// Check if user exists
+			PreparedStatement check = con.prepareStatement("SELECT * FROM users WHERE username=?");
+			check.setString(1, username);
+			ResultSet rs = check.executeQuery();
 
-		boolean status = userDAO.registerUser(user);
+			if (rs.next()) {
+				response.sendRedirect("register.jsp?error=exists");
+				return;
+			}
 
-		if (status) {
+			// Insert user
+			PreparedStatement ps = con.prepareStatement("INSERT INTO users(username, password, role) VALUES (?, ?, ?)");
 
-			response.sendRedirect(request.getContextPath() + "/login.jsp?success=registered");
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ps.setString(3, role);
 
+			ps.executeUpdate();
+
+			response.sendRedirect("login.jsp?success=1");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		String action = request.getParameter("action");
+
+		if ("logout".equals(action)) {
+			HttpSession session = request.getSession(false);
+
+			if (session != null) {
+				session.invalidate();
+			}
+
+			response.sendRedirect("login.jsp");
 		} else {
-
-			response.sendRedirect(request.getContextPath() + "/register.jsp?error=failed");
+			// 🔥 DEFAULT REDIRECT (IMPORTANT FIX)
+			response.sendRedirect("login.jsp");
 		}
 	}
 }

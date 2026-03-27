@@ -18,6 +18,17 @@ public class PatientServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		HttpSession session = request.getSession(false);
+
+		if (session == null || session.getAttribute("user_id") == null) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+
+		// Access session data
+		int userId = (int) session.getAttribute("user_id");
+		String username = (String) session.getAttribute("username");
+		String role = (String) session.getAttribute("role");
 		String action = request.getParameter("action");
 
 		if (action == null)
