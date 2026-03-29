@@ -52,29 +52,6 @@ The Hospital Reception Management System is a robust application that automates 
 - **GUI Framework**: Swing (Java GUI components)
 - **Architecture**: Object-Oriented Programming (OOP)
 
-## Project Structure
-
-```
-Hospital-Reception-Management-System/
-├── src/
-│   └── main/
-│       ├── Patient.java
-│       ├── Receptionist.java
-│       ├── Appointment.java
-│       ├── Doctor.java
-│       ├── Department.java
-│       ├── Billing.java
-│       ├── Invoice.java
-│       ├── User.java
-│       ├── LoginFrame.java
-│       ├── MainWindow.java
-│       └── [Other GUI and utility classes]
-├── .classpath
-├── .project
-├── .settings/
-└── README.md
-```
-
 ## Getting Started
 
 ### Prerequisites
