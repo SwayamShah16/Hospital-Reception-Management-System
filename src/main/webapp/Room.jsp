@@ -104,7 +104,7 @@ if (keyword == null) {
 				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
 						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
+				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
 				</a></li>
 			</ul>
@@ -112,18 +112,20 @@ if (keyword == null) {
 	</div>
 	<div class="main-content">
 		<!-- Navbar -->
-		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid text-center">
-				<a class="navbar-brand" href="dashboard.jsp"> Hospital ERP </a> <span
-					class="me-3 text-white">Logged in: <b class="bi bi-person"
-					style="max-width: 200px;"><%=username%> (<%=role%>) </b>
-				</span>
-				<form action="UserServlet" method="post">
-					<input type="hidden" name="action" value="logout">
-					<button class="btn btn-light btn-sm">Logout</button>
-				</form>
-			</div>
-		</nav>
+		<header>
+			<nav class="navbar">
+				<div class="container-fluid text-center text-dark">
+					<a class="navbar-brand text-dark" href="dashboard">
+						Hospital ERP </a> <span class="me-3 text-dark">Logged in: <b
+						class="bi bi-person"><%=username%> (<%=role%>) </b></span>
+					<form action="UserServlet" method="post">
+						<input type="hidden" name="action" value="logout">
+						<button class="btn btn-warning btn-sm">Logout</button>
+					</form>
+
+				</div>
+			</nav>
+		</header>
 
 		<div class="container py-4">
 			<h3 class="mb-4 text-center text-dark">Rooms</h3>

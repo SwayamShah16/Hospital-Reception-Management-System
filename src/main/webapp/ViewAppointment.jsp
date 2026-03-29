@@ -19,6 +19,14 @@ if (!("Admin".equals(role) || "Doctor".equals(role))) {
 	return;
 }
 %>
+<%!public String highlight(String text, String keyword) {
+		if (text == null)
+			return "";
+		if (keyword == null || keyword.trim().isEmpty())
+			return text;
+
+		return text.replaceAll("(?i)(" + keyword + ")", "<span style='background:yellow;font-weight:bold;'>$1</span>");
+	}%>
 <%
 AppointmentDAO dao = new AppointmentDAO();
 String keyword = request.getParameter("keyword") == null ? "" : request.getParameter("keyword");
@@ -75,8 +83,8 @@ List<AppointmentPOJO> list = dao.getAllAppointments(keyword);
 		</div>
 		<div class="sidebar-menu">
 			<ul class="nav flex-column">
-				<li class="nav-item"><a class="nav-link" href="dashboard"> <i
-						class="fas fa-tachometer-alt"></i> Dashboard
+				<li class="nav-item"><a class="nav-link" href="dashboard">
+						<i class="fas fa-tachometer-alt"></i> Dashboard
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="patient"> <i
 						class="fas fa-user-injured"></i> Patient
@@ -106,27 +114,27 @@ List<AppointmentPOJO> list = dao.getAllAppointments(keyword);
 				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
 						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
+				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
 				</a></li>
 			</ul>
 		</div>
 	</div>
 	<div class="main-content">
-
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-			<div class="container-fluid">
-				<a class="navbar-brand fw-bold" href="#"> Hospital Reception ERP
-				</a>
-				<div class="d-flex align-items-center text-white">
-					<span class="me-3"> Welcome, <b><%=username%></b> (<%=role%>)
-					</span> <a href="UserServlet?action=logout" class="btn btn-danger btn-sm">
-						Logout </a>
+		<header>
+			<nav class="navbar navbar-expand-lg">
+				<div class="container-fluid text-center">
+					<a class="navbar-brand" href="dashboard"> Hospital ERP </a> <span
+						class="me-3 text-dark">Logged in: <b class="bi bi-person"><%=username%>
+							(<%=role%>) </b></span>
+					<form action="UserServlet" method="post">
+						<input type="hidden" name="action" value="logout">
+						<button class="btn btn-warning btn-sm">Logout</button>
+					</form>
 
 				</div>
-
-			</div>
-		</nav>
+			</nav>
+		</header>
 		<div class="container p-3 mb-3">
 			<div class="d-flex justify-content-between align-items-center mb-4">
 				<h2>Appointments</h2>
@@ -172,8 +180,8 @@ List<AppointmentPOJO> list = dao.getAllAppointments(keyword);
 					%>
 					<tr class="<%=cls%> text-center">
 						<td><%=a.getAppointmentId()%></td>
-						<td><%=dao.getPatientName(a.getPatientId())%></td>
-						<td><%=dao.getDoctorName(a.getDoctorId())%></td>
+						<td><%=highlight(dao.getPatientName(a.getPatientId()), keyword)%></td>
+						<td><%=highlight(dao.getDoctorName(a.getPatientId()), keyword)%></td>
 						<td><%=dao.getReceptionistName(a.getReceptionistId())%></td>
 						<td><%=a.getAppointmentDate()%></td>
 						<td><%=a.getAppointmentTime()%></td>

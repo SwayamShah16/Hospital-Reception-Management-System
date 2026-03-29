@@ -60,7 +60,7 @@ String role = (String) session1.getAttribute("role");
 						</tr>
 						<tr>
 							<th>Amount</th>
-							<td><%=payment.getAmount()%></td>
+							<td>₹ <%=payment.getAmount()%></td>
 						</tr>
 						<tr>
 							<th>Payment Mode</th>

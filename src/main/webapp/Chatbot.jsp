@@ -69,14 +69,14 @@ String role = (String) session1.getAttribute("role");
 	display: inline-block;
 }
 </style>
-
 <script>
 function sendMessage() {
+
 	let msg = document.getElementById("msg").value;
 
 	if (msg.trim() === "") return;
 
-	fetch("<%=request.getContextPath()%>/ChatbotServlet", {
+	fetch("chatbot", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/x-www-form-urlencoded"
@@ -85,18 +85,26 @@ function sendMessage() {
 	})
 	.then(res => res.text())
 	.then(data => {
-		console.log("Server Response:", data);
 
 		let box = document.getElementById("chatBox");
 
-		box.innerHTML += `<div class="msg-user"><span>${msg}</span></div>`;
-		box.innerHTML += `<div class="msg-bot"><span>${data}</span></div>`;
+		// User message
+		let userDiv = document.createElement("div");
+		userDiv.className = "msg-user";
+		userDiv.innerHTML = "<span>" + msg + "</span>";
+
+		// Bot reply
+		let botDiv = document.createElement("div");
+		botDiv.className = "msg-bot";
+		botDiv.innerHTML = "<span>" + data + "</span>";
+
+		box.appendChild(userDiv);
+		box.appendChild(botDiv);
 
 		box.scrollTop = box.scrollHeight;
 
 		document.getElementById("msg").value = "";
-	})
-	.catch(err => console.error("Error:", err));
+	});
 }
 </script>
 
@@ -108,7 +116,7 @@ function sendMessage() {
 	<div class="sidebar" id="sidebar">
 		<div
 			class="sidebar-header d-flex justify-content-between align-items-center">
-			<h4 class="mb-0">Hospital Dashboard</h4>
+			<h4 class="mb-0">Reception Help Desk</h4>
 			<button class="btn btn-sm btn-outline-light d-md-none"
 				id="sidebarToggle">
 				<i class="bi bi-x"></i>
@@ -144,11 +152,11 @@ function sendMessage() {
 				<li class="nav-item"><a class="nav-link" href="Medicine.jsp">
 						<i class="fas fa-boxes"></i> Medical Inventory
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="Ambulance.jspF">
+				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
 						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-				<li class="nav-item"><a class="nav-link active" href=""> <i
-						class="fas fa-robot"></i> Chatbot
+				<li class="nav-item"><a class="nav-link active" href="chatbot">
+						<i class="fas fa-robot"></i> Chatbot
 				</a></li>
 			</ul>
 		</div>
@@ -158,18 +166,20 @@ function sendMessage() {
 	<div class="main-content">
 
 		<!-- Navbar -->
-		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid text-center">
-				<a class="navbar-brand" href="profile.jsp"> Hospital ERP </a> <span
-					class="me-3 text-white">Logged in: <b class="bi bi-person"><%=username%>
-						(<%=role%>) </b></span>
-				<form action="UserServlet" method="post">
-					<input type="hidden" name="action" value="logout">
-					<button class="btn btn-light btn-sm">Logout</button>
-				</form>
+		<header>
+			<nav class="navbar">
+				<div class="container-fluid text-center text-dark">
+					<a class="navbar-brand text-dark" href="dashboard">
+						Hospital ERP </a> <span class="me-3 text-dark">Logged in: <b
+						class="bi bi-person"><%=username%> (<%=role%>) </b></span>
+					<form action="UserServlet" method="post">
+						<input type="hidden" name="action" value="logout">
+						<button class="btn btn-warning btn-sm">Logout</button>
+					</form>
 
-			</div>
-		</nav>
+				</div>
+			</nav>
+		</header>
 
 		<!-- Content -->
 		<div class="container py-4">
@@ -190,13 +200,13 @@ function sendMessage() {
 				<div class="input-group mt-3">
 					<input type="text" id="msg" class="form-control"
 						placeholder="Type your message...">
-					<button class="btn btn-success" onclick="sendMessage()">Send</button>
+					<button type="button" class="btn btn-success"
+						onclick="sendMessage()">Send</button>
 				</div>
 
 			</div>
 
 		</div>
-
 		<!-- Footer -->
 		<footer class="text-center mt-5 pt-4 pb-3"> &copy; 2026
 			Hospital Reception ERP System. All rights reserved. </footer>
