@@ -35,7 +35,6 @@ if (!("Admin".equals(role) || "Doctor".equals(role) || "Staff".equals(role))) {
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -82,114 +81,114 @@ if (!("Admin".equals(role) || "Doctor".equals(role) || "Staff".equals(role))) {
 				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
 						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
+				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
 				</a></li>
 			</ul>
 		</div>
 	</div>
+
 	<div class="main-content">
-		<!-- Navbar -->
-		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid text-center">
-				<a class="navbar-brand" href="profile.jsp"> Hospital ERP </a> <span
-					class="me-3 text-white">Logged in: <b class="bi bi-person"><%=username%>
-						(<%=role%>) </b></span>
-				<form action="UserServlet" method="post">
-					<input type="hidden" name="action" value="logout">
-					<button class="btn btn-light btn-sm">Logout</button>
-				</form>
 
-			</div>
-		</nav>
+		<header>
+			<nav class="navbar">
+				<div class="container-fluid text-center text-dark">
+					<a class="navbar-brand text-dark" href="dashboard">
+						Hospital ERP </a> <span class="me-3 text-dark">Logged in: <b
+						class="bi bi-person"><%=username%> (<%=role%>) </b></span>
+					<form action="UserServlet" method="post">
+						<input type="hidden" name="action" value="logout">
+						<button class="btn btn-warning btn-sm">Logout</button>
+					</form>
 
+				</div>
+			</nav>
+		</header>
 
-		<div class="container py-4">
-			<h3 class="mb-4 text-center text-dark">Payment</h3>
-			<!-- Page Content -->
-			<div id="page-content-wrapper">
-				<nav
-					class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-					<h4 class="ms-3 mb-0 text-white">Add Payment</h4>
-				</nav>
+		<br>
+		<div class="container">
+			<h3 class="mb-4 text-center text-dark">Add Payment</h3>
 
-				<div class="container-fluid mt-4">
-					<div class="card shadow-sm">
-						<div class="card-header bg-primary text-white">
-							<h5 class="mb-0">Process Payment</h5>
-						</div>
-						<div class="card-body">
-							<form action="payment" method="post">
-								<div class="mb-3">
-									<label class="form-label">Appointment ID</label> <input
-										type="number" name="appointmentId" class="form-control"
-										placeholder="Enter Appointment ID" required>
-								</div>
-
-								<div class="mb-3">
-									<label class="form-label">Patient ID</label> <input
-										type="number" name="patientId" class="form-control"
-										placeholder="Enter Patient ID" required>
-								</div>
-
-								<div class="mb-3">
-									<label class="form-label">Amount</label> <input type="text"
-										name="amount" class="form-control" placeholder="Enter Amount"
-										required>
-								</div>
-
-								<div class="mb-3">
-									<label class="form-label">Payment Date</label> <input
-										type="date" name="paymentDate" class="form-control" required>
-								</div>
-
-								<div class="mb-3">
-									<label class="form-label">Payment Mode</label> <select
-										name="paymentMode" class="form-select" required>
-										<option value="Cash">Cash</option>
-										<option value="Card">Card</option>
-										<option value="UPI">UPI</option>
-										<option value="Cheque">Cheque</option>
-									</select>
-								</div>
-
-								<button type="submit" class="btn btn-success">Pay Now</button>
-
-								<button href="viewPaymentStatus.jsp" class="btn btn-warning">View
-									Payments</button>
-							</form>
-
-							<!-- Payment completion message -->
-							<%
-							String message = (String) request.getAttribute("message");
-							if (message != null) {
-								String alertClass = message.toLowerCase().contains("success") ? "alert-success" : "alert-danger";
-							%>
-							<div class="alert <%=alertClass%> mt-3" role="alert">
-								<%=message%>
-							</div>
-							<%
-							}
-							%>
-						</div>
+			<div class="container-fluid mt-4">
+				<div class="card shadow-sm">
+					<div class="card-header bg-primary text-white">
+						<h5 class="mb-0">Process Payment</h5>
 					</div>
+					<div class="card-body">
+						<form action="payment" method="post">
+							<div class="mb-3">
+								<label class="form-label">Appointment ID</label> <input
+									type="number" name="appointmentId" class="form-control"
+									placeholder="Enter Appointment ID" required>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Patient ID</label> <input
+									type="number" name="patientId" class="form-control"
+									placeholder="Enter Patient ID" required>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Amount</label> <input type="text"
+									name="amount" class="form-control" placeholder="Enter Amount"
+									required>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Payment Date</label> <input
+									type="date" name="paymentDate" class="form-control" required>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Payment Mode</label> <select
+									name="paymentMode" class="form-select" required>
+									<option value="Cash">Cash</option>
+									<option value="Card">Card</option>
+									<option value="UPI">UPI</option>
+									<option value="Cheque">Cheque</option>
+								</select>
+							</div>
+
+							<button type="submit" class="btn btn-success">Pay Now</button>
+
+
+						</form>
+						<!-- Payment completion message -->
+						<%
+						String message = (String) request.getAttribute("message");
+						if (message != null) {
+							String alertClass = message.toLowerCase().contains("success") ? "alert-success" : "alert-danger";
+						%>
+						<div class="alert <%=alertClass%> mt-3" role="alert">
+							<%=message%>
+						</div>
+						<%
+						}
+						%>
+					</div>
+
+					<form action="paymentStatus" method="get">
+						<button type="submit" class="btn btn-warning">View
+							Payments</button>
+					</form>
 				</div>
 			</div>
-
 		</div>
-		<footer class="text-center mt-5 pt-4 pb-3 "">
-			<!-- place footer here -->
-			&copy; 2026 Hospital Reception ERP System. All rights reserved.
-		</footer>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-			crossorigin="anonymous"></script>
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-			integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-			crossorigin="anonymous"></script>
+	</div>
+	<footer class="text-center mt-5 pt-4 pb-3 "">
+		<!-- place footer here -->
+		&copy; 2026 Hospital Reception ERP System. All rights reserved.
+	</footer>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+		integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+		crossorigin="anonymous"></script>
 
 	</div>
 </body>

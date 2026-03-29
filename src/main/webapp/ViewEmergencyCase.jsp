@@ -109,7 +109,7 @@ List<EmergencyCasePOJO> list = dao.getAllEmergencies();
 				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
 						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
+				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
 				</a></li>
 			</ul>
@@ -119,18 +119,20 @@ List<EmergencyCasePOJO> list = dao.getAllEmergencies();
 	<div class="main-content">
 
 		<!-- Navbar -->
-		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid text-center">
-				<a class="navbar-brand" href="profile.jsp"> Hospital ERP </a> <span
-					class="me-3 text-white">Logged in: <b class="bi bi-person"><%=username%>
-						(<%=role%>) </b></span>
-				<form action="UserServlet" method="post">
-					<input type="hidden" name="action" value="logout">
-					<button class="btn btn-light btn-sm">Logout</button>
-				</form>
+		<header>
+			<nav class="navbar">
+				<div class="container-fluid text-center text-dark">
+					<a class="navbar-brand text-dark" href="dashboard">
+						Hospital ERP </a> <span class="me-3 text-dark">Logged in: <b
+						class="bi bi-person"><%=username%> (<%=role%>) </b></span>
+					<form action="UserServlet" method="post">
+						<input type="hidden" name="action" value="logout">
+						<button class="btn btn-warning btn-sm">Logout</button>
+					</form>
 
-			</div>
-		</nav>
+				</div>
+			</nav>
+		</header>
 
 		<div class="container p-3">
 

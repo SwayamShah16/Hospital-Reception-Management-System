@@ -19,13 +19,14 @@ body {
 }
 
 .navbar {
-	background: linear-gradient(90deg, #0f2027 0%, #2c5364 100%);
+	width: 100%;
+	background: white;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 	backdrop-filter: blur(6px);
-	position: fixed;
-	top: 0;
-	width: auto;
-	z-index: 1030;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.navbar {
+	padding-left: calc(var(--sidebar-width)+ 20px);
 }
 
 .navbar-brand img {
@@ -37,12 +38,8 @@ body {
 }
 
 .navbar-brand, .nav-link {
-	color: #fff !important;
+	color: rgb(0, 0, 0)mportant;
 	font-weight: 500;
-}
-
-.main-content .navbar {
-	margin-left: 0; /* already handled by .main-content */
 }
 
 .sidebar {
@@ -107,6 +104,9 @@ body {
 	.main-content.active {
 		margin-left: 250px;
 	}
+	.navbar {
+		padding-left: 20px;
+	}
 }
 
 h3 {
@@ -135,7 +135,7 @@ tr:nth-child(odd) {
 	background-color: grey;
 }
 
-tr:nth-last-child(even) {
+tr:nth-child(even) {
 	background-color: white;
 }
 

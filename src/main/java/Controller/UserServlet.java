@@ -109,9 +109,6 @@ public class UserServlet extends HttpServlet {
 			}
 
 			response.sendRedirect("login.jsp");
-		} else {
-			// 🔥 DEFAULT REDIRECT (IMPORTANT FIX)
-			response.sendRedirect("login.jsp");
 		}
 	}
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.List"%>
 <%
 HttpSession session1 = request.getSession(false);
 
@@ -11,6 +11,12 @@ if (session1 == null || session1.getAttribute("user_id") == null) {
 int userId = (int) session1.getAttribute("user_id");
 String username = (String) session1.getAttribute("username");
 String role = (String) session1.getAttribute("role");
+%>
+<%
+if (request.getAttribute("patients") == null) {
+	response.sendRedirect("dashboard");
+	return;
+}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -259,6 +265,7 @@ to {
 }
 </style>
 </head>
+
 <body ng-app="AmbulanceApp">
 	<!-- Sidebar Overlay -->
 	<div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -306,7 +313,7 @@ to {
 				<li class="nav-item"><a class="nav-link" href="Ambulance.jsp">
 						<i class="fas fa-ambulance"></i> Ambulance Service
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href=""> <i
+				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
 				</a></li>
 			</ul>
@@ -314,10 +321,11 @@ to {
 	</div>
 
 	<!-- Main Content -->
+	<
 	<div class="main-content" ng-controller="DashboardController">
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-fluid text-center">
-				<a class="navbar-brand" href="profile.jsp"> Hospital ERP </a> <span
+				<a class="navbar-brand" href="dashboard.jsp"> Hospital ERP </a> <span
 					class="me-3 text-dark">Logged in: <b class="bi bi-person"><%=username%>
 						(<%=role%>) </b></span>
 				<form action="UserServlet" method="post">
@@ -328,7 +336,128 @@ to {
 			</div>
 		</nav>
 
+		<div class="container mt-4 fade-in">
+
+			<!-- STATS -->
+			<div class="row g-4 justify-content-center">
+
+				<!-- First Row -->
+				<div class="col-md-3">
+					<div class="card stat-card stat-primary p-3 text-center">
+						<h6>Total Patients</h6>
+						<h2 class="stat-number"><%=request.getAttribute("patients")%></h2>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card stat-card stat-success p-3 text-center">
+						<h6>Total Doctors</h6>
+						<h2 class="stat-number"><%=request.getAttribute("doctors")%></h2>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card stat-card stat-warning p-3 text-center">
+						<h6>Appointments</h6>
+						<h2 class="stat-number"><%=request.getAttribute("appointments")%></h2>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card stat-card stat-info p-3 text-center">
+						<h6>Total Revenue</h6>
+						<h2 class="stat-number">
+							₹
+							<%=request.getAttribute("revenue")%></h2>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row g-4 justify-content-center mt-2">
+
+				<div class="col-md-3">
+					<div class="card stat-card stat-success p-3 text-center">
+						<h6>Total Staff</h6>
+						<h2 class="stat-number">
+							<%=request.getAttribute("staff") != null ? request.getAttribute("staff") : 0%>
+						</h2>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card stat-card stat-warning p-3 text-center">
+						<h6>Total Rooms</h6>
+						<h2 class="stat-number">
+							<%=request.getAttribute("rooms") != null ? request.getAttribute("rooms") : 0%>
+						</h2>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row mt-5 pt-3">
+
+			<!-- Activity Logs -->
+			<div class="col-md-6">
+				<div class="alert-section h-100">
+					<h5>Recent Activity</h5>
+
+					<%
+					List<String> activities = (List<String>) request.getAttribute("activities");
+
+					if (activities != null && !activities.isEmpty()) {
+						for (String act : activities) {
+					%>
+					<div class="alert-item">
+						<span><%=act%></span> <span class="badge bg-success status-badge">Recent</span>
+					</div>
+					<%
+					}
+					} else {
+					%>
+					<div class="alert-item">
+						<span>No recent activity</span>
+					</div>
+					<%
+					}
+					%>
+
+				</div>
+			</div>
+
+			<!-- Announcements -->
+			<div class="col-md-6">
+				<div class="alert-section h-100">
+					<h5>Important Announcements</h5>
+
+					<div class="alert-item">
+						<span>COVID guidelines updated</span> <span
+							class="badge bg-danger status-badge">New</span>
+					</div>
+
+					<div class="alert-item">
+						<span>New cardiologist joined</span> <span
+							class="badge bg-success status-badge">Info</span>
+					</div>
+
+					<div class="alert-item">
+						<span>Maintenance on Sunday</span> <span
+							class="badge bg-warning status-badge">Alert</span>
+					</div>
+
+					<div class="alert-item">
+						<span>Emergency ward expansion</span> <span
+							class="badge bg-primary status-badge">Update</span>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
 	</div>
+
 	<footer class="text-center mt-5 pt-4 pb-3 "">
 		<!-- place footer here -->
 		&copy; 2026 Hospital Reception ERP System. All rights reserved.
