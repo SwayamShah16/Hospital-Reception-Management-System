@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.AppointmentDAO;
+import DAO.DashboardDAO;
 import POJO.AppointmentPOJO;
 
 import jakarta.servlet.*;
@@ -50,6 +51,7 @@ public class AppointmentServlet extends HttpServlet {
 				a.setPriority(request.getParameter("priority"));
 				a.setRemarks(request.getParameter("remarks"));
 				dao.addAppointment(a);
+				DashboardDAO.addActivity("Appointment Booked");
 				response.sendRedirect("ViewAppointment.jsp");
 			} else if ("edit".equals(action)) {
 				AppointmentPOJO a = new AppointmentPOJO();
@@ -68,10 +70,12 @@ public class AppointmentServlet extends HttpServlet {
 				a.setPriority(request.getParameter("priority"));
 				a.setRemarks(request.getParameter("remarks"));
 				dao.updateAppointment(a);
+				DashboardDAO.addActivity("Appointment Updated");
 				response.sendRedirect("ViewAppointment.jsp");
 			} else if ("delete".equals(action)) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				dao.deleteAppointment(id);
+				DashboardDAO.addActivity("Appointment Deleted");
 				response.sendRedirect("ViewAppointment.jsp");
 			} else if ("search".equals(action)) {
 				String keyword = request.getParameter("keyword");

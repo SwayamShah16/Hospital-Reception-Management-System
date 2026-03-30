@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
 
+import DAO.DashboardDAO;
 import DAO.EmergencyCaseDAO;
 import POJO.EmergencyCasePOJO;
 
@@ -64,6 +65,7 @@ public class EmergencyCaseServlet extends HttpServlet {
 			e.setStatus(request.getParameter("status"));
 
 			EmergencyCaseDAO.insertEmergency(e);
+			DashboardDAO.addActivity("Emergency Case booked");
 		}
 
 		if ("update".equals(action)) {
@@ -79,11 +81,13 @@ public class EmergencyCaseServlet extends HttpServlet {
 			e.setStatus(request.getParameter("status"));
 
 			EmergencyCaseDAO.updateEmergency(e);
+			DashboardDAO.addActivity("Emergency Case Details Updated");
 		}
 
 		if ("delete".equals(action)) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			EmergencyCaseDAO.deleteEmergency(id);
+			DashboardDAO.addActivity("Emergency Case Deleted");
 		}
 
 		response.sendRedirect("ViewEmergencyCase.jsp");

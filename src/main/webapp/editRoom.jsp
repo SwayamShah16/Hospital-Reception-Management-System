@@ -16,9 +16,9 @@ String username = (String) session1.getAttribute("username");
 String role = (String) session1.getAttribute("role");
 %>
 <%
-if (!("Admin".equals(role) || "Staff".equals(role))) {
-    response.sendRedirect("unauthorized.jsp");
-    return;
+if (!("Admin".equals(role))) {
+	response.sendRedirect("unauthorized.jsp");
+	return;
 }
 %>
 <!DOCTYPE html>

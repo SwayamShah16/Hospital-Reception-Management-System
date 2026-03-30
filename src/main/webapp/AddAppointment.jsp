@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ page
 	import="DAO.AppointmentDAO, POJO.AppointmentPOJO, java.util.List, POJO.PatientPOJO, POJO.DoctorPOJO,POJO.ReceptionistPOJO"%>
-	<%
+<%
 HttpSession session1 = request.getSession(false);
 
 if (session1 == null || session1.getAttribute("user_id") == null) {
@@ -14,9 +14,9 @@ String username = (String) session1.getAttribute("username");
 String role = (String) session1.getAttribute("role");
 %>
 <%
-if (!("Admin".equals(role) || "Doctor".equals(role))) {
-    response.sendRedirect("unauthorized.jsp");
-    return;
+if (!("Admin".equals(role) || "Doctor".equals(role) || "Staff".equals(role))) {
+	response.sendRedirect("unauthorized.jsp");
+	return;
 }
 %>
 <%

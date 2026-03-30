@@ -110,10 +110,10 @@ List<StaffPOJO> list = dao.getAllStaff();
 		<header>
 			<nav class="navbar">
 				<div class="container-fluid text-center text-dark">
-					<a class="navbar-brand text-dark" href="dashboard">
-						Hospital ERP </a> <span class="me-3 text-dark">Logged in: <b
+					<a class="navbar-brand text-dark" href="dashboard"> Hospital
+						ERP </a> <span class="me-3 text-dark">Logged in: <b
 						class="bi bi-person"><%=username%> (<%=role%>) </b></span>
-					<form action="UserServlet" method="post">
+					<form action="UserServlet" method="get">
 						<input type="hidden" name="action" value="logout">
 						<button class="btn btn-warning btn-sm">Logout</button>
 					</form>
@@ -151,7 +151,7 @@ List<StaffPOJO> list = dao.getAllStaff();
 							<p><%=highlight(s.getRole(), keyword)%></p>
 
 							<p>
-								₹
+								&#8377;
 								<%=s.getSalary()%></p>
 
 							<span class="badge bg-info"><%=s.getShiftTiming()%></span> <br>

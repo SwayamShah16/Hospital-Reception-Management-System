@@ -14,7 +14,7 @@ int userId = (int) session1.getAttribute("user_id");
 String username = (String) session1.getAttribute("username");
 String role = (String) session1.getAttribute("role");
 
-if (!("Admin".equals(role) || "Doctor".equals(role))) {
+if (!("Admin".equals(role) || "Doctor".equals(role) || "Staff".equals(role))) {
 	response.sendRedirect("unauthorized.jsp");
 	return;
 }

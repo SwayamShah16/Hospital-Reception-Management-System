@@ -108,7 +108,11 @@ public class UserServlet extends HttpServlet {
 				session.invalidate();
 			}
 
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("login.jsp?msg=loggedout");
+			return; // ✅ IMPORTANT
 		}
+
+		// ✅ fallback to avoid blank page
+		response.sendRedirect("login.jsp");
 	}
 }

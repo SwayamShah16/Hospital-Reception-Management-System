@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+import DAO.DashboardDAO;
 import DAO.RoomDAO;
 import POJO.RoomPOJO;
 
@@ -76,8 +77,10 @@ public class RoomServlet extends HttpServlet {
 		if ("update".equals(action)) {
 			r.setRoomId(Integer.parseInt(request.getParameter("id")));
 			dao.updateRoom(r);
+			DashboardDAO.addActivity("Room Details Updated");
 		} else {
 			dao.addRoom(r);
+			DashboardDAO.addActivity("Room Added");
 		}
 
 		response.sendRedirect("room?action=list");

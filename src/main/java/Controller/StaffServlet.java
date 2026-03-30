@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+import DAO.DashboardDAO;
 import DAO.StaffDAO;
 import POJO.StaffPOJO;
 
@@ -20,19 +21,19 @@ public class StaffServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession(false);
 
 		if (session == null || session.getAttribute("user_id") == null) {
-		    response.sendRedirect("login.jsp");
-		    return;
+			response.sendRedirect("login.jsp");
+			return;
 		}
 
 		// Access session data
 		int userId = (int) session.getAttribute("user_id");
 		String username = (String) session.getAttribute("username");
 		String role = (String) session.getAttribute("role");
-		
+
 		String action = request.getParameter("action");
 		if (action == null)
 			action = "list";
@@ -79,8 +80,10 @@ public class StaffServlet extends HttpServlet {
 		if ("update".equals(action)) {
 			s.setStaffId(Integer.parseInt(request.getParameter("id")));
 			dao.updateStaff(s);
+			DashboardDAO.addActivity("Staff Details Updated");
 		} else {
 			dao.addStaff(s);
+			DashboardDAO.addActivity("Staff Added");
 		}
 
 		response.sendRedirect("staff?action=list");
