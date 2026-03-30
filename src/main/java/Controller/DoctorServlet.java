@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+import DAO.DashboardDAO;
 import DAO.DoctorDAO;
 import POJO.DoctorPOJO;
 
@@ -26,8 +27,8 @@ public class DoctorServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		if (session == null || session.getAttribute("user_id") == null) {
-		    response.sendRedirect("login.jsp");
-		    return;
+			response.sendRedirect("login.jsp");
+			return;
 		}
 
 		// Access session data
@@ -81,8 +82,10 @@ public class DoctorServlet extends HttpServlet {
 		if ("update".equals(action)) {
 			d.setDoctorId(Integer.parseInt(request.getParameter("id")));
 			dao.updateDoctor(d);
+			DashboardDAO.addActivity("Doctor Details Updated");
 		} else {
 			dao.addDoctor(d);
+			DashboardDAO.addActivity("Doctor Added");
 		}
 
 		response.sendRedirect("doctor?action=list");

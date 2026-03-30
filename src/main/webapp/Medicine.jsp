@@ -351,7 +351,7 @@ to {
 				<a class="navbar-brand" href="dashboard"> Hospital ERP </a> <span
 					class="me-3 text-dark">Logged in: <b class="bi bi-person"><%=username%>
 						(<%=role%>) </b></span>
-				<form action="UserServlet" method="post">
+				<form action="UserServlet" method="get">
 					<input type="hidden" name="action" value="logout">
 					<button class="btn btn-warning btn-sm">Logout</button>
 				</form>

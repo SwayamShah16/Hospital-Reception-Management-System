@@ -200,6 +200,12 @@ body {
 	height: 100%;
 }
 
+.activity-box {
+	height: 250px; /* fixed size */
+	overflow-y: auto; /* scroll when overflow */
+	padding-right: 5px;
+}
+
 .alert-item {
 	display: flex;
 	justify-content: space-between;
@@ -328,7 +334,7 @@ to {
 				<a class="navbar-brand" href="dashboard.jsp"> Hospital ERP </a> <span
 					class="me-3 text-dark">Logged in: <b class="bi bi-person"><%=username%>
 						(<%=role%>) </b></span>
-				<form action="UserServlet" method="post">
+				<form action="UserServlet" method="get">
 					<input type="hidden" name="action" value="logout">
 					<button class="btn btn-warning btn-sm">Logout</button>
 				</form>
@@ -343,7 +349,7 @@ to {
 
 				<!-- First Row -->
 				<div class="col-md-3">
-					<div class="card stat-card stat-primary p-3 text-center">
+					<div class="card stat-card stat-info p-3 text-center">
 						<h6>Total Patients</h6>
 						<h2 class="stat-number"><%=request.getAttribute("patients")%></h2>
 					</div>
@@ -401,28 +407,38 @@ to {
 
 			<!-- Activity Logs -->
 			<div class="col-md-6">
-				<div class="alert-section h-100">
-					<h5>Recent Activity</h5>
+				<div class="alert-section">
 
-					<%
-					List<String> activities = (List<String>) request.getAttribute("activities");
+					<!-- Header with button -->
+					<div class="d-flex justify-content-between align-items-center mb-2">
+						<h5 class="mb-0">Recent Activity</h5>
+						<a href="viewActivity" class="btn btn-sm btn-primary">View All</a>
+					</div>
 
-					if (activities != null && !activities.isEmpty()) {
-						for (String act : activities) {
-					%>
-					<div class="alert-item">
-						<span><%=act%></span> <span class="badge bg-success status-badge">Recent</span>
+					<!-- Scrollable Box -->
+					<div class="activity-box">
+
+						<%
+						List<String> activities = (List<String>) request.getAttribute("activities");
+
+						if (activities != null && !activities.isEmpty()) {
+							for (String act : activities) {
+						%>
+						<div class="alert-item">
+							<span><%=act%></span> <span class="badge bg-success status-badge">Recent</span>
+						</div>
+						<%
+						}
+						} else {
+						%>
+						<div class="alert-item">
+							<span>No recent activity</span>
+						</div>
+						<%
+						}
+						%>
+
 					</div>
-					<%
-					}
-					} else {
-					%>
-					<div class="alert-item">
-						<span>No recent activity</span>
-					</div>
-					<%
-					}
-					%>
 
 				</div>
 			</div>

@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.DashboardDAO;
 import DAO.PatientDAO;
 import POJO.PatientPOJO;
 
@@ -97,11 +98,13 @@ public class PatientServlet extends HttpServlet {
 
 			p.setPatientId(Integer.parseInt(request.getParameter("id")));
 			dao.updatePatient(p);
+			DashboardDAO.addActivity("Patient Details Updated");
 
 		} else {
 
 			p.setRegistrationDate(new Date(System.currentTimeMillis()));
 			dao.addPatient(p);
+			DashboardDAO.addActivity("Patient Added");
 		}
 
 		response.sendRedirect("patient?action=list");

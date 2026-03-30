@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 import Connection.GetConnection;
+import DAO.DashboardDAO;
 import DAO.PaymentDAO;
 import POJO.PaymentPOJO;
 
@@ -58,6 +59,7 @@ public class PaymentServlet extends HttpServlet {
 			p.setPaymentMode(paymentMode);
 
 			boolean success = dao.addPayment(p);
+			DashboardDAO.addActivity("Payment Received");
 
 			if (success) {
 				req.setAttribute("message", "Payment processed successfully!");

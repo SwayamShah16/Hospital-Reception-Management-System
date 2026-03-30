@@ -139,4 +139,27 @@ public class DashboardDAO {
 
 		return list;
 	}
+
+	public static List<String> getAllActivities() {
+
+		List<String> list = new ArrayList<>();
+
+		try {
+			Connection con = GetConnection.getConnection();
+
+			PreparedStatement ps = con.prepareStatement("SELECT action, created_at FROM activity_log ORDER BY id DESC");
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				list.add(rs.getString("action") + " (" + rs.getTimestamp("created_at") + ")");
+			}
+
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 }
