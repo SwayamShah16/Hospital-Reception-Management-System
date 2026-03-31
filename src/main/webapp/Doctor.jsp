@@ -130,18 +130,34 @@ List<DoctorPOJO> list = dao.getAllDoctors();
 
 		<div class="container py-4">
 			<h3 class="mb-4 text-center text-dark">Doctors</h3>
+			<div class="card p-3 mb-3">
 
-			<div class="container p-3 mb-3">
 				<form action="doctor" method="get"
-					class="d-flex mb-2 align-item-center">
-					<input type="hidden" name="action" value="search"> <input
-						class="col-md-6" type="text" name="keyword" class="form-control "
-						placeholder="Search Doctor Name or Specialization"><br>
-					<button class="btn btn-primary">Search</button>
-					<br> <a href="doctor?action=list" class="btn btn-secondary">
-						Reset </a><br> <a href="addDoctor.jsp" class="btn btn-success">
-						+ Add Doctor </a>
+					class="row g-2 align-items-center">
+
+					<input type="hidden" name="action" value="search">
+
+					<!-- Search Input -->
+					<div class="col-md-6">
+						<input type="text" name="keyword" class="form-control"
+							placeholder="Search by Name or Specialization or Contact">
+					</div>
+
+					<!-- Buttons -->
+					<div class="col-md-6 text-end">
+
+						<button class="btn btn-primary">
+							<i class="fas fa-search"></i> Search
+						</button>
+
+						<a href="doctor?action=list" class="btn btn-secondary"> <i
+							class="fas fa-sync"></i> Reset
+						</a>
+
+					</div>
+
 				</form>
+
 			</div>
 			<!-- CARD GRID -->
 			<div class="row">

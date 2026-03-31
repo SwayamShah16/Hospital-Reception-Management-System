@@ -142,16 +142,6 @@ List<EmergencyCasePOJO> list = dao.getAllEmergencies();
 					Emergency</a>
 			</div>
 
-			<!-- Search -->
-			<form class="row g-2 mb-3" method="get">
-				<div class="col-auto">
-					<input type="text" name="keyword" class="form-control"
-						placeholder="Search by patient or type" value="<%=keyword%>">
-				</div>
-				<div class="col-auto">
-					<button class="btn btn-primary">Search</button>
-				</div>
-			</form>
 
 			<!-- Table -->
 			<table class="table table-bordered table-hover text-center">

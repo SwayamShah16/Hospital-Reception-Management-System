@@ -122,88 +122,87 @@ List<StaffPOJO> list = dao.getAllStaff();
 			</nav>
 		</header>
 
-
 		<div class="container py-4">
-			<h3 class="mb-4 text-center text-dark">Staff</h3>
-
-			<div class="container">
-				<form action="staff" method="get" class="d-flex ">
+			<h3 class="mb-4 text-center text-dark">Rooms</h3>
+			<div class="card p-3 mb-3">
+				<form action="staff" method="get" class="d-flex">
 					<input type="hidden" name="action" value="search"> <input
-						name="keyword" class="form-control">
+						type="text" name="keyword" class="form-control me-3"
+						placeholder="Search Staff Name or Staff Role">
 					<button class="btn btn-primary">Search</button>
 					<a href="addStaff.jsp" class="btn btn-success">+ Add Staff</a>
 				</form>
 			</div>
 
-			<!-- CARD GRID -->
-			<div class="row">
+			<div class="container py-4">
+				<!-- CARD GRID -->
+				<div class="row">
 
-				<%
-				for (StaffPOJO s : list) {
-				%>
+					<%
+					for (StaffPOJO s : list) {
+					%>
 
-				<div class="col-md-4 mb-3">
-					<div class="card shadow">
+					<div class="col-md-4 mb-3">
+						<div class="card shadow">
 
-						<div class="card-body text-center">
+							<div class="card-body text-center">
 
-							<h5><%=highlight(s.getName(), keyword)%></h5>
-							<p><%=highlight(s.getRole(), keyword)%></p>
+								<h5><%=highlight(s.getName(), keyword)%></h5>
+								<p><%=highlight(s.getRole(), keyword)%></p>
 
-							<p>
-								&#8377;
-								<%=s.getSalary()%></p>
+								<p>
+									&#8377;
+									<%=s.getSalary()%></p>
 
-							<span class="badge bg-info"><%=s.getShiftTiming()%></span> <br>
-							<br>
+								<span class="badge bg-info"><%=s.getShiftTiming()%></span> <br>
+								<br>
 
-							<%
-							if ("Active".equals(s.getStatus())) {
-							%>
-							<span class="badge bg-success">Active</span>
-							<%
-							} else {
-							%>
-							<span class="badge bg-danger">Inactive</span>
-							<%
-							}
-							%>
+								<%
+								if ("Active".equals(s.getStatus())) {
+								%>
+								<span class="badge bg-success">Active</span>
+								<%
+								} else {
+								%>
+								<span class="badge bg-danger">Inactive</span>
+								<%
+								}
+								%>
 
-							<hr>
+								<hr>
 
-							<p><%=highlight(s.getContactNumber(), keyword)%></p>
-							<p><%=s.getEmail()%></p>
+								<p><%=highlight(s.getContactNumber(), keyword)%></p>
+								<p><%=s.getEmail()%></p>
 
-							<a href="staff?action=edit&id=<%=s.getStaffId()%>"
-								class="btn btn-warning btn-sm">Edit</a> <a
-								href="staff?action=delete&id=<%=s.getStaffId()%>"
-								class="btn btn-danger btn-sm">Delete</a>
+								<a href="staff?action=edit&id=<%=s.getStaffId()%>"
+									class="btn btn-warning btn-sm">Edit</a> <a
+									href="staff?action=delete&id=<%=s.getStaffId()%>"
+									class="btn btn-danger btn-sm">Delete</a>
 
+							</div>
 						</div>
 					</div>
+
+					<%
+					}
+					%>
 				</div>
 
-				<%
-				}
-				%>
+
 			</div>
+			<footer class="text-center mt-5 pt-4 pb-3 "">
+				<!-- place footer here -->
+				&copy; 2026 Hospital Reception ERP System. All rights reserved.
+			</footer>
+			<script
+				src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+				integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+				crossorigin="anonymous"></script>
 
+			<script
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+				integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+				crossorigin="anonymous"></script>
 
-		</div>
-		<footer class="text-center mt-5 pt-4 pb-3 "">
-			<!-- place footer here -->
-			&copy; 2026 Hospital Reception ERP System. All rights reserved.
-		</footer>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-			crossorigin="anonymous"></script>
-
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-			integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-			crossorigin="anonymous"></script>
-
-	</div>
-</body>
+		</div></body>
 </html>

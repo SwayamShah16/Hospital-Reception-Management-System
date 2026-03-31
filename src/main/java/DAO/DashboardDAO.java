@@ -29,7 +29,8 @@ public class DashboardDAO {
 		int count = 0;
 		try {
 			Connection con = GetConnection.getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM doctor");
+			PreparedStatement ps = con
+					.prepareStatement("SELECT COUNT(*) FROM doctor WHERE Availability_Status='Available'");
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 				count = rs.getInt(1);
@@ -74,7 +75,7 @@ public class DashboardDAO {
 		int count = 0;
 		try {
 			Connection con = GetConnection.getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM staff");
+			PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM staff WHERE Status='Active'");
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 				count = rs.getInt(1);
@@ -89,7 +90,7 @@ public class DashboardDAO {
 		int count = 0;
 		try {
 			Connection con = GetConnection.getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM room");
+			PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM room WHERE Status='Available';");
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 				count = rs.getInt(1);

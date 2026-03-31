@@ -142,75 +142,89 @@ List<AppointmentPOJO> list = dao.getAllAppointments(keyword);
 					Appointment</a>
 			</div>
 
-			<!-- Search bar -->
-			<form class="row g-3 mb-3" method="get" action="appointment">
-				<div class="col-auto">
-					<input type="text" name="keyword" class="form-control"
-						placeholder="Search by patient or doctor" value="<%=keyword%>">
-				</div>
-				<div class="col-auto">
-					<button type="submit" class="btn btn-primary">Search</button>
-				</div>
-			</form>
+			<div class="card p-3 mb-3">
+
+				<form action="appointment" method="get"
+					class="row g-2 align-items-center">
+
+					<input type="hidden" name="action" value="search">
+
+					<!-- Search Input -->
+					<div class="col-md-6">
+						<input type="text" name="keyword" class="form-control"
+							placeholder="Search by Patient or Doctor">
+					</div>
+
+					<!-- Buttons -->
+					<div class="col-md-6 text-end">
+
+						<button class="btn btn-primary">
+							<i class="fas fa-search"></i> Search
+						</button>
+
+					</div>
+
+				</form>
+
+			</div>
+
+			<div class="container">
+				<table class="table table-hover table-bordered align-middle">
+					<thead class="table-dark text-center">
+						<tr>
+							<th>ID</th>
+							<th>Patient</th>
+							<th>Doctor</th>
+							<th>Receptionist</th>
+							<th>Date</th>
+							<th>Time</th>
+							<th>Priority</th>
+							<th>Remarks</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+						for (AppointmentPOJO a : list) {
+							String cls = "priority-low";
+							if ("High".equals(a.getPriority()))
+								cls = "priority-high";
+							else if ("Normal".equals(a.getPriority()))
+								cls = "priority-normal";
+						%>
+						<tr class="<%=cls%> text-center">
+							<td><%=a.getAppointmentId()%></td>
+							<td><%=highlight(dao.getPatientName(a.getPatientId()), keyword)%></td>
+							<td><%=highlight(dao.getDoctorName(a.getDoctorId()), keyword)%></td>
+							<td><%=dao.getReceptionistName(a.getReceptionistId())%></td>
+							<td><%=a.getAppointmentDate()%></td>
+							<td><%=a.getAppointmentTime()%></td>
+							<td><%=a.getPriority()%></td>
+							<td><%=a.getRemarks()%></td>
+							<td class="table-actions"><a
+								href="EditAppointment.jsp?id=<%=a.getAppointmentId()%>"
+								class="btn btn-sm btn-primary">Edit</a></td>
+						</tr>
+						<%
+						}
+						%>
+					</tbody>
+				</table>
+			</div>
+			<footer class="text-center mt-5 pt-4 pb-3 "">
+				<!-- place footer here -->
+				&copy; 2026 Hospital Reception ERP System. All rights reserved.
+			</footer>
+			<script
+				src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+				integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+				crossorigin="anonymous"></script>
+
+			<script
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+				integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+				crossorigin="anonymous"></script>
+
 		</div>
-
-		<div class="container">
-			<table class="table table-hover table-bordered align-middle">
-				<thead class="table-dark text-center">
-					<tr>
-						<th>ID</th>
-						<th>Patient</th>
-						<th>Doctor</th>
-						<th>Receptionist</th>
-						<th>Date</th>
-						<th>Time</th>
-						<th>Priority</th>
-						<th>Remarks</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-					for (AppointmentPOJO a : list) {
-						String cls = "priority-low";
-						if ("High".equals(a.getPriority()))
-							cls = "priority-high";
-						else if ("Normal".equals(a.getPriority()))
-							cls = "priority-normal";
-					%>
-					<tr class="<%=cls%> text-center">
-						<td><%=a.getAppointmentId()%></td>
-						<td><%=highlight(dao.getPatientName(a.getPatientId()), keyword)%></td>
-						<td><%=highlight(dao.getDoctorName(a.getDoctorId()), keyword)%></td>
-						<td><%=dao.getReceptionistName(a.getReceptionistId())%></td>
-						<td><%=a.getAppointmentDate()%></td>
-						<td><%=a.getAppointmentTime()%></td>
-						<td><%=a.getPriority()%></td>
-						<td><%=a.getRemarks()%></td>
-						<td class="table-actions"><a
-							href="EditAppointment.jsp?id=<%=a.getAppointmentId()%>"
-							class="btn btn-sm btn-primary">Edit</a></td>
-					</tr>
-					<%
-					}
-					%>
-				</tbody>
-			</table>
-		</div>
-		<footer class="text-center mt-5 pt-4 pb-3 "">
-			<!-- place footer here -->
-			&copy; 2026 Hospital Reception ERP System. All rights reserved.
-		</footer>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-			crossorigin="anonymous"></script>
-
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-			integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-			crossorigin="anonymous"></script>
-
-	</div>
 </body>
 </html>
