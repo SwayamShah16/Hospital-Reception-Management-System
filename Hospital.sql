@@ -84,21 +84,6 @@ CREATE TABLE Room (
     Charges_Per_Day DECIMAL(10,2)
 );
 
-8️. Admission Table
-CREATE TABLE Admission (
-    Admission_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Patient_ID INT,
-    Room_ID INT,
-    Admission_Date DATE,
-    Discharge_Date DATE,
-    Doctor_ID INT,
-    Total_Bill DECIMAL(10,2),
-
-    FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID),
-    FOREIGN KEY (Room_ID) REFERENCES Room(Room_ID),
-    FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_ID)
-);
-
 9. Emergency_Case Table
 CREATE TABLE Emergency_Case (
     Emergency_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -137,4 +122,6 @@ CREATE TABLE users (
     role VARCHAR(20) NOT NULL,
     PRIMARY KEY (user_id)
 );
+
+
 
