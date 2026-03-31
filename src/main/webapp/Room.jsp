@@ -55,6 +55,18 @@ if (keyword == null) {
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link rel="stylesheet" href="style.css">
+<style>
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 250px;
+	height: 100vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-top: 20px;
+}
+</style>
 
 </head>
 <body>
@@ -106,6 +118,15 @@ if (keyword == null) {
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="about.jsp">
+						<i class="bi bi-info-circle"></i> About
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="contact.jsp">
+						<i class="bi bi-person-rolodex"></i> Contact Us
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="DiseaseInfo.jsp">
+						<i class="fa fa-book-medical"></i> Disease Info
 				</a></li>
 			</ul>
 		</div>

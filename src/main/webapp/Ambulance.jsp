@@ -33,6 +33,8 @@ if (!("Admin".equals(role) || "Staff".equals(role))) {
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
 	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Angular CDN -->
 <script src="https://cdn.jsdelivr.net/npm/angular@1.8.2/angular.min.js"></script>
@@ -56,7 +58,7 @@ if (!("Admin".equals(role) || "Staff".equals(role))) {
 }
 
 body {
-	font-family: 'Inter', sans-serif;
+	font-family: cursive;
 	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 	min-height: 100vh;
 }
@@ -67,9 +69,16 @@ body {
 	position: fixed;
 	left: 0;
 	top: 0;
+	overflow-y: auto;
 	background: linear-gradient(135deg, #dc3545, #c82333);
+	background-size: cover;
+	background-position: center;
+	min-height: 100vh;
+	color: white;
+	transition: all 0.3s;
 	z-index: 1000;
-	transition: transform 0.3s ease;
+	scrollbar-width: medium;
+	scroll-behavior: smooth;
 }
 
 .main-content {
@@ -313,6 +322,15 @@ to {
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="about.jsp">
+						<i class="bi bi-info-circle"></i> About
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="contact.jsp">
+						<i class="bi bi-person-rolodex"></i> Contact Us
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="DiseaseInfo.jsp">
+						<i class="fa fa-book-medical"></i> Disease Info
 				</a></li>
 			</ul>
 		</div>

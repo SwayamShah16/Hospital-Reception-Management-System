@@ -35,7 +35,7 @@ List<AppointmentPOJO> list = dao.getAllAppointments(keyword);
 <!DOCTYPE html>
 <html>
 <head>
-<title>Doctor Management</title>
+<title>Appointment Management</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -55,6 +55,17 @@ List<AppointmentPOJO> list = dao.getAllAppointments(keyword);
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <style>
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 250px;
+	height: 100vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-top: 20px;
+}
+
 .priority-high {
 	background-color: #f8d7da;
 } /* Red-ish for High */
@@ -116,6 +127,15 @@ List<AppointmentPOJO> list = dao.getAllAppointments(keyword);
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="about.jsp">
+						<i class="bi bi-info-circle"></i> About
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="contact.jsp">
+						<i class="bi bi-person-rolodex"></i> Contact Us
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="DiseaseInfo.jsp">
+						<i class="fa fa-book-medical"></i> Disease Info
 				</a></li>
 			</ul>
 		</div>

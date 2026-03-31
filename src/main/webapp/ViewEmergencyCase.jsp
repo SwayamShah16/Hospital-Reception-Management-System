@@ -112,6 +112,15 @@ List<EmergencyCasePOJO> list = dao.getAllEmergencies();
 				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
 				</a></li>
+				<li class="nav-item"><a class="nav-link" href="about.jsp">
+						<i class="bi bi-info-circle"></i> About
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="contact.jsp">
+						<i class="bi bi-person-rolodex"></i> Contact Us
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="DiseaseInfo.jsp">
+						<i class="fa fa-book-medical"></i> Disease Info
+				</a></li>
 			</ul>
 		</div>
 	</div>

@@ -33,9 +33,12 @@ if (request.getAttribute("patients") == null) {
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
 	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Angular CDN -->
 <script src="https://cdn.jsdelivr.net/npm/angular@1.8.2/angular.min.js"></script>
+
 
 <style>
 :root {
@@ -63,15 +66,18 @@ body {
 }
 
 .sidebar {
-	width: var(--sidebar-width);
-	height: 100vh;
 	position: fixed;
-	left: 0;
 	top: 0;
+	left: 0;
+	width: 250px;
+	height: 100vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-top: 20px;
 	background: linear-gradient(to right, #1A2980, #26D0CE);
 	z-index: 1000;
-	transition: transform 0.3s ease;
-	z-index: 1000;
+	scrollbar-width: medium;
+	scroll-behavior: smooth;
 }
 
 .main-content {
@@ -387,27 +393,37 @@ body, .card, .alert-section, .navbar {
 				<li class="nav-item"><a class="nav-link" href="chatbot"> <i
 						class="fas fa-robot"></i> Chatbot
 				</a></li>
+				<li class="nav-item"><a class="nav-link" href="about.jsp">
+						<i class="bi bi-info-circle"></i> About
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="contact.jsp">
+						<i class="bi bi-person-rolodex"></i> Contact Us
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="DiseaseInfo.jsp">
+						<i class="fa fa-book-medical"></i> Disease Info
+				</a></li>
 			</ul>
 		</div>
 	</div>
 
 	<!-- Main Content -->
 	<div class="main-content" ng-controller="DashboardController">
-		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid text-center">
-				<a class="navbar-brand" href="dashboard.jsp"> Hospital ERP </a> <span
-					class="me-3 ">Logged in: <b class="bi bi-person"><%=username%>
-						(<%=role%>) </b></span>
-				<button onclick="toggleDarkMode()" class="btn btn-dark btn-sm">🌙</button>
+		<header>
+			<nav class="navbar navbar-expand-lg">
+				<div class="container-fluid text-center">
+					<a class="navbar-brand" href="dashboard.jsp"> Hospital ERP </a> <span
+						class="me-3 ">Logged in: <b class="bi bi-person"><%=username%>
+							(<%=role%>) </b></span>
+					<button onclick="toggleDarkMode()" class="btn btn-dark btn-sm">🌙</button>
 
-				<form action="UserServlet" method="get">
-					<input type="hidden" name="action" value="logout">
-					<button class="btn btn-warning btn-sm">Logout</button>
-				</form>
+					<form action="UserServlet" method="get">
+						<input type="hidden" name="action" value="logout">
+						<button class="btn btn-warning btn-sm">Logout</button>
+					</form>
 
-			</div>
-		</nav>
-
+				</div>
+			</nav>
+		</header>
 		<div class="container mt-4 fade-in">
 
 			<!-- STATS -->
@@ -538,10 +554,12 @@ body, .card, .alert-section, .navbar {
 			</div>
 
 		</div>
-		<footer class="text-center mt-5 pt-4 pb-3 "">
-			<!-- place footer here -->
-			&copy; 2026 Hospital Reception ERP System. All rights reserved.
-		</footer>
+		<div>
+			<footer class="text-center mt-5 pt-4 pb-3 "">
+				<!-- place footer here -->
+				&copy; 2026 Hospital Reception ERP System. All rights reserved.
+			</footer>
+		</div>
 	</div>
 
 	<!-- Bootstrap JS -->
