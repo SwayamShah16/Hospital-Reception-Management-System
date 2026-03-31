@@ -36,6 +36,7 @@ if (request.getAttribute("patients") == null) {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Angular CDN -->
 <script src="https://cdn.jsdelivr.net/npm/angular@1.8.2/angular.min.js"></script>
+
 <style>
 :root {
 	--sidebar-width: 250px;
@@ -57,8 +58,8 @@ if (request.getAttribute("patients") == null) {
 
 body {
 	font-family: 'Inter', sans-serif;
-	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-	min-height: 100vh;
+	background: var(--bg-main, linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%));
+	color: var(--text-main, #000);
 }
 
 .sidebar {
@@ -77,7 +78,7 @@ body {
 	margin-left: var(--sidebar-width) !important;
 	min-height: 100vh;
 	transition: margin-left 0.3s ease;
-	background-color: #f8f9fc;
+	background-color: var(--bg-main, #f8f9fc);
 	padding: 2rem 1rem;
 }
 
@@ -269,6 +270,70 @@ to {
 	background-color: #f8d7da;
 	color: #721c24;
 }
+/* DARK MODE VARIABLES */
+body.dark-mode {
+	--bg-main: #121212;
+	--bg-card: #1e1e1e;
+	--bg-sidebar: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+	--text-main: #ffffff;
+	--text-muted: #b0b0b0;
+	--border-color: #2c2c2c;
+}
+/* Cards */
+.dark-mode .stat-card, .dark-mode .alert-section, .dark-mode .table-card
+	{
+	background-color: var(--bg-card);
+	color: var(--text-main);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Activity & Alerts */
+.dark-mode .alert-item {
+	border-bottom: 1px solid var(--border-color);
+	color: var(--text-main);
+}
+
+/* Navbar */
+.dark-mode .navbar {
+	background-color: #1e1e1e;
+}
+
+/* Footer */
+.dark-mode footer {
+	background-color: #1e1e1e;
+	color: var(--text-muted);
+}
+
+.dark-mode .table {
+	color: white;
+}
+
+.dark-mode .table thead th {
+	background: #333 !important;
+}
+
+.dark-mode .badge {
+	opacity: 0.9;
+}
+
+.dark-mode .sidebar-menu .nav-link {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.dark-mode .sidebar-menu .nav-link:hover, .dark-mode .sidebar-menu .nav-link.active
+	{
+	background-color: rgba(255, 255, 255, 0.15);
+	color: white;
+}
+
+body, .card, .alert-section, .navbar {
+	transition: all 0.3s ease;
+}
+/* Fix navbar text in dark mode */
+.dark-mode .navbar-brand, .dark-mode .navbar span, .dark-mode .navbar b
+	{
+	color: #ffffff !important;
+}
 </style>
 </head>
 
@@ -327,13 +392,14 @@ to {
 	</div>
 
 	<!-- Main Content -->
-	<
 	<div class="main-content" ng-controller="DashboardController">
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-fluid text-center">
 				<a class="navbar-brand" href="dashboard.jsp"> Hospital ERP </a> <span
-					class="me-3 text-dark">Logged in: <b class="bi bi-person"><%=username%>
+					class="me-3 ">Logged in: <b class="bi bi-person"><%=username%>
 						(<%=role%>) </b></span>
+				<button onclick="toggleDarkMode()" class="btn btn-dark btn-sm">🌙</button>
+
 				<form action="UserServlet" method="get">
 					<input type="hidden" name="action" value="logout">
 					<button class="btn btn-warning btn-sm">Logout</button>
@@ -472,13 +538,32 @@ to {
 			</div>
 
 		</div>
+		<footer class="text-center mt-5 pt-4 pb-3 "">
+			<!-- place footer here -->
+			&copy; 2026 Hospital Reception ERP System. All rights reserved.
+		</footer>
 	</div>
 
-	<footer class="text-center mt-5 pt-4 pb-3 "">
-		<!-- place footer here -->
-		&copy; 2026 Hospital Reception ERP System. All rights reserved.
-	</footer>
 	<!-- Bootstrap JS -->
+	<script>
+		function toggleDarkMode() {
+			document.body.classList.toggle("dark-mode");
+
+			if (document.body.classList.contains("dark-mode")) {
+				localStorage.setItem("theme", "dark");
+			} else {
+				localStorage.setItem("theme", "light");
+			}
+		}
+
+		// IMPORTANT FIX
+		document.addEventListener("DOMContentLoaded", function() {
+			if (localStorage.getItem("theme") === "dark") {
+				document.body.classList.add("dark-mode");
+			}
+		});
+	</script>
+	</script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 

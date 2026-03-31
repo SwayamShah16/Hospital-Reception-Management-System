@@ -130,14 +130,12 @@ if (keyword == null) {
 		<div class="container py-4">
 			<h3 class="mb-4 text-center text-dark">Rooms</h3>
 			<div class="card p-3 mb-3">
-
-				<form action="room" method="get" class="d-flex mb-3">
+				<form action="room" method="get" class="d-flex">
 					<input type="hidden" name="action" value="search"> <input
 						type="text" name="keyword" class="form-control me-2"
 						placeholder="Search Room No or Type">
 					<button class="btn btn-primary">Search</button>
 				</form>
-
 			</div>
 			<!-- Patients Table -->
 			<div class="card p-3">

@@ -38,7 +38,7 @@ body {
 }
 
 .navbar-brand, .nav-link {
-	color: rgb(0, 0, 0)mportant;
+	color: rgb(0, 0, 0) mportant;
 	font-weight: 500;
 }
 
@@ -173,4 +173,33 @@ thead th {
 .btn-secondary:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode {
+	background-color: #121212;
+	color: #ffffff;
+}
+
+/* Cards */
+.dark-mode .card {
+	background-color: #1e1e1e;
+	color: #fff;
+}
+
+/* Navbar */
+.dark-mode .navbar {
+	background-color: #1a1a1a !important;
+}
+
+/* Tables */
+.dark-mode table {
+	background-color: #1e1e1e;
+	color: white;
+}
+
+/* Inputs */
+.dark-mode input, .dark-mode select, .dark-mode textarea {
+	background-color: #2a2a2a;
+	color: white;
+	border: 1px solid #555;
 }

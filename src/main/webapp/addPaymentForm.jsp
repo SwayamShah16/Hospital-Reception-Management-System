@@ -96,6 +96,7 @@ if (!("Admin".equals(role) || "Doctor".equals(role) || "Staff".equals(role))) {
 					<a class="navbar-brand text-dark" href="dashboard"> Hospital
 						ERP </a> <span class="me-3 text-dark">Logged in: <b
 						class="bi bi-person"><%=username%> (<%=role%>) </b></span>
+
 					<form action="UserServlet" method="get">
 						<input type="hidden" name="action" value="logout">
 						<button class="btn btn-warning btn-sm">Logout</button>
@@ -175,11 +176,12 @@ if (!("Admin".equals(role) || "Doctor".equals(role) || "Staff".equals(role))) {
 			</div>
 		</div>
 
+		<footer class="text-center mt-5 pt-4 pb-3 "">
+			<!-- place footer here -->
+			&copy; 2026 Hospital Reception ERP System. All rights reserved.
+		</footer>
 	</div>
-	<footer class="text-center mt-5 pt-4 pb-3 "">
-		<!-- place footer here -->
-		&copy; 2026 Hospital Reception ERP System. All rights reserved.
-	</footer>
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
