@@ -27,8 +27,8 @@ public class PaymentDAO {
 		ps.setDate(4, p.getPaymentDate());
 		ps.setString(5, p.getPaymentMode());
 
-		// Simulate 80% success, 20% failure
-		String status = Math.random() > 0.2 ? "Success" : "Failed";
+		// Simulate 98% success, 2% failure
+		String status = Math.random() > 0.02 ? "Success" : "Failed";
 		ps.setString(6, status);
 
 		int rows = ps.executeUpdate();

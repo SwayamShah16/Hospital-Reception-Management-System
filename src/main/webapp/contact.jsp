@@ -163,7 +163,7 @@ body {
 	<div class="sidebar" id="sidebar">
 		<div
 			class="sidebar-header d-flex justify-content-between align-items-center">
-			<h4 class="mb-0">About Us</h4>
+			<h4 class="mb-0">Contact Us</h4>
 			<button class="btn btn-sm btn-outline-light d-md-none"
 				id="sidebarToggle">
 				<i class="bi bi-x"></i>

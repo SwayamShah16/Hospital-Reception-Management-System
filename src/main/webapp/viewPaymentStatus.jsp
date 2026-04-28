@@ -37,11 +37,13 @@ String role = (String) session1.getAttribute("role");
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary">Check
 							Status</button>
-						<button href="addPayment.jsp" class="btn btn-warning ">Back
-							to Add Payment</button>
 					</div>
 				</form>
-
+				<div class="text-center my-2">
+					<form action="payment" method="post">
+						<button class="btn btn-warning ">Back to Add Payment</button>
+					</form>
+				</div>
 				<!-- Display Payment Status -->
 				<%
 				PaymentPOJO payment = (PaymentPOJO) request.getAttribute("payment");

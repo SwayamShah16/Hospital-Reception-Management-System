@@ -412,7 +412,7 @@ to {
 								<div class="stat-number">{{totalValue | number:0}}</div>
 							</div>
 							<div class="stat-icon bg-white bg-opacity-20">
-								<i class="fas fa-dollar-sign"></i>
+								<i class="fas fa-rupee-sign"></i>
 							</div>
 						</div>
 					</div>

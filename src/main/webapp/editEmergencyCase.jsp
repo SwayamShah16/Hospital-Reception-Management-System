@@ -123,6 +123,8 @@ body {
 				<div class="mb-3">
 					<label class="form-label">Priority</label> <select name="priority"
 						class="form-select" required>
+						<option value="Critical"
+							<%="Critical".equals(e.getPriorityLevel()) ? "selected" : ""%>>Critical</option>
 						<option value="High"
 							<%="High".equals(e.getPriorityLevel()) ? "selected" : ""%>>High</option>
 						<option value="Medium"

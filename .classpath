@@ -13,5 +13,7 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/OneDrive/Desktop/Apache Tomcat 10/apache-tomcat-10.0.27/lib/servlet-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/OneDrive/Desktop/Apache Tomcat 10/apache-tomcat-10.0.27/lib/tomcat-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/Downloads/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/Downloads/jakarta.mail-api-2.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/shahs/Downloads/jakarta.activation-2.0.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
